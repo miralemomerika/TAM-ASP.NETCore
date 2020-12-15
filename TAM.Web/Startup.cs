@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TAM.Repository;
 using TAM.Web.Data;
 
 namespace TAM.Web
@@ -34,6 +35,8 @@ namespace TAM.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository.Repository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

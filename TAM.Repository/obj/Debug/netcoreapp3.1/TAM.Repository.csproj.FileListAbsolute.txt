@@ -1,0 +1,4 @@
+C:\Users\User\source\repos\webapp\TAM\TAM.Repository\bin\Debug\netcoreapp3.1\TAM.Core.dll
+C:\Users\User\source\repos\webapp\TAM\TAM.Repository\obj\Debug\netcoreapp3.1\TAM.Repository.csprojAssemblyReference.cache
+C:\Users\User\source\repos\webapp\TAM\TAM.Repository\obj\Debug\netcoreapp3.1\TAM.Repository.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\webapp\TAM\TAM.Repository\obj\Debug\netcoreapp3.1\TAM.Repository.AssemblyInfo.cs
