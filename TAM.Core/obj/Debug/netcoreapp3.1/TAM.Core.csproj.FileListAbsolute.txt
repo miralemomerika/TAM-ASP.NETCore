@@ -1,0 +1,8 @@
+C:\Users\User\source\repos\webapp\TAM\TAM.Core\bin\Debug\netcoreapp3.1\TAM.Core.deps.json
+C:\Users\User\source\repos\webapp\TAM\TAM.Core\bin\Debug\netcoreapp3.1\TAM.Core.dll
+C:\Users\User\source\repos\webapp\TAM\TAM.Core\bin\Debug\netcoreapp3.1\TAM.Core.pdb
+C:\Users\User\source\repos\webapp\TAM\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\webapp\TAM\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.AssemblyInfo.cs
+C:\Users\User\source\repos\webapp\TAM\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\webapp\TAM\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.dll
+C:\Users\User\source\repos\webapp\TAM\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.pdb
