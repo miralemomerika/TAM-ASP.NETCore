@@ -11,13 +11,13 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {
-        private readonly UserManager<UserAccount> _userManager;
-        private readonly SignInManager<UserAccount> _signInManager;
+        private readonly UserManager<KorisnickiRacun> _userManager;
+        private readonly SignInManager<KorisnickiRacun> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
 
         public DeletePersonalDataModel(
-            UserManager<UserAccount> userManager,
-            SignInManager<UserAccount> signInManager,
+            UserManager<KorisnickiRacun> userManager,
+            SignInManager<KorisnickiRacun> signInManager,
             ILogger<DeletePersonalDataModel> logger)
         {
             _userManager = userManager;

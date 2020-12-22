@@ -12,13 +12,13 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {
-        UserManager<UserAccount> _userManager;
-        private readonly SignInManager<UserAccount> _signInManager;
+        UserManager<KorisnickiRacun> _userManager;
+        private readonly SignInManager<KorisnickiRacun> _signInManager;
         ILogger<ResetAuthenticatorModel> _logger;
 
         public ResetAuthenticatorModel(
-            UserManager<UserAccount> userManager,
-            SignInManager<UserAccount> signInManager,
+            UserManager<KorisnickiRacun> userManager,
+            SignInManager<KorisnickiRacun> signInManager,
             ILogger<ResetAuthenticatorModel> logger)
         {
             _userManager = userManager;

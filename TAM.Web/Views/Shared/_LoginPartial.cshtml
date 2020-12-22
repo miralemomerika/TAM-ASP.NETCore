@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using TAM.Core
-@inject SignInManager<UserAccount> SignInManager
-@inject UserManager<UserAccount> UserManager
+@inject SignInManager<KorisnickiRacun> SignInManager
+@inject UserManager<KorisnickiRacun> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

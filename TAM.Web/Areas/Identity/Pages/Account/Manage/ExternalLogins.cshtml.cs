@@ -12,12 +12,12 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<UserAccount> _userManager;
-        private readonly SignInManager<UserAccount> _signInManager;
+        private readonly UserManager<KorisnickiRacun> _userManager;
+        private readonly SignInManager<KorisnickiRacun> _signInManager;
 
         public ExternalLoginsModel(
-            UserManager<UserAccount> userManager,
-            SignInManager<UserAccount> signInManager)
+            UserManager<KorisnickiRacun> userManager,
+            SignInManager<KorisnickiRacun> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

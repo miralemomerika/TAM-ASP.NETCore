@@ -14,13 +14,13 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
     {
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
 
-        private readonly UserManager<UserAccount> _userManager;
-        private readonly SignInManager<UserAccount> _signInManager;
+        private readonly UserManager<KorisnickiRacun> _userManager;
+        private readonly SignInManager<KorisnickiRacun> _signInManager;
         private readonly ILogger<TwoFactorAuthenticationModel> _logger;
 
         public TwoFactorAuthenticationModel(
-            UserManager<UserAccount> userManager,
-            SignInManager<UserAccount> signInManager,
+            UserManager<KorisnickiRacun> userManager,
+            SignInManager<KorisnickiRacun> signInManager,
             ILogger<TwoFactorAuthenticationModel> logger)
         {
             _userManager = userManager;

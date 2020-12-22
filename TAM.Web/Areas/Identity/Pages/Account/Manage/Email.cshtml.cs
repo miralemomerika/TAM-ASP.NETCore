@@ -16,13 +16,13 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
 {
     public partial class EmailModel : PageModel
     {
-        private readonly UserManager<UserAccount> _userManager;
-        private readonly SignInManager<UserAccount> _signInManager;
+        private readonly UserManager<KorisnickiRacun> _userManager;
+        private readonly SignInManager<KorisnickiRacun> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public EmailModel(
-            UserManager<UserAccount> userManager,
-            SignInManager<UserAccount> signInManager,
+            UserManager<KorisnickiRacun> userManager,
+            SignInManager<KorisnickiRacun> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -50,7 +50,7 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
             public string NewEmail { get; set; }
         }
 
-        private async Task LoadAsync(UserAccount user)
+        private async Task LoadAsync(KorisnickiRacun user)
         {
             var email = await _userManager.GetEmailAsync(user);
             Email = email;

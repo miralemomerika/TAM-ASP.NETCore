@@ -15,9 +15,9 @@ namespace TAM.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<UserAccount> _userManager;
+        private readonly UserManager<KorisnickiRacun> _userManager;
 
-        public ConfirmEmailModel(UserManager<UserAccount> userManager)
+        public ConfirmEmailModel(UserManager<KorisnickiRacun> userManager)
         {
             _userManager = userManager;
         }

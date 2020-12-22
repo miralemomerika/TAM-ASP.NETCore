@@ -18,13 +18,13 @@ namespace TAM.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<UserAccount> _userManager;
-        private readonly SignInManager<UserAccount> _signInManager;
+        private readonly UserManager<KorisnickiRacun> _userManager;
+        private readonly SignInManager<KorisnickiRacun> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<UserAccount> signInManager, 
+        public LoginModel(SignInManager<KorisnickiRacun> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<UserAccount> userManager)
+            UserManager<KorisnickiRacun> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

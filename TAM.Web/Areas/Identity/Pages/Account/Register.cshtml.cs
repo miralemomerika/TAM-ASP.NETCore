@@ -20,14 +20,14 @@ namespace TAM.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<UserAccount> _signInManager;
-        private readonly UserManager<UserAccount> _userManager;
+        private readonly SignInManager<KorisnickiRacun> _signInManager;
+        private readonly UserManager<KorisnickiRacun> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<UserAccount> userManager,
-            SignInManager<UserAccount> signInManager,
+            UserManager<KorisnickiRacun> userManager,
+            SignInManager<KorisnickiRacun> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -82,7 +82,7 @@ namespace TAM.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new UserAccount { UserName = Input.Email, Email = Input.Email,
+                var user = new KorisnickiRacun { UserName = Input.Email, Email = Input.Email,
                 FirstName = Input.FirstName, LastName = Input.LastName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

@@ -7,7 +7,7 @@ using TAM.Core;
 
 namespace TAM.Repository
 {
-    public class ApplicationDbContext : IdentityDbContext<UserAccount>
+    public class ApplicationDbContext : IdentityDbContext<KorisnickiRacun>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

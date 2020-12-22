@@ -14,10 +14,10 @@ namespace TAM.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LogoutModel : PageModel
     {
-        private readonly SignInManager<UserAccount> _signInManager;
+        private readonly SignInManager<KorisnickiRacun> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
 
-        public LogoutModel(SignInManager<UserAccount> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<KorisnickiRacun> signInManager, ILogger<LogoutModel> logger)
         {
             _signInManager = signInManager;
             _logger = logger;

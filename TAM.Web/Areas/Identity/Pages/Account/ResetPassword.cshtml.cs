@@ -16,9 +16,9 @@ namespace TAM.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ResetPasswordModel : PageModel
     {
-        private readonly UserManager<UserAccount> _userManager;
+        private readonly UserManager<KorisnickiRacun> _userManager;
 
-        public ResetPasswordModel(UserManager<UserAccount> userManager)
+        public ResetPasswordModel(UserManager<KorisnickiRacun> userManager)
         {
             _userManager = userManager;
         }

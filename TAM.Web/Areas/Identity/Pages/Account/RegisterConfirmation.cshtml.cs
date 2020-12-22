@@ -13,10 +13,10 @@ namespace TAM.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly UserManager<UserAccount> _userManager;
+        private readonly UserManager<KorisnickiRacun> _userManager;
         private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<UserAccount> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<KorisnickiRacun> userManager, IEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;
