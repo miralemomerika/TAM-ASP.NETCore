@@ -20,4 +20,9 @@
     <ProjectReference Include="..\TAM.Service\TAM.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\AdministratorModul\Data\" />
+    <Folder Include="Areas\AdministratorModul\Models\" />
+  </ItemGroup>
+
 </Project>

@@ -36,17 +36,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
+                    @if(true) //Potrebno implementirati u zavisnosti od uloge
+                    {
+                        <partial name="_UlogaAdministrator" />
+                    }
                     <partial name="_LoginPartial" />
                 </ul>
             </div>

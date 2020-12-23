@@ -206,3 +206,5 @@ C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Area
 C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Error.cshtml.g.cs
 C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
+C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\AdministratorModul\Views\Home\Index.cshtml.g.cs
+C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_UlogaAdministrator.cshtml.g.cs
