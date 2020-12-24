@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\PortirModul\**" />
+    <Content Remove="Areas\PortirModul\**" />
+    <EmbeddedResource Remove="Areas\PortirModul\**" />
+    <None Remove="Areas\PortirModul\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
@@ -18,11 +25,13 @@
     <ProjectReference Include="..\TAM.Core\TAM.Core.csproj" />
     <ProjectReference Include="..\TAM.Repository\TAM.Repository.csproj" />
     <ProjectReference Include="..\TAM.Service\TAM.Service.csproj" />
+    <ProjectReference Include="..\TAM.ViewModels\TAM.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\AdministratorModul\Data\" />
     <Folder Include="Areas\AdministratorModul\Models\" />
+    <Folder Include="Areas\AdministratorModul\Views\Uplate\" />
   </ItemGroup>
 
 </Project>

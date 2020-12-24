@@ -208,3 +208,7 @@ C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Area
 C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\AdministratorModul\Views\Home\Index.cshtml.g.cs
 C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_UlogaAdministrator.cshtml.g.cs
+C:\Users\User\source\repos\webapp\TAM\TAM.Web\bin\Debug\netcoreapp3.1\TAM.ViewModels.dll
+C:\Users\User\source\repos\webapp\TAM\TAM.Web\bin\Debug\netcoreapp3.1\TAM.ViewModels.pdb
+C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Shared\SelectListItemPrikaz.cshtml.g.cs
+C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\_ViewImports.cshtml.g.cs

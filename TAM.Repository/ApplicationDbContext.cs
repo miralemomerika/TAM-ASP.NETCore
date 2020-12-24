@@ -13,5 +13,7 @@ namespace TAM.Repository
             : base(options)
         {
         }
+
+        public DbSet<SvrhaUplate> SvrhaUplate { get; set; }
     }
 }

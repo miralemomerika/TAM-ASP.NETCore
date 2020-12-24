@@ -12,7 +12,15 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+#nullable restore
+#line 1 "C:\Users\User\source\repos\webapp\TAM\TAM.Web\Areas\_ViewImports.cshtml"
+using TAM.Web;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"90ce855ae2339ea76fda7f9ff2a2566e0a112c23", @"/Areas/AdministratorModul/Views/Home/Index.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"bbccf35cf1cfa655e332af6ccc29e7a18de5fc5d", @"/Areas/_ViewImports.cshtml")]
     public class Areas_AdministratorModul_Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

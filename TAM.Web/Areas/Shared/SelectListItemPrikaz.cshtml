@@ -1,0 +1,44 @@
+﻿@{
+    var Naslov = TempData["naslov"].ToString();
+    var UrlUredi = TempData["urlUredi"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<SelectListItem>
+
+<table class="table table-hover">
+    <thead class="card-header">
+        <tr>
+            <td>@Naslov</td>
+            <td>Akcija</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Text</td>
+                <td>
+                    <button class="btn btn-info" onclick="Uredi(@item.Value, '@UrlUredi')">Uredi</button>
+                    <button class="btn btn-danger" onclick="Obrisi(@item.Value)">Obrisi</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-dark" onclick="Dodaj()">Dodaj</button>
+
+<script>
+    function Uredi(Id, Url) {
+        alert("Uredi -> " + Id + " - " + Url);
+    }
+
+    function Obrisi(Id) {
+        alert("Obrisi -> " + Id);
+    }
+
+    function Dodaj() {
+        alert("Dodavanje novog");
+    }
+</script>

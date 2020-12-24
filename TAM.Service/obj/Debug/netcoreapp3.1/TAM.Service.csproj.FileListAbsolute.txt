@@ -10,3 +10,8 @@ C:\Users\User\source\repos\webapp\TAM\TAM.Service\obj\Debug\netcoreapp3.1\TAM.Se
 C:\Users\User\source\repos\webapp\TAM\TAM.Service\obj\Debug\netcoreapp3.1\TAM.Service.dll
 C:\Users\User\source\repos\webapp\TAM\TAM.Service\obj\Debug\netcoreapp3.1\TAM.Service.pdb
 C:\Users\User\source\repos\webapp\TAM\TAM.Service\obj\Debug\netcoreapp3.1\TAM.Service.genruntimeconfig.cache
+C:\Users\User\source\repos\webapp\TAM\TAM.Service\bin\Debug\netcoreapp3.1\TAM.Core.dll
+C:\Users\User\source\repos\webapp\TAM\TAM.Service\bin\Debug\netcoreapp3.1\TAM.Repository.dll
+C:\Users\User\source\repos\webapp\TAM\TAM.Service\bin\Debug\netcoreapp3.1\TAM.Core.pdb
+C:\Users\User\source\repos\webapp\TAM\TAM.Service\bin\Debug\netcoreapp3.1\TAM.Repository.pdb
+C:\Users\User\source\repos\webapp\TAM\TAM.Service\obj\Debug\netcoreapp3.1\TAM.Service.csproj.CopyComplete
