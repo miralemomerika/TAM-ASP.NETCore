@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using TAM.Core;
 using TAM.Repository;
+using TAM.Service.Classes;
+using TAM.Service.Interfaces;
 
 namespace TAM.Web
 {
@@ -39,6 +41,7 @@ namespace TAM.Web
             services.AddRazorPages();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository.Repository<>));
+            services.AddTransient<ISvrhaUplateService, SvrhaUplateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1572,6 +1572,39 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "TAM.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.10",
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.10"
+        },
+        "compile": {
+          "bin/placeholder/TAM.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TAM.Core.dll": {}
+        }
+      },
+      "TAM.Repository/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "3.1.10",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.10",
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.10",
+          "TAM.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TAM.Repository.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TAM.Repository.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -5836,6 +5869,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "TAM.Core/1.0.0": {
+      "type": "project",
+      "path": "../TAM.Core/TAM.Core.csproj",
+      "msbuildProject": "../TAM.Core/TAM.Core.csproj"
+    },
+    "TAM.Repository/1.0.0": {
+      "type": "project",
+      "path": "../TAM.Repository/TAM.Repository.csproj",
+      "msbuildProject": "../TAM.Repository/TAM.Repository.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5843,7 +5886,9 @@
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 3.1.10",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.1.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.10",
-      "Microsoft.EntityFrameworkCore.Tools >= 3.1.10"
+      "Microsoft.EntityFrameworkCore.Tools >= 3.1.10",
+      "TAM.Core >= 1.0.0",
+      "TAM.Repository >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5876,7 +5921,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj": {
+              "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj"
+            },
+            "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj": {
+              "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

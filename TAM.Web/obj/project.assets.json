@@ -2750,7 +2750,9 @@
         "dependencies": {
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "3.1.10",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.10",
-          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.10"
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.10",
+          "TAM.Core": "1.0.0",
+          "TAM.Repository": "1.0.0"
         },
         "compile": {
           "bin/placeholder/TAM.Service.dll": {}
@@ -2761,6 +2763,16 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "TAM.ViewModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/TAM.ViewModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TAM.ViewModels.dll": {}
+        }
       }
     }
   },
@@ -8805,6 +8817,11 @@
       "type": "project",
       "path": "../TAM.Service/TAM.Service.csproj",
       "msbuildProject": "../TAM.Service/TAM.Service.csproj"
+    },
+    "TAM.ViewModels/1.0.0": {
+      "type": "project",
+      "path": "../TAM.ViewModels/TAM.ViewModels.csproj",
+      "msbuildProject": "../TAM.ViewModels/TAM.ViewModels.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8817,7 +8834,8 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.4",
       "TAM.Core >= 1.0.0",
       "TAM.Repository >= 1.0.0",
-      "TAM.Service >= 1.0.0"
+      "TAM.Service >= 1.0.0",
+      "TAM.ViewModels >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -8859,6 +8877,9 @@
             },
             "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj": {
               "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj"
+            },
+            "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj": {
+              "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj"
             }
           }
         }

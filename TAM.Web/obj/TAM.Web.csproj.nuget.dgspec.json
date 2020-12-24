@@ -181,7 +181,14 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj": {
+                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj"
+              },
+              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj": {
+                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -235,6 +242,63 @@
         }
       }
     },
+    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj",
+        "projectName": "TAM.ViewModels",
+        "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Web\\TAM.Web.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -270,6 +334,9 @@
               },
               "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj": {
                 "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj"
+              },
+              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj": {
+                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj"
               }
             }
           }

@@ -14,4 +14,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TAM.Core\TAM.Core.csproj" />
+    <ProjectReference Include="..\TAM.Repository\TAM.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
