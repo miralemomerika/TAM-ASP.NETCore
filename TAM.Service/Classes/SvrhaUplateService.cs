@@ -9,7 +9,7 @@ namespace TAM.Service.Classes
 {
     public class SvrhaUplateService : ISvrhaUplateService
     {
-        IRepository<SvrhaUplate> SvrhaUplateRepository;
+        readonly IRepository<SvrhaUplate> SvrhaUplateRepository;
 
         public SvrhaUplateService(IRepository<SvrhaUplate> repository)
         {
@@ -19,6 +19,26 @@ namespace TAM.Service.Classes
         public IEnumerable<SvrhaUplate> GetAll()
         {
             return SvrhaUplateRepository.GetAll();
+        }
+
+        public SvrhaUplate GetById(int Id)
+        {
+            return SvrhaUplateRepository.GetById(Id);
+        }
+
+        public void Update(SvrhaUplate svrha)
+        {
+            SvrhaUplateRepository.Update(svrha);
+        }
+
+        public void Delete(SvrhaUplate svrha)
+        {
+            SvrhaUplateRepository.Delete(svrha);
+        }
+
+        public void Add(SvrhaUplate svrha)
+        {
+            SvrhaUplateRepository.Add(svrha);
         }
     }
 }
