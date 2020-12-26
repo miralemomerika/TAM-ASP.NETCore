@@ -1,6 +1,8 @@
 ﻿@{
     var Naslov = TempData["naslov"].ToString();
     var UrlUredi = TempData["urlUredi"].ToString();
+    var UrlDodaj = TempData["urlDodaj"].ToString();
+    var UrlObrisi = TempData["urlObrisi"].ToString();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -19,26 +21,26 @@
             <tr>
                 <td>@item.Text</td>
                 <td>
-                    <button class="btn btn-info" onclick="Uredi(@item.Value, '@UrlUredi')">Uredi</button>
-                    <button class="btn btn-danger" onclick="Obrisi(@item.Value)">Obrisi</button>
+                    <button class="btn btn-info" onclick="AjaxForma(@item.Value, '@UrlUredi')">Uredi</button>
+                    <button class="btn btn-danger"
+                            onclick="location.href='@UrlObrisi?Id=@item.Value'">
+                        Obrisi
+                    </button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<button class="btn btn-dark" onclick="Dodaj()">Dodaj</button>
+<button class="btn btn-dark" onclick="AjaxForma(0, '@UrlDodaj')">Dodaj</button>
+
+<div id="forma"></div>
 
 <script>
-    function Uredi(Id, Url) {
-        alert("Uredi -> " + Id + " - " + Url);
-    }
-
-    function Obrisi(Id) {
-        alert("Obrisi -> " + Id);
-    }
-
-    function Dodaj() {
-        alert("Dodavanje novog");
+    function AjaxForma(Id, Url) {
+        var url = Url + "?Id=" + Id;
+        $.get(url, function (res) {
+            $("#forma").html(res);
+        });
     }
 </script>
