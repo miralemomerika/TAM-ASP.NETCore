@@ -1,8 +1,10 @@
-﻿@{
+﻿
+@{
     var Naslov = TempData["naslov"].ToString();
     var UrlUredi = TempData["urlUredi"].ToString();
     var UrlDodaj = TempData["urlDodaj"].ToString();
     var UrlObrisi = TempData["urlObrisi"].ToString();
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +12,7 @@
 
 <table class="table table-hover">
     <thead class="card-header">
-        <tr>
+        <tr align="center">
             <td>@Naslov</td>
             <td>Akcija</td>
         </tr>
@@ -18,10 +20,13 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr align="center">
                 <td>@item.Text</td>
                 <td>
-                    <button class="btn btn-info" onclick="AjaxForma(@item.Value, '@UrlUredi')">Uredi</button>
+                    <button class="btn btn-info" onclick="AjaxForma(@item.Value, '@UrlUredi')"
+                            data-toggle="modal" data-target="#exampleModalCenter">
+                        Uredi
+                    </button>
                     <button class="btn btn-danger"
                             onclick="location.href='@UrlObrisi?Id=@item.Value'">
                         Obrisi
@@ -32,9 +37,20 @@
     </tbody>
 </table>
 
-<button class="btn btn-dark" onclick="AjaxForma(0, '@UrlDodaj')">Dodaj</button>
+<button class="btn btn-dark float-right" onclick="AjaxForma(0, '@UrlDodaj')"
+        data-toggle="modal" data-target="#exampleModalCenter">
+    Dodaj
+</button>
 
-<div id="forma"></div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            
+            <div id="forma" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function AjaxForma(Id, Url) {

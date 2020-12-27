@@ -15,5 +15,6 @@ namespace TAM.Repository
         }
 
         public DbSet<SvrhaUplate> SvrhaUplate { get; set; }
+        public DbSet<TipPolaznika> TipPolaznika { get; set; }
     }
 }

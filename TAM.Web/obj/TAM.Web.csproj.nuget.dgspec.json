@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Web\\TAM.Web.csproj": {}
+    "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Web\\TAM.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj": {
+    "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj",
         "projectName": "TAM.Core",
-        "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\obj\\",
+        "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj",
+        "packagesPath": "C:\\Users\\Aldin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Aldin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,7 +29,6 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -41,7 +40,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
@@ -67,24 +65,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj": {
+    "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj",
+        "projectUniqueName": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj",
         "projectName": "TAM.Repository",
-        "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\obj\\",
+        "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj",
+        "packagesPath": "C:\\Users\\Aldin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Aldin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -96,10 +94,9 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj"
+              "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj": {
+                "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj"
               }
             }
           }
@@ -112,7 +109,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
@@ -151,24 +147,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj": {
+    "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Service\\TAM.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj",
+        "projectUniqueName": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Service\\TAM.Service.csproj",
         "projectName": "TAM.Service",
-        "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\obj\\",
+        "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Service\\TAM.Service.csproj",
+        "packagesPath": "C:\\Users\\Aldin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Aldin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -180,13 +176,12 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj"
+              "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj": {
+                "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj"
               },
-              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj"
+              "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj": {
+                "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj"
               }
             }
           }
@@ -199,7 +194,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
@@ -238,24 +232,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj": {
+    "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.ViewModels\\TAM.ViewModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj",
+        "projectUniqueName": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.ViewModels\\TAM.ViewModels.csproj",
         "projectName": "TAM.ViewModels",
-        "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\obj\\",
+        "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.ViewModels\\TAM.ViewModels.csproj",
+        "packagesPath": "C:\\Users\\Aldin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.ViewModels\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Aldin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -267,7 +261,6 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -279,7 +272,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -295,24 +287,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Web\\TAM.Web.csproj": {
+    "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Web\\TAM.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Web\\TAM.Web.csproj",
+        "projectUniqueName": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Web\\TAM.Web.csproj",
         "projectName": "TAM.Web",
-        "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Web\\TAM.Web.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Web\\obj\\",
+        "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Web\\TAM.Web.csproj",
+        "packagesPath": "C:\\Users\\Aldin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Aldin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -324,19 +316,18 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj"
+              "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj": {
+                "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj"
               },
-              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj"
+              "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj": {
+                "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj"
               },
-              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj"
+              "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Service\\TAM.Service.csproj": {
+                "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.Service\\TAM.Service.csproj"
               },
-              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.ViewModels\\TAM.ViewModels.csproj"
+              "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.ViewModels\\TAM.ViewModels.csproj": {
+                "projectPath": "C:\\Users\\Aldin\\Source\\Repos\\webapp\\TAM.ViewModels\\TAM.ViewModels.csproj"
               }
             }
           }
@@ -349,7 +340,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
@@ -394,7 +384,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
