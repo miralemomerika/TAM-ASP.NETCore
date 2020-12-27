@@ -41,7 +41,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
             TempData["action"] = "SvrhaUplateSpasi";
             TempData["controller"] = "Uplate";
-
+            TempData["nazivTeksta"] = "Svrha uplate";
             return View("/Areas/Shared/SelectListItemForma.cshtml", 
                 new SelectListItem { Value=svrha.Id.ToString(), Text=svrha.Svrha });
         }
@@ -50,6 +50,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         {
             TempData["action"] = "SvrhaUplateSpasi";
             TempData["controller"] = "Uplate";
+            TempData["nazivTeksta"] = "Svrha uplate";
 
             return View("/Areas/Shared/SelectListItemForma.cshtml",
                 new SelectListItem { Value = "0" });

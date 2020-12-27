@@ -7,3 +7,12 @@ C:\Users\User\source\repos\webapp\TAM\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM
 C:\Users\User\source\repos\webapp\TAM\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM.ViewModels.dll
 C:\Users\User\source\repos\webapp\TAM\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM.ViewModels.pdb
 C:\Users\User\source\repos\webapp\TAM\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM.ViewModels.csprojAssemblyReference.cache
+C:\Users\Aldin\source\repos\webapp\TAM.ViewModels\bin\Debug\netcoreapp3.1\TAM.ViewModels.deps.json
+C:\Users\Aldin\source\repos\webapp\TAM.ViewModels\bin\Debug\netcoreapp3.1\TAM.ViewModels.dll
+C:\Users\Aldin\source\repos\webapp\TAM.ViewModels\bin\Debug\netcoreapp3.1\TAM.ViewModels.pdb
+C:\Users\Aldin\source\repos\webapp\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM.ViewModels.csprojAssemblyReference.cache
+C:\Users\Aldin\source\repos\webapp\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM.ViewModels.AssemblyInfoInputs.cache
+C:\Users\Aldin\source\repos\webapp\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM.ViewModels.AssemblyInfo.cs
+C:\Users\Aldin\source\repos\webapp\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM.ViewModels.csproj.CoreCompileInputs.cache
+C:\Users\Aldin\source\repos\webapp\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM.ViewModels.dll
+C:\Users\Aldin\source\repos\webapp\TAM.ViewModels\obj\Debug\netcoreapp3.1\TAM.ViewModels.pdb

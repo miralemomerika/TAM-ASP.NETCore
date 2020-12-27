@@ -1,14 +1,31 @@
 ﻿@{
     var Action = TempData["action"].ToString();
     var Controller = TempData["controller"].ToString();
+    var NazivTeksta = TempData["nazivTeksta"].ToString();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @model SelectListItem
 
+
+
 <form asp-action="@Action" asp-controller="@Controller">
+    <div class="modal-header" style="padding:1rem 0rem">
+        @if (Model.Value == "0")
+        {
+            <h5 class="modal-title" id="exampleModalLongTitle">Dodaj</h5>
+        }
+        else
+        {
+            <h5 class="modal-title" id="exampleModalLongTitle">Uredi</h5>
+        }
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <br />
     <input asp-for="Value" value="@Model.Value" hidden />
-    <label for="Text">Naziv uplate</label>
-    <input asp-for="Text" value="@Model.Text" type="text" />
-    <input type="submit" class="btn btn-dark" value="Spremi" />
+    <label for="Text">@NazivTeksta</label>
+    <input asp-for="Text" value="@Model.Text" type="text" class="form-control mb-3" />
+    <input type="submit" class="btn btn-primary float-right" value="Spremi" />
 </form>

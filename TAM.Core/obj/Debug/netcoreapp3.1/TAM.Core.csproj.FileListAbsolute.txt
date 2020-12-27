@@ -7,3 +7,12 @@ C:\Users\User\source\repos\webapp\TAM\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.
 C:\Users\User\source\repos\webapp\TAM\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.dll
 C:\Users\User\source\repos\webapp\TAM\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.pdb
 C:\Users\User\source\repos\webapp\TAM\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.csprojAssemblyReference.cache
+C:\Users\Aldin\source\repos\webapp\TAM.Core\bin\Debug\netcoreapp3.1\TAM.Core.deps.json
+C:\Users\Aldin\source\repos\webapp\TAM.Core\bin\Debug\netcoreapp3.1\TAM.Core.dll
+C:\Users\Aldin\source\repos\webapp\TAM.Core\bin\Debug\netcoreapp3.1\TAM.Core.pdb
+C:\Users\Aldin\source\repos\webapp\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.csprojAssemblyReference.cache
+C:\Users\Aldin\source\repos\webapp\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.AssemblyInfoInputs.cache
+C:\Users\Aldin\source\repos\webapp\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.AssemblyInfo.cs
+C:\Users\Aldin\source\repos\webapp\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.csproj.CoreCompileInputs.cache
+C:\Users\Aldin\source\repos\webapp\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.dll
+C:\Users\Aldin\source\repos\webapp\TAM.Core\obj\Debug\netcoreapp3.1\TAM.Core.pdb
