@@ -1,0 +1,58 @@
+﻿
+@using TAM.Core
+
+@{
+    ViewData["Title"] = "Prikaz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<Prostorija>
+
+<table class="table table-hover">
+    <thead class="card-header">
+        <tr align="center">
+            <td>Prostorija</td>
+            <td>Kapacitet</td>
+            <td>Akcija</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr align="center">
+                <td>@item.Naziv</td>
+                <td>@item.BrojMjesta</td>
+                <td>
+                    <button class="btn btn-info" onclick="AjaxForma(@item.Id)"
+                            data-toggle="modal" data-target="#exampleModalCenter">
+                        Uredi
+                    </button>
+                    <button class="btn btn-danger">
+                        Obrisi
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-dark float-right"
+        data-toggle="modal" data-target="#exampleModalCenter">
+    Dodaj
+</button>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div id="forma" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function AjaxForma(Id, Url) {
+        alert("Potrebno implementirati");
+    }
+</script>
