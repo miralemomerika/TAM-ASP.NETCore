@@ -43,6 +43,7 @@ namespace TAM.Web
             services.AddScoped(typeof(IRepository<>), typeof(Repository.Repository<>));
             services.AddTransient<ISvrhaUplateService, SvrhaUplateService>();
             services.AddTransient<ITipPolaznikaService, TipPolaznikaService>();
+            services.AddTransient<ITipDogadjajaService, TipDogadjajaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
