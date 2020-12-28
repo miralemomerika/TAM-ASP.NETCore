@@ -2739,10 +2739,7 @@
         },
         "runtime": {
           "bin/placeholder/TAM.Repository.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "TAM.Service/1.0.0": {
         "type": "project",
@@ -2757,10 +2754,7 @@
         },
         "runtime": {
           "bin/placeholder/TAM.Service.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       }
     }
   },
