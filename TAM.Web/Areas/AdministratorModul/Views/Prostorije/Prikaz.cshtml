@@ -2,7 +2,6 @@
 @using TAM.Core
 
 @{
-    ViewData["Title"] = "Prikaz";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,11 +22,12 @@
                 <td>@item.Naziv</td>
                 <td>@item.BrojMjesta</td>
                 <td>
-                    <button class="btn btn-info" onclick="AjaxForma(@item.Id)"
+                    <button class="btn btn-info" onclick="Uredi(@item.Id)"
                             data-toggle="modal" data-target="#exampleModalCenter">
                         Uredi
                     </button>
-                    <button class="btn btn-danger">
+                    <button class="btn btn-danger"
+                            onclick="location.href='/AdministratorModul/Prostorije/Obrisi?Id=@item.Id'">
                         Obrisi
                     </button>
                 </td>
@@ -37,7 +37,7 @@
 </table>
 
 <button class="btn btn-dark float-right"
-        data-toggle="modal" data-target="#exampleModalCenter">
+        data-toggle="modal" data-target="#exampleModalCenter" onclick="Dodaj()">
     Dodaj
 </button>
 
@@ -52,7 +52,15 @@
 </div>
 
 <script>
-    function AjaxForma(Id, Url) {
-        alert("Potrebno implementirati");
+    function Uredi(Id, url) {
+        $.get("/AdministratorModul/Prostorije/Uredi?Id=" + Id, function (res) {
+            $("#forma").html(res);
+        })
+    }
+
+    function Dodaj() {
+        $.get("/AdministratorModul/Prostorije/Dodaj", function (res) {
+            $("#forma").html(res);
+        })
     }
 </script>

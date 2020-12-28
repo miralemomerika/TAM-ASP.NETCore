@@ -431,3 +431,4 @@ C:\Users\Aldin\source\repos\webapp\TAM.Web\obj\Debug\netcoreapp3.1\TAM.Web.dll
 C:\Users\Aldin\source\repos\webapp\TAM.Web\obj\Debug\netcoreapp3.1\TAM.Web.pdb
 C:\Users\Aldin\source\repos\webapp\TAM.Web\obj\Debug\netcoreapp3.1\TAM.Web.genruntimeconfig.cache
 C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\AdministratorModul\Views\Prostorije\Prikaz.cshtml.g.cs
+C:\Users\User\source\repos\webapp\TAM\TAM.Web\obj\Debug\netcoreapp3.1\Razor\Areas\AdministratorModul\Views\Prostorije\Forma.cshtml.g.cs

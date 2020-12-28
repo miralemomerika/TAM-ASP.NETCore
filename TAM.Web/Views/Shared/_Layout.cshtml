@@ -38,7 +38,7 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
-                    @if(true) //Potrebno implementirati u zavisnosti od uloge
+                    @if (true) //Potrebno implementirati u zavisnosti od uloge
                     {
                         <partial name="_UlogaAdministrator" />
                     }
@@ -66,6 +66,8 @@
     <!-- Bootstrap core JavaScript -->
     <script src="/template/vendor/jquery/jquery.min.js"></script>
     <script src="/template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 
