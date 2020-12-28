@@ -45,7 +45,8 @@ namespace TAM.Web
             services.AddTransient<ITipPolaznikaService, TipPolaznikaService>();
             services.AddTransient<IProstorijaService, ProstorijaService>();
             services.AddTransient<ITipDogadjajaService, TipDogadjajaService>();
-            //services.AddTransient<ITipDogadjajaService, TipDogadjajaService>();
+            services.AddTransient<IKategorijaKursaService, KategorijaKursaService>();
+            services.AddTransient<IKategorijaObavijestiService, KategorijaObavijestiService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
