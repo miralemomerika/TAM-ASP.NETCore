@@ -1,0 +1,66 @@
+﻿
+@using TAM.Core
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<Prostorija>
+
+<table class="table table-hover">
+    <thead class="card-header">
+        <tr align="center">
+            <td>Prostorija</td>
+            <td>Kapacitet</td>
+            <td>Akcija</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr align="center">
+                <td>@item.Naziv</td>
+                <td>@item.BrojMjesta</td>
+                <td>
+                    <button class="btn btn-info" onclick="Uredi(@item.Id)"
+                            data-toggle="modal" data-target="#exampleModalCenter">
+                        Uredi
+                    </button>
+                    <button class="btn btn-danger"
+                            onclick="location.href='/AdministratorModul/Prostorije/Obrisi?Id=@item.Id'">
+                        Obrisi
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-dark float-right"
+        data-toggle="modal" data-target="#exampleModalCenter" onclick="Dodaj()">
+    Dodaj
+</button>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div id="forma" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Uredi(Id, url) {
+        $.get("/AdministratorModul/Prostorije/Uredi?Id=" + Id, function (res) {
+            $("#forma").html(res);
+        })
+    }
+
+    function Dodaj() {
+        $.get("/AdministratorModul/Prostorije/Dodaj", function (res) {
+            $("#forma").html(res);
+        })
+    }
+</script>

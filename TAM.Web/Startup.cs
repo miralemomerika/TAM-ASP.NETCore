@@ -43,6 +43,7 @@ namespace TAM.Web
             services.AddScoped(typeof(IRepository<>), typeof(Repository.Repository<>));
             services.AddTransient<ISvrhaUplateService, SvrhaUplateService>();
             services.AddTransient<ITipPolaznikaService, TipPolaznikaService>();
+            services.AddTransient<IProstorijaService, ProstorijaService>();
             services.AddTransient<ITipDogadjajaService, TipDogadjajaService>();
             //services.AddTransient<ITipDogadjajaService, TipDogadjajaService>();
         }

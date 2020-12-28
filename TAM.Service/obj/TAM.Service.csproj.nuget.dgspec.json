@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Service\\TAM.Service.csproj": {}
   },
   "projects": {
@@ -12,12 +13,29 @@
         "projectPath": "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj",
         "packagesPath": "C:\\Users\\miral\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Core\\obj\\",
+=======
+    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj",
+        "projectName": "TAM.Core",
+        "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\obj\\",
+>>>>>>> Prostorija-gitignore
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\miral\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> Prostorija-gitignore
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,6 +47,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -40,6 +59,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
@@ -65,6 +85,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
         }
       }
@@ -77,12 +98,30 @@
         "projectPath": "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj",
         "packagesPath": "C:\\Users\\miral\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Repository\\obj\\",
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj",
+        "projectName": "TAM.Repository",
+        "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\obj\\",
+>>>>>>> Prostorija-gitignore
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\miral\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> Prostorija-gitignore
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -94,9 +133,15 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
+<<<<<<< HEAD
               "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj": {
                 "projectPath": "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj"
+=======
+              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj": {
+                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj"
+>>>>>>> Prostorija-gitignore
               }
             }
           }
@@ -109,6 +154,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
@@ -147,6 +193,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
         }
       }
@@ -159,12 +206,30 @@
         "projectPath": "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Service\\TAM.Service.csproj",
         "packagesPath": "C:\\Users\\miral\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Service\\obj\\",
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj",
+        "projectName": "TAM.Service",
+        "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\TAM.Service.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Service\\obj\\",
+>>>>>>> Prostorija-gitignore
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\miral\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> Prostorija-gitignore
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -176,12 +241,21 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
+<<<<<<< HEAD
               "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj": {
                 "projectPath": "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Core\\TAM.Core.csproj"
               },
               "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj": {
                 "projectPath": "C:\\Users\\miral\\Source\\Repos\\webapp\\TAM.Repository\\TAM.Repository.csproj"
+=======
+              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj": {
+                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Core\\TAM.Core.csproj"
+              },
+              "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj": {
+                "projectPath": "C:\\Users\\User\\source\\repos\\webapp\\TAM\\TAM.Repository\\TAM.Repository.csproj"
+>>>>>>> Prostorija-gitignore
               }
             }
           }
@@ -194,6 +268,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
@@ -232,7 +307,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+>>>>>>> Prostorija-gitignore
         }
       }
     }
