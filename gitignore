@@ -1,0 +1,13 @@
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.[Cc]ache
+!?*.[Cc]ache/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+ScaffoldingReadMe.txt
+*.nuget.props
+*.nuget.targets
