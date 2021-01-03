@@ -27,12 +27,33 @@
                 <td>@user.Email</td>
                 <td>@string.Join(" , ", user.Roles.ToList())</td>
                 <td>
-                    <a class="btn btn-primary" asp-controller="Uloge"
+                    @*<a class="btn btn-primary" asp-controller="Uloge"
                        asp-action="Manage" asp-route-userId="@user.UserId">
                         Uredi
-                    </a>
+                    </a>*@
+
+                    <button class="btn btn-primary" data-toggle="modal" 
+                            data-target="#exampleModalCenter" onclick="Uredi('@user.UserId')">Uredi</button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div id="forma" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Uredi(userId) {
+        $.get("/AdministratorModul/Uloge/Upravljanje?userId=" + userId, function (res) {
+            $("#forma").html(res);
+        })
+    }
+</script>
