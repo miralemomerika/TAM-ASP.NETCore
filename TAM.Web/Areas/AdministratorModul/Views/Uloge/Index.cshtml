@@ -1,0 +1,38 @@
+﻿@using TAM.ViewModels
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<KorisnikUlogaVM>
+
+<h1>Uloge</h1>
+<table class="table table-hover">
+    <thead class="card-header">
+        <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Uloge</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                <td>@string.Join(" , ", user.Roles.ToList())</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Uloge"
+                       asp-action="Manage" asp-route-userId="@user.UserId">
+                        Uredi
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
