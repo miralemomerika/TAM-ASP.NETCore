@@ -26,6 +26,43 @@
     <br />
     <input asp-for="Value" value="@Model.Value" hidden />
     <label for="Text">@NazivTeksta</label>
-    <input asp-for="Text" value="@Model.Text" type="text" class="form-control mb-3" />
+    <input id="Naziv" asp-for="Text" value="@Model.Text" type="text" class="form-control mb-3" onkeyup="validateEntry()"/>
     <input type="submit" class="btn btn-primary float-right" value="Spremi" />
 </form>
+<script>
+
+    var naziv = $("#Naziv");
+    var validate = document.createElement('span');
+    validate.setAttribute('class', 'text-danger');
+    var submit = false;
+
+    function validateEntry() {
+
+        if (naziv.val() == "" || naziv.val() == undefined) {
+
+            validate.innerHTML = "Obavezno polje!";
+            naziv.after(validate);
+            submit = false;
+        }
+        else if (naziv.val().length < 4) {
+
+            validate.innerHTML = "Naziv mora sadržavati minimalno 4 karaktera.";
+            naziv.after(validate);
+            submit = false;
+        }
+        else {
+            $('.text-danger').remove();
+            submit = true;
+        }
+    }
+
+    $("form").submit(function () {
+
+        validateEntry();
+        if (submit)
+            return true;
+        else
+            return false;
+    });
+
+</script>
