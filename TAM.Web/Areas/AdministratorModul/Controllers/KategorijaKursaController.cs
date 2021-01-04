@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TAM.Service.Interfaces;
 using TAM.Service.Classes;
+using cloudscribe.Pagination.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
@@ -19,22 +21,38 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         {
             KategorijaKursaService = kategorijaKursaService;
         }
-
-        public IActionResult KategorijaKursaPrikaz()
+       
+        public IActionResult KategorijaKursaPrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
         {
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            ViewBag.CurrentFilter = pretrazivanje;
             var podaci = KategorijaKursaService.GetAll().Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Naziv
-            }).ToList();
-
+            }).ToList().AsQueryable();
+            var BrojKategorija = podaci.Count();
+            if (!String.IsNullOrEmpty(pretrazivanje))
+            {
+                podaci = podaci.Where(x => x.Text.Contains(pretrazivanje));
+                BrojKategorija = podaci.Count();
+            }
+            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
+            var rezultat = new PagedResult<SelectListItem>
+            {
+                Data = podaci.AsNoTracking().ToList(),
+                TotalItems = BrojKategorija,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
             TempData["naslov"] = "Kategorija kursa";
             TempData["urlUredi"] = "/AdministratorModul/KategorijaKursa/KategorijaKursaUredi";
             TempData["urlDodaj"] = "/AdministratorModul/KategorijaKursa/KategorijaKursaDodaj";
             TempData["urlObrisi"] = "/AdministratorModul/KategorijaKursa/KategorijaKursaObrisi";
-
-            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", podaci);
-
+            ViewData["Title"] = "KategorijaKursaPrikaz";
+            ViewData["Controller"] = "KategorijaKursa";
+            ViewData["Action"] = "KategorijaKursaPrikaz";
+            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", rezultat);
         }
 
         public IActionResult KategorijaKursaUredi(int id)

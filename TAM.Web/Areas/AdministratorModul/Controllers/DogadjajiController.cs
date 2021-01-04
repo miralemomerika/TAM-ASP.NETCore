@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cloudscribe.Pagination.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using TAM.Service.Interfaces;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
@@ -18,20 +20,38 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TipDogadjajaService = tipDogadjajaService;
         }
 
-        public IActionResult TipDogadjajaPrikaz()
+        
+        public IActionResult TipDogadjajaPrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
         {
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            ViewBag.CurrentFilter = pretrazivanje;
             var podaci = TipDogadjajaService.GetAll().Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Naziv
-            }).ToList();
-
+            }).ToList().AsQueryable();
+            var BrojKategorija = podaci.Count();
+            if (!String.IsNullOrEmpty(pretrazivanje))
+            {
+                podaci = podaci.Where(x => x.Text.Contains(pretrazivanje));
+                BrojKategorija = podaci.Count();
+            }
+            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
+            var rezultat = new PagedResult<SelectListItem>
+            {
+                Data = podaci.AsNoTracking().ToList(),
+                TotalItems = BrojKategorija,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
             TempData["naslov"] = "Tip dogadjaja";
             TempData["urlUredi"] = "/AdministratorModul/Dogadjaji/TipDogadjajaUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Dogadjaji/TipDogadjajaDodaj";
             TempData["urlObrisi"] = "/AdministratorModul/Dogadjaji/TipDogadjajaObrisi";
-
-            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", podaci);
+            ViewData["Title"] = "TipDogadjajaPrikaz";
+            ViewData["Controller"] = "Dogadjaji";
+            ViewData["Action"] = "TipDogadjajaPrikaz";
+            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", rezultat);
         }
 
         public IActionResult TipDogadjajaUredi(int Id)

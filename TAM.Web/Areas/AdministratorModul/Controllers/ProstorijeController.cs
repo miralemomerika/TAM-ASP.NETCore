@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using cloudscribe.Pagination.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +20,29 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ProstorijaService = prostorijaService;
         }
 
-        public IActionResult Prikaz()
+        public IActionResult Prikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
         {
-            return View(ProstorijaService.GetAll().ToList());
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            ViewBag.CurrentFilter = pretrazivanje;
+            var podaci = ProstorijaService.GetAll().ToList().AsQueryable();
+            var BrojKategorija = podaci.Count();
+            if (!String.IsNullOrEmpty(pretrazivanje))
+            {
+                podaci = podaci.Where(x => x.Naziv.Contains(pretrazivanje));
+                BrojKategorija = podaci.Count();
+            }
+            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
+            var rezultat = new PagedResult<Prostorija>
+            {
+                Data = podaci.AsNoTracking().ToList(),
+                TotalItems = BrojKategorija,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+            ViewData["Title"] = "Prikaz";
+            ViewData["Controller"] = "Prostorije";
+            ViewData["Action"] = "Prikaz";       
+            return View(rezultat);
         }
 
         public IActionResult Dodaj()
