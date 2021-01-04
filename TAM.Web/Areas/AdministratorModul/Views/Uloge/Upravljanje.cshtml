@@ -1,0 +1,40 @@
+﻿@using TAM.ViewModels
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<KorisnikUlogaUpravljanjeVM>
+
+<form method="post" asp-action="Upravljanje" asp-controller="Uloge" asp-route-userId="@ViewBag.userId">
+    <div>
+        <div class="modal-header pb-0">
+            <div>
+                <h5>Upravljanje ulogama</h5>
+                <p>Korisnik: @ViewBag.UserName</p>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="card-body">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="form-check m-1">
+                    <input type="hidden" asp-for="@Model[i].RoleId" />
+                    <input type="hidden" asp-for="@Model[i].RoleName" />
+                    <input asp-for="@Model[i].Selected" class="form-check-input" />
+                    <label class="form-check-label" asp-for="@Model[i].Selected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+             }
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <div>
+            <input type="submit" value="Spasi" class="btn btn-primary float-right" style="width:auto" />
+            <a asp-action="Index" class="btn btn-dark float-right mr-2" style="width:auto">Cancel</a>
+        </div>
+    </div>
+</form>

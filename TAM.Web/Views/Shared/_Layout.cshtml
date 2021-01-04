@@ -39,7 +39,7 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
-                    @if (true) //Potrebno implementirati u zavisnosti od uloge
+                    @if (User.IsInRole("Administrator"))
                     {
                         <partial name="_UlogaAdministrator" />
                     }
