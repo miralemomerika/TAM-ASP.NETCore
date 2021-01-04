@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using TAM.Service.Interfaces;
 using TAM.Service.Classes;
+using cloudscribe.Pagination.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
@@ -19,22 +21,38 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         {
             KategorijaObavijestiService = kategorijaObavijestiService;
         }
-
-        public IActionResult KategorijaObavijestiPrikaz()
+     
+        public IActionResult KategorijaObavijestiPrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
         {
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            ViewBag.CurrentFilter = pretrazivanje;
             var podaci = KategorijaObavijestiService.GetAll().Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Naziv
-            }).ToList();
-
+            }).ToList().AsQueryable();
+            var BrojKategorija = podaci.Count();
+            if (!String.IsNullOrEmpty(pretrazivanje))
+            {
+                podaci = podaci.Where(x => x.Text.Contains(pretrazivanje));
+                BrojKategorija = podaci.Count();
+            }
+            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
+            var rezultat = new PagedResult<SelectListItem>
+            {
+                Data = podaci.AsNoTracking().ToList(),
+                TotalItems = BrojKategorija,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
             TempData["naslov"] = "Kategorija obavijesti";
             TempData["urlUredi"] = "/AdministratorModul/Obavijesti/KategorijaObavijestiUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Obavijesti/KategorijaObavijestiDodaj";
             TempData["urlObrisi"] = "/AdministratorModul/Obavijesti/KategorijaObavijestiObrisi";
-
-            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", podaci);
-
+            ViewData["Title"] = "KategorijaObavijestiPrikaz";
+            ViewData["Controller"] = "Obavijesti";
+            ViewData["Action"] = "KategorijaObavijestiPrikaz";
+            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", rezultat);
         }
 
         public IActionResult KategorijaObavijestiUredi(int id)

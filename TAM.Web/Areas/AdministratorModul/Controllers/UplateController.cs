@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using cloudscribe.Pagination.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,20 +21,37 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             SvrhaUplateService = svrhaUplateService;
         }
 
-        public IActionResult SvrhaUplatePrikaz()
+        public IActionResult SvrhaUplatePrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
         {
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            ViewBag.CurrentFilter = pretrazivanje;
             var podaci = SvrhaUplateService.GetAll().Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Svrha
-            }).ToList();
-
+            }).ToList().AsQueryable();
+            var BrojKategorija = podaci.Count();
+            if (!String.IsNullOrEmpty(pretrazivanje))
+            {
+                podaci = podaci.Where(x => x.Text.Contains(pretrazivanje));
+                BrojKategorija = podaci.Count();
+            }
+            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
+            var rezultat = new PagedResult<SelectListItem>
+            {
+                Data = podaci.AsNoTracking().ToList(),
+                TotalItems = BrojKategorija,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
             TempData["naslov"] = "Svrha uplate";
             TempData["urlUredi"] = "/AdministratorModul/Uplate/SvrhaUplateUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Uplate/SvrhaUplateDodaj";
             TempData["urlObrisi"] = "/AdministratorModul/Uplate/SvrhaUplateObrisi";
-
-            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", podaci);
+            ViewData["Title"] = "SvrhaUplatePrikaz";
+            ViewData["Controller"] = "Uplate";
+            ViewData["Action"] = "SvrhaUplatePrikaz";
+            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", rezultat);
         }
 
         public IActionResult SvrhaUplateUredi(int Id)

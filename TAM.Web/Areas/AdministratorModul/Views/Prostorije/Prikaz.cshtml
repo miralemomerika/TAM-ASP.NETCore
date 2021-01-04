@@ -2,21 +2,35 @@
 @using TAM.Core
 
 @{
+    var Naslov = ViewData["Title"].ToString();
+    var Controller = ViewData["Controller"].ToString();
+    var Akcija = ViewData["Action"].ToString();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model List<Prostorija>
 
-<table class="table table-hover">
+@model cloudscribe.Pagination.Models.PagedResult<Prostorija>
+
+<br />
+<br />
+<br />
+<form asp-action="@Naslov" method="get">    
+    <div>
+        <input type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />       
+        <button type="submit" value="Search"><i class="fa fa-search"></i></button>
+    </div>
+</form>
+<br />
+<table class="table table-striped">
     <thead class="card-header">
         <tr align="center">
-            <td>Prostorija</td>
-            <td>Kapacitet</td>
-            <td>Akcija</td>
+            <th>Prostorija</th>
+            <th>Kapacitet</th>
+            <th>Akcija</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Data)
         {
             <tr align="center">
                 <td>@item.Naziv</td>
@@ -41,6 +55,10 @@
     Dodaj
 </button>
 
+
+<ul>
+    <partial name="_PaginationPartial" view-data="ViewData" model="Model" />
+</ul>
 @Html.Partial("_ModalPartial")
 
 <script>

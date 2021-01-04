@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cloudscribe.Pagination.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using TAM.Core;
+using TAM.Service.Classes;
 using TAM.Service.Interfaces;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
@@ -19,20 +23,37 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TipPolaznikaService = tipPolaznikaService;
         }
 
-        public IActionResult TipPolaznikaPrikaz()
+        public IActionResult TipPolaznikaPrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
         {
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            ViewBag.CurrentFilter = pretrazivanje;
             var podaci = TipPolaznikaService.GetAll().Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Naziv
-            }).ToList();
-
+            }).ToList().AsQueryable();
+            var BrojKategorija = podaci.Count();
+            if (!String.IsNullOrEmpty(pretrazivanje))
+            {
+                podaci = podaci.Where(x => x.Text.Contains(pretrazivanje));
+                BrojKategorija = podaci.Count();
+            }
+            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
+            var rezultat = new PagedResult<SelectListItem>
+            {
+                Data = podaci.AsNoTracking().ToList(),
+                TotalItems = BrojKategorija,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
             TempData["naslov"] = "Tip polaznika";
             TempData["urlUredi"] = "/AdministratorModul/Polaznici/TipPolaznikaUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Polaznici/TipPolaznikaDodaj";
             TempData["urlObrisi"] = "/AdministratorModul/Polaznici/TipPolaznikaObrisi";
-   
-            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", podaci);
+            ViewData["Title"] = "TipPolaznikaPrikaz";
+            ViewData["Controller"] = "Polaznici";
+            ViewData["Action"] = "TipPolaznikaPrikaz";
+            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", rezultat);
         }
 
         public IActionResult TipPolaznikaUredi(int Id)
