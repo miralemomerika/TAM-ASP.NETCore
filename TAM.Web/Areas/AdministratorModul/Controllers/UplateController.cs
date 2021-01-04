@@ -21,7 +21,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             SvrhaUplateService = svrhaUplateService;
         }
 
-        public IActionResult SvrhaUplatePrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
+        public IActionResult SvrhaUplatePrikaz(string pretrazivanje, int pageNumber = 1, 
+            int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
             ViewBag.CurrentFilter = pretrazivanje;

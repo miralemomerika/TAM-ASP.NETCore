@@ -20,7 +20,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ProstorijaService = prostorijaService;
         }
 
-        public IActionResult Prikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
+        public IActionResult Prikaz(string pretrazivanje, int pageNumber = 1, 
+            int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
             ViewBag.CurrentFilter = pretrazivanje;

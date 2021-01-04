@@ -21,7 +21,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         }
 
         
-        public IActionResult TipDogadjajaPrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
+        public IActionResult TipDogadjajaPrikaz(string pretrazivanje, int pageNumber = 1, 
+            int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
             ViewBag.CurrentFilter = pretrazivanje;

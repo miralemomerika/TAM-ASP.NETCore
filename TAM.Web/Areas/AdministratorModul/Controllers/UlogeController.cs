@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using cloudscribe.Pagination.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,10 +24,11 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             _roleManager = roleManager;
         }
 
-        public async Task<IActionResult> Index() 
+        public async Task<IActionResult> Index(string pretrazivanje, int pageNumber = 1, 
+            int pageSize = 5) 
         { 
-            var users = await _userManager.Users.ToListAsync(); 
-            var userRolesViewModel = new List<KorisnikUlogaVM>(); 
+            var users = await _userManager.Users.ToListAsync();
+            var userRolesViewModel = new List<KorisnikUlogaVM>();
 
             foreach (KorisnickiRacun user in users) 
             { 
@@ -37,8 +39,32 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 thisViewModel.LastName = user.LastName; 
                 thisViewModel.Roles = await GetUserRoles(user); 
                 userRolesViewModel.Add(thisViewModel); 
-            } 
-            return View(userRolesViewModel); 
+            }
+
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            ViewBag.CurrentFilter = pretrazivanje;
+            var BrojKategorija = userRolesViewModel.Count();
+            var upit = userRolesViewModel.AsQueryable();
+
+            if (!String.IsNullOrEmpty(pretrazivanje))
+            {
+                upit = upit.Where(x => x.FirstName.Contains(pretrazivanje));
+                BrojKategorija = userRolesViewModel.Count();
+            }
+            upit = upit.Skip(ExcludeRecords).Take(pageSize);
+
+            var rezultat = new PagedResult<KorisnikUlogaVM>
+            {
+                Data = upit.AsNoTracking().ToList(),
+                TotalItems = BrojKategorija,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            ViewData["Title"] = "Index";
+            ViewData["Controller"] = "Uloge";
+            ViewData["Action"] = "Index";
+            return View(rezultat); 
         }
 
         public async Task<IActionResult> Upravljanje(string userId) 

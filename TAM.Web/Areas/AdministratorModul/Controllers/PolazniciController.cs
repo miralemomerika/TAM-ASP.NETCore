@@ -23,7 +23,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TipPolaznikaService = tipPolaznikaService;
         }
 
-        public IActionResult TipPolaznikaPrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
+        public IActionResult TipPolaznikaPrikaz(string pretrazivanje, int pageNumber = 1, 
+            int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
             ViewBag.CurrentFilter = pretrazivanje;

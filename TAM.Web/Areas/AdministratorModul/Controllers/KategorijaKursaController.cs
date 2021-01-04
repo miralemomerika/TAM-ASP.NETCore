@@ -22,7 +22,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             KategorijaKursaService = kategorijaKursaService;
         }
        
-        public IActionResult KategorijaKursaPrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
+        public IActionResult KategorijaKursaPrikaz(string pretrazivanje, int pageNumber = 1, 
+            int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
             ViewBag.CurrentFilter = pretrazivanje;
