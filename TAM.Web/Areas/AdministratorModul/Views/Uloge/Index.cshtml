@@ -27,13 +27,11 @@
                 <td>@user.Email</td>
                 <td>@string.Join(" , ", user.Roles.ToList())</td>
                 <td>
-                    @*<a class="btn btn-primary" asp-controller="Uloge"
-                       asp-action="Manage" asp-route-userId="@user.UserId">
-                        Uredi
-                    </a>*@
 
-                    <button class="btn btn-primary" data-toggle="modal" 
-                            data-target="#exampleModalCenter" onclick="Uredi('@user.UserId')">Uredi</button>
+                    <button class="btn btn-primary" data-toggle="modal"
+                            data-target="#exampleModalCenter" onclick="Uredi('@user.UserId')">
+                        Uredi
+                    </button>
                 </td>
             </tr>
         }
