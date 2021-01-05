@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TAM.Core;
 using TAM.ViewModels;
+using TAM.Web.Helper;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
@@ -51,20 +52,11 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 upit = upit.Where(x => x.FirstName.Contains(pretrazivanje));
                 BrojKategorija = userRolesViewModel.Count();
             }
-            upit = upit.Skip(ExcludeRecords).Take(pageSize);
-
-            var rezultat = new PagedResult<KorisnikUlogaVM>
-            {
-                Data = upit.AsNoTracking().ToList(),
-                TotalItems = BrojKategorija,
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            };
 
             ViewData["Title"] = "Index";
             ViewData["Controller"] = "Uloge";
             ViewData["Action"] = "Index";
-            return View(rezultat); 
+            return View(PomocneMetode.Paginacija<KorisnikUlogaVM>(pretrazivanje, upit, pageNumber, pageSize)); 
         }
 
         public async Task<IActionResult> Upravljanje(string userId) 

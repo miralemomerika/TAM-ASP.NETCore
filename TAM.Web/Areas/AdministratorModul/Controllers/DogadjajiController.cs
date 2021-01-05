@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TAM.Service.Interfaces;
+using TAM.Web.Helper;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
@@ -37,14 +38,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 podaci = podaci.Where(x => x.Text.Contains(pretrazivanje));
                 BrojKategorija = podaci.Count();
             }
-            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
-            var rezultat = new PagedResult<SelectListItem>
-            {
-                Data = podaci.AsNoTracking().ToList(),
-                TotalItems = BrojKategorija,
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            };
+
             TempData["naslov"] = "Tip dogadjaja";
             TempData["urlUredi"] = "/AdministratorModul/Dogadjaji/TipDogadjajaUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Dogadjaji/TipDogadjajaDodaj";
@@ -52,7 +46,9 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ViewData["Title"] = "TipDogadjajaPrikaz";
             ViewData["Controller"] = "Dogadjaji";
             ViewData["Action"] = "TipDogadjajaPrikaz";
-            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", rezultat);
+
+            return View("/Areas/Shared/SelectListItemPrikaz.cshtml",
+                 PomocneMetode.Paginacija<SelectListItem>(pretrazivanje, podaci, pageNumber, pageSize));
         }
 
         public IActionResult TipDogadjajaUredi(int Id)

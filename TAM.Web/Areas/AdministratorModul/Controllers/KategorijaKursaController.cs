@@ -8,6 +8,7 @@ using TAM.Service.Interfaces;
 using TAM.Service.Classes;
 using cloudscribe.Pagination.Models;
 using Microsoft.EntityFrameworkCore;
+using TAM.Web.Helper;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
@@ -38,14 +39,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 podaci = podaci.Where(x => x.Text.Contains(pretrazivanje));
                 BrojKategorija = podaci.Count();
             }
-            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
-            var rezultat = new PagedResult<SelectListItem>
-            {
-                Data = podaci.AsNoTracking().ToList(),
-                TotalItems = BrojKategorija,
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            };
+
             TempData["naslov"] = "Kategorija kursa";
             TempData["urlUredi"] = "/AdministratorModul/KategorijaKursa/KategorijaKursaUredi";
             TempData["urlDodaj"] = "/AdministratorModul/KategorijaKursa/KategorijaKursaDodaj";
@@ -53,7 +47,9 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ViewData["Title"] = "KategorijaKursaPrikaz";
             ViewData["Controller"] = "KategorijaKursa";
             ViewData["Action"] = "KategorijaKursaPrikaz";
-            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", rezultat);
+
+            return View("/Areas/Shared/SelectListItemPrikaz.cshtml",
+                 PomocneMetode.Paginacija<SelectListItem>(pretrazivanje, podaci, pageNumber, pageSize));
         }
 
         public IActionResult KategorijaKursaUredi(int id)
