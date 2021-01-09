@@ -1,20 +1,29 @@
 ﻿@using TAM.Core
 
 @{
+    var Action = TempData["action"].ToString();
+    var NazivTeksta = TempData["nazivTeksta"].ToString();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @model Prostorija
 
-<form asp-action="Spasi" asp-controller="Prostorije">
+<form asp-action="@Action" asp-controller="Prostorije">
     <div class="modal-header" style="padding:1rem 0rem">
-        @if (Model.Id == 0)
+        @if (@NazivTeksta == "Potvrda")
         {
-            <h5 class="modal-title" id="exampleModalLongTitle">Dodaj</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">@NazivTeksta</h5>
         }
         else
         {
-            <h5 class="modal-title" id="exampleModalLongTitle">Uredi</h5>
+            @if (Model.Id == 0)
+            {
+                <h5 class="modal-title" id="exampleModalLongTitle">Dodaj</h5>
+            }
+            else
+            {
+                <h5 class="modal-title" id="exampleModalLongTitle">Uredi</h5>
+            }
         }
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -22,16 +31,28 @@
     </div>
     <br />
     <input asp-for="Id" value="@Model.Id" hidden />
+    @if (@NazivTeksta != "Potvrda")
+    {
+        <div class="form-group">
+            <label for="Naziv">Naziv:</label>
+            <input asp-for="Naziv" value="@Model.Naziv" type="text" class="form-control mb-3" />
+            <span asp-validation-for="Naziv" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="Naziv">Broj mjesta:</label>
+            <input asp-for="BrojMjesta" value="@Model.BrojMjesta" type="number" class="form-control mb-3" />
+            <span asp-validation-for="BrojMjesta" class="text-danger"></span>
+        </div>
+        <input type="submit" class="btn btn-primary float-right" value="Spremi" />
+    }
+    else
+    {
+        <div class="form-group">
+            <label for="Naziv"><strong>Jeste li sigurni da želite izbrisati ovaj zapis?</strong></label>
+            <input asp-for="Naziv" value="@Model.Naziv" type="text" class="form-control mb-3" disabled />
+        </div>
+        <input type="submit" class="btn btn-danger float-right" value="Obrisi" />
+    }
 
-    <div class="form-group">
-        <label for="Naziv">Naziv:</label>
-        <input asp-for="Naziv" value="@Model.Naziv" type="text" class="form-control mb-3" />
-        <span asp-validation-for="Naziv" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label for="Naziv">Broj mjesta:</label>
-        <input asp-for="BrojMjesta" value="@Model.BrojMjesta" type="number" class="form-control mb-3" />
-        <span asp-validation-for="BrojMjesta" class="text-danger"></span>
-    </div>
-    <input type="submit" class="btn btn-primary float-right mb-3 mt-3" value="Spremi" />
+
 </form>

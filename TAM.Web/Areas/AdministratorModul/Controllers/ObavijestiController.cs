@@ -43,7 +43,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["naslov"] = "Kategorija obavijesti";
             TempData["urlUredi"] = "/AdministratorModul/Obavijesti/KategorijaObavijestiUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Obavijesti/KategorijaObavijestiDodaj";
-            TempData["urlObrisi"] = "/AdministratorModul/Obavijesti/KategorijaObavijestiObrisi";
+            TempData["urlObrisi"] = "/AdministratorModul/Obavijesti/KategorijaObavijestiObrisiView";
             ViewData["Title"] = "KategorijaObavijestiPrikaz";
             ViewData["Controller"] = "Obavijesti";
             ViewData["Action"] = "KategorijaObavijestiPrikaz";
@@ -79,20 +79,35 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             if (kategorijaObavijesti.Value == "0")
             {
                 KategorijaObavijestiService.Add(new Core.KategorijaObavijesti { Naziv = kategorijaObavijesti.Text });
+                TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
             }
             else
             {
                 var uredi = KategorijaObavijestiService.GetById(Int32.Parse(kategorijaObavijesti.Value));
                 uredi.Naziv = kategorijaObavijesti.Text;
                 KategorijaObavijestiService.Update(uredi);
+                TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
             }
 
             return RedirectToAction("KategorijaObavijestiPrikaz");
         }
 
-        public IActionResult KategorijaObavijestiObrisi(int id)
+        public IActionResult KategorijaObavijestiObrisiView(int id)
         {
-            KategorijaObavijestiService.Delete(KategorijaObavijestiService.GetById(id));
+            var kategorijaObavijesti = KategorijaObavijestiService.GetById(id);
+
+            TempData["action"] = "Obrisi";
+            TempData["controller"] = "Obavijesti";
+            TempData["nazivTeksta"] = "Potvrda";
+
+            return View("/Areas/Shared/SelectListItemForma.cshtml",
+                new SelectListItem { Value = kategorijaObavijesti.Id.ToString(), Text = kategorijaObavijesti.Naziv });
+        }
+
+        public IActionResult Obrisi(SelectListItem kategorijaObavijesti)
+        {
+            KategorijaObavijestiService.Delete(KategorijaObavijestiService.GetById(Int32.Parse(kategorijaObavijesti.Value)));
+            TempData["deleted"] = "Obrisali ste kategoriju.";
 
             return RedirectToAction("KategorijaObavijestiPrikaz");
         }

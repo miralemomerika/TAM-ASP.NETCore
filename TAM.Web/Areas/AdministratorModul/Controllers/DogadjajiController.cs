@@ -42,7 +42,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["naslov"] = "Tip dogadjaja";
             TempData["urlUredi"] = "/AdministratorModul/Dogadjaji/TipDogadjajaUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Dogadjaji/TipDogadjajaDodaj";
-            TempData["urlObrisi"] = "/AdministratorModul/Dogadjaji/TipDogadjajaObrisi";
+            TempData["urlObrisi"] = "/AdministratorModul/Dogadjaji/TipDogadjajaObrisiView";
             ViewData["Title"] = "TipDogadjajaPrikaz";
             ViewData["Controller"] = "Dogadjaji";
             ViewData["Action"] = "TipDogadjajaPrikaz";
@@ -58,6 +58,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["action"] = "TipDogadjajaSpasi";
             TempData["controller"] = "Dogadjaji";
             TempData["nazivTeksta"] = "Tip dogadjaja";
+
             return View("/Areas/Shared/SelectListItemForma.cshtml",
                 new SelectListItem { Value = TipDogadjaja.Id.ToString(), Text = TipDogadjaja.Naziv });
         }
@@ -67,6 +68,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["action"] = "TipDogadjajaSpasi";
             TempData["controller"] = "Dogadjaji";
             TempData["nazivTeksta"] = "Tip dogadjaja";
+
             return View("/Areas/Shared/SelectListItemForma.cshtml",
                 new SelectListItem { Value = "0" });
         }
@@ -76,19 +78,35 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             if (TipDogadjaja.Value == "0")
             {
                 TipDogadjajaService.Add(new Core.TipDogadjaja { Naziv = TipDogadjaja.Text });
+                TempData["successAdd"] = "Uspješno ste dodali događaj.";
             }
             else
             {
                 var uredi = TipDogadjajaService.GetById(Int32.Parse(TipDogadjaja.Value));
                 uredi.Naziv = TipDogadjaja.Text;
                 TipDogadjajaService.Update(uredi);
+                TempData["successUpdate"] = "Uspješno ste uredili događaj.";
             }
             return RedirectToAction("TipDogadjajaPrikaz");
         }
 
-        public IActionResult TipDogadjajaObrisi(int Id)
+        public IActionResult TipDogadjajaObrisiView(int Id)
         {
-            TipDogadjajaService.Delete(TipDogadjajaService.GetById(Id));
+            var TipDogadjaja = TipDogadjajaService.GetById(Id);
+
+            TempData["action"] = "Obrisi";
+            TempData["controller"] = "Dogadjaji";
+            TempData["nazivTeksta"] = "Potvrda";
+
+            return View("/Areas/Shared/SelectListItemForma.cshtml",
+                new SelectListItem { Value = TipDogadjaja.Id.ToString(), Text = TipDogadjaja.Naziv });
+        }
+
+        public IActionResult Obrisi(SelectListItem TipDogadjaja)
+        {
+            TipDogadjajaService.Delete(TipDogadjajaService.GetById(Int32.Parse(TipDogadjaja.Value)));
+            TempData["deleted"] = "Obrisali ste događaj.";
+
             return RedirectToAction("TipDogadjajaPrikaz");
         }
     }

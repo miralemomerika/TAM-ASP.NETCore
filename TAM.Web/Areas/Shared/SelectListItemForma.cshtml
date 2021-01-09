@@ -1,7 +1,7 @@
 ﻿@{
     var Action = TempData["action"].ToString();
     var Controller = TempData["controller"].ToString();
-    var NazivTeksta = TempData["nazivTeksta"].ToString();   
+    var NazivTeksta = TempData["nazivTeksta"].ToString();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,23 +11,42 @@
 
 <form asp-action="@Action" asp-controller="@Controller">
     <div class="modal-header" style="padding:1rem 0rem">
-        @if (Model.Value == "0")
+        @if (@NazivTeksta == "Potvrda")
         {
-            <h5 class="modal-title" id="exampleModalLongTitle">Dodaj</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">@NazivTeksta</h5>
         }
         else
         {
-            <h5 class="modal-title" id="exampleModalLongTitle">Uredi</h5>
+            @if (Model.Value == "0")
+            {
+                <h5 class="modal-title" id="exampleModalLongTitle">Dodaj</h5>
+            }
+            else
+            {
+                <h5 class="modal-title" id="exampleModalLongTitle">Uredi</h5>
+            }
         }
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <br />
-    <input asp-for="Value" value="@Model.Value" hidden />
-    <label for="Text">@NazivTeksta</label>
-    <input id="Naziv" asp-for="Text" value="@Model.Text" type="text" class="form-control mb-3" onkeyup="validateEntry()"/>
-    <input type="submit" class="btn btn-primary float-right mb-3 mt-3" value="Spremi" />
+    @if (@NazivTeksta != "Potvrda")
+    {
+        <input asp-for="Value" value="@Model.Value" hidden />
+        <input id="delete" name="delete" value="0" hidden />
+        <label for="Text">@NazivTeksta</label>
+        <input id="Naziv" asp-for="Text" value="@Model.Text" type="text" class="form-control mb-3" onkeyup="validateEntry()" />
+        <input id="Submit" type="submit" class="btn btn-primary float-right" value="Spremi" onsubmit="$('form').submit()" />
+    }
+    else
+    {
+        <input asp-for="Value" value="@Model.Value" hidden />
+        <input id="delete" name="delete" value="1" hidden />
+        <label for="Text"><strong>Jeste li sigurni da želite izbrisati ovaj zapis?</strong></label>
+        <input asp-for="Text" value="@Model.Text" type="text" class="form-control mb-3" disabled />
+        <input type="submit" class="btn btn-danger float-right" value="Obrisi" onsubmit="$('form').submit()" />
+    }
 </form>
 <script>
 
@@ -59,10 +78,15 @@
     $("form").submit(function () {
 
         validateEntry();
-        if (submit)
+
+        if ($('#delete').val() == "1")
             return true;
-        else
-            return false;
+        else {
+            if (submit)
+                return true
+            else
+                return false;
+        }
     });
 
 </script>
