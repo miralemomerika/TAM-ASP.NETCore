@@ -11,18 +11,45 @@
 
 @model cloudscribe.Pagination.Models.PagedResult<SelectListItem>
 
-<br/>
-<br/>
-<br/>
+<br />
+<br />
+<br />
 <form asp-action="@Naslov2" method="get">
     <div>
-        <input type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi"/>
+        <input type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
         <button type="submit" value="Search"><i class="fa fa-search"></i></button>
     </div>
 </form>
 
 <br />
-<table class="table table-striped">
+@if (TempData["deleted"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["deleted"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successAdd"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successAdd"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successUpdate"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successUpdate"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<table id="Table" class="table table-striped">
     <thead class="card-header">
         <tr align="center">
             <th>@Naslov</th>
@@ -39,8 +66,9 @@
                             data-toggle="modal" data-target="#exampleModalCenter">
                         Uredi
                     </button>
-                    <button class="btn btn-danger"
-                            onclick="location.href='@UrlObrisi?Id=@item.Value'">
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter"
+                            @* onclick="location.href='@UrlObrisi?Id=@item.Value'">*@
+                            onclick="AjaxForma(@item.Value, '@UrlObrisi')">
                         Obrisi
                     </button>
                 </td>
@@ -60,12 +88,22 @@
 @Html.Partial("_ModalPartial")
 
 <script>
-    function AjaxForma(Id, Url) {
+    function AjaxForma(Id, Url, del) {
         var url = Url + "?Id=" + Id;
         $.get(url, function (res) {
             $("#forma").html(res);
         });
     }
+
+    function remove(el) {
+        $(el).parent().remove();
+    }
+
+    setTimeout(function () {
+        if ($('#alert').length > 0) {
+            $('#alert').remove();
+        }
+    }, 3000)
 </script>
 
 

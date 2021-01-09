@@ -16,12 +16,12 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
     {
 
         readonly IKategorijaKursaService KategorijaKursaService;
-       
-        public KategorijaKursaController (IKategorijaKursaService kategorijaKursaService)
+
+        public KategorijaKursaController(IKategorijaKursaService kategorijaKursaService)
         {
             KategorijaKursaService = kategorijaKursaService;
         }
-       
+
         public IActionResult KategorijaKursaPrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
@@ -48,7 +48,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["naslov"] = "Kategorija kursa";
             TempData["urlUredi"] = "/AdministratorModul/KategorijaKursa/KategorijaKursaUredi";
             TempData["urlDodaj"] = "/AdministratorModul/KategorijaKursa/KategorijaKursaDodaj";
-            TempData["urlObrisi"] = "/AdministratorModul/KategorijaKursa/KategorijaKursaObrisi";
+            TempData["urlObrisi"] = "/AdministratorModul/KategorijaKursa/KategorijaKursaObrisiView";
             ViewData["Title"] = "KategorijaKursaPrikaz";
             ViewData["Controller"] = "KategorijaKursa";
             ViewData["Action"] = "KategorijaKursaPrikaz";
@@ -79,23 +79,38 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult KategorijaKursaSpasi(SelectListItem kategorijaKursa)
         {
-            if(kategorijaKursa.Value == "0")
+            if (kategorijaKursa.Value == "0")
             {
                 KategorijaKursaService.Add(new Core.KategorijaKursa { Naziv = kategorijaKursa.Text });
+                TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
             }
             else
             {
                 var uredi = KategorijaKursaService.GetById(Int32.Parse(kategorijaKursa.Value));
                 uredi.Naziv = kategorijaKursa.Text;
                 KategorijaKursaService.Update(uredi);
+                TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
             }
 
             return RedirectToAction("KategorijaKursaPrikaz");
         }
 
-        public IActionResult KategorijaKursaObrisi(int id)
+        public IActionResult KategorijaKursaObrisiView(int id)
         {
-            KategorijaKursaService.Delete(KategorijaKursaService.GetById(id));
+            var kategorijaKursa = KategorijaKursaService.GetById(id);
+
+            TempData["action"] = "Obrisi";
+            TempData["controller"] = "KategorijaKursa";
+            TempData["nazivTeksta"] = "Potvrda";
+
+            return View("/Areas/Shared/SelectListItemForma.cshtml",
+                new SelectListItem { Value = kategorijaKursa.Id.ToString(), Text = kategorijaKursa.Naziv });
+        }
+
+        public IActionResult Obrisi(SelectListItem kategorijaKursa)
+        {
+            KategorijaKursaService.Delete(KategorijaKursaService.GetById(Int32.Parse(kategorijaKursa.Value)));
+            TempData["deleted"] = "Obrisali ste kategoriju.";
 
             return RedirectToAction("KategorijaKursaPrikaz");
         }

@@ -49,7 +49,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["naslov"] = "Tip polaznika";
             TempData["urlUredi"] = "/AdministratorModul/Polaznici/TipPolaznikaUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Polaznici/TipPolaznikaDodaj";
-            TempData["urlObrisi"] = "/AdministratorModul/Polaznici/TipPolaznikaObrisi";
+            TempData["urlObrisi"] = "/AdministratorModul/Polaznici/TipPolaznikaObrisiView";
             ViewData["Title"] = "TipPolaznikaPrikaz";
             ViewData["Controller"] = "Polaznici";
             ViewData["Action"] = "TipPolaznikaPrikaz";
@@ -63,6 +63,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["action"] = "TipPolaznikaSpasi";
             TempData["controller"] = "Polaznici";
             TempData["nazivTeksta"] = "Tip polaznika";
+
             return View("/Areas/Shared/SelectListItemForma.cshtml",
                 new SelectListItem { Value = tipPolaznika.Id.ToString(), Text = tipPolaznika.Naziv });
         }
@@ -72,6 +73,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["action"] = "TipPolaznikaSpasi";
             TempData["controller"] = "Polaznici";
             TempData["nazivTeksta"] = "Tip polaznika";
+
             return View("/Areas/Shared/SelectListItemForma.cshtml",
                 new SelectListItem { Value = "0" });
         }
@@ -81,19 +83,35 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             if (tipPolaznika.Value == "0")
             {
                 TipPolaznikaService.Add(new Core.TipPolaznika { Naziv = tipPolaznika.Text });
+                TempData["successAdd"] = "Uspješno ste dodali tip polaznika.";
             }
             else
             {
                 var uredi = TipPolaznikaService.GetById(Int32.Parse(tipPolaznika.Value));
                 uredi.Naziv = tipPolaznika.Text;
                 TipPolaznikaService.Update(uredi);
+                TempData["successUpdate"] = "Uspješno ste uredili tip polaznika.";
             }
             return RedirectToAction("TipPolaznikaPrikaz");
         }
 
-        public IActionResult TipPolaznikaObrisi(int Id)
+        public IActionResult TipPolaznikaObrisiView(int Id)
         {
-            TipPolaznikaService.Delete(TipPolaznikaService.GetById(Id));
+            var tipPolaznika = TipPolaznikaService.GetById(Id);
+
+            TempData["action"] = "Obrisi";
+            TempData["controller"] = "Polaznici";
+            TempData["nazivTeksta"] = "Potvrda";
+
+            return View("/Areas/Shared/SelectListItemForma.cshtml",
+                new SelectListItem { Value = tipPolaznika.Id.ToString(), Text = tipPolaznika.Naziv });
+        }
+
+        public IActionResult Obrisi(SelectListItem tipPolaznika)
+        {
+            TipPolaznikaService.Delete(TipPolaznikaService.GetById(Int32.Parse(tipPolaznika.Value)));
+            TempData["deleted"] = "Obrisali ste tip polaznika.";
+
             return RedirectToAction("TipPolaznikaPrikaz");
         }
     }

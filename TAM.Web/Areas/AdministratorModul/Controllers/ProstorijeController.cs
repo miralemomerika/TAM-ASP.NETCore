@@ -41,35 +41,53 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             };
             ViewData["Title"] = "Prikaz";
             ViewData["Controller"] = "Prostorije";
-            ViewData["Action"] = "Prikaz";       
+            ViewData["Action"] = "Prikaz";
             return View(rezultat);
         }
 
         public IActionResult Dodaj()
         {
+            TempData["action"] = "Spasi";
+            TempData["nazivTeksta"] = "Dodaj prostoriju";
+
             return View("Forma", new Prostorija { Id = 0 });
         }
 
         public IActionResult Uredi(int Id)
         {
+            TempData["action"] = "Spasi";
+            TempData["nazivTeksta"] = "Uredi prostoriju";
+
             return View("Forma", ProstorijaService.GetById(Id));
         }
 
-        public IActionResult Obrisi(int Id)
+        public IActionResult ObrisiView(int Id)
         {
-            ProstorijaService.Delete(ProstorijaService.GetById(Id));
+            TempData["action"] = "Obrisi";
+            TempData["nazivTeksta"] = "Potvrda";
+
+            return View("Forma", ProstorijaService.GetById(Id));
+        }
+
+        public IActionResult Obrisi(Prostorija prostorija)
+        {
+            ProstorijaService.Delete(prostorija);
+            TempData["deleted"] = "Obrisali ste prostoriju.";
+
             return RedirectToAction("Prikaz");
         }
 
         public IActionResult Spasi(Prostorija prostorija)
         {
-            if(prostorija.Id == 0)
+            if (prostorija.Id == 0)
             {
                 ProstorijaService.Add(prostorija);
+                TempData["successAdd"] = "Uspješno ste dodali prostoriju.";
             }
             else
             {
                 ProstorijaService.Update(prostorija);
+                TempData["successUpdate"] = "Uspješno ste uredili prostoriju.";
             }
             return RedirectToAction("Prikaz");
         }

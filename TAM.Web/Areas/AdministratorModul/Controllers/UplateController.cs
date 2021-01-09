@@ -47,7 +47,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["naslov"] = "Svrha uplate";
             TempData["urlUredi"] = "/AdministratorModul/Uplate/SvrhaUplateUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Uplate/SvrhaUplateDodaj";
-            TempData["urlObrisi"] = "/AdministratorModul/Uplate/SvrhaUplateObrisi";
+            TempData["urlObrisi"] = "/AdministratorModul/Uplate/SvrhaUplateObrisiView";
             ViewData["Title"] = "SvrhaUplatePrikaz";
             ViewData["Controller"] = "Uplate";
             ViewData["Action"] = "SvrhaUplatePrikaz";
@@ -61,8 +61,9 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TempData["action"] = "SvrhaUplateSpasi";
             TempData["controller"] = "Uplate";
             TempData["nazivTeksta"] = "Svrha uplate";
-            return View("/Areas/Shared/SelectListItemForma.cshtml", 
-                new SelectListItem { Value=svrha.Id.ToString(), Text=svrha.Svrha });
+
+            return View("/Areas/Shared/SelectListItemForma.cshtml",
+                new SelectListItem { Value = svrha.Id.ToString(), Text = svrha.Svrha });
         }
 
         public IActionResult SvrhaUplateDodaj()
@@ -80,22 +81,36 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             if (svrha.Value == "0")
             {
                 SvrhaUplateService.Add(new Core.SvrhaUplate { Svrha = svrha.Text });
+                TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
             }
             else
             {
                 var uredi = SvrhaUplateService.GetById(Int32.Parse(svrha.Value));
                 uredi.Svrha = svrha.Text;
                 SvrhaUplateService.Update(uredi);
+                TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
             }
             return RedirectToAction("SvrhaUplatePrikaz");
         }
 
-        public IActionResult SvrhaUplateObrisi(int Id)
+        public IActionResult SvrhaUplateObrisiView(int Id)
         {
-            SvrhaUplateService.Delete(SvrhaUplateService.GetById(Id));
-            return RedirectToAction("SvrhaUplatePrikaz");
+            var svrha = SvrhaUplateService.GetById(Id);
+
+            TempData["action"] = "Obrisi";
+            TempData["controller"] = "Uplate";
+            TempData["nazivTeksta"] = "Potvrda";
+
+            return View("/Areas/Shared/SelectListItemForma.cshtml",
+                new SelectListItem { Value = svrha.Id.ToString(), Text = svrha.Svrha });
         }
 
+        public IActionResult Obrisi(SelectListItem svrha)
+        {
+            SvrhaUplateService.Delete(SvrhaUplateService.GetById(Int32.Parse(svrha.Value)));
+            TempData["deleted"] = "Obrisali ste kategoriju.";
 
+            return RedirectToAction("SvrhaUplatePrikaz");
+        }
     }
 }

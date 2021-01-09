@@ -14,13 +14,40 @@
 <br />
 <br />
 <br />
-<form asp-action="@Naslov" method="get">    
+<form asp-action="@Naslov" method="get">
     <div>
-        <input type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />       
+        <input type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
         <button type="submit" value="Search"><i class="fa fa-search"></i></button>
     </div>
 </form>
 <br />
+@if (TempData["deleted"] != null)
+{
+    <div id="alert" class="alert alert-danger" role="alert">
+        @TempData["deleted"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successAdd"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successAdd"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successUpdate"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successUpdate"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 <table class="table table-striped">
     <thead class="card-header">
         <tr align="center">
@@ -40,8 +67,8 @@
                             data-toggle="modal" data-target="#exampleModalCenter">
                         Uredi
                     </button>
-                    <button class="btn btn-danger"
-                            onclick="location.href='/AdministratorModul/Prostorije/Obrisi?Id=@item.Id'">
+                    <button class="btn btn-danger" onclick="Obrisi(@item.Id)"
+                            data-toggle="modal" data-target="#exampleModalCenter">
                         Obrisi
                     </button>
                 </td>
@@ -73,4 +100,20 @@
             $("#forma").html(res);
         })
     }
+
+    function Obrisi(Id, url) {
+        $.get("/AdministratorModul/Prostorije/ObrisiView?Id=" + Id, function (res) {
+            $("#forma").html(res);
+        })
+    }
+
+    function remove(el) {
+        $(el).parent().remove();
+    }
+
+    setTimeout(function () {
+        if ($('#alert').length > 0) {
+            $('#alert').remove();
+        }
+    }, 5000)
 </script>
