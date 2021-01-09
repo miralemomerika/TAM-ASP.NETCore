@@ -11,13 +11,10 @@
 
 @model cloudscribe.Pagination.Models.PagedResult<Prostorija>
 
-<br />
-<br />
-<br />
-<form asp-action="@Naslov" method="get">
+<form asp-action="@Naslov" method="get" class="mt-3 mb-3">
     <div>
-        <input type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
-        <button type="submit" value="Search"><i class="fa fa-search"></i></button>
+        <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
+        <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
     </div>
 </form>
 <br />
@@ -77,16 +74,15 @@
     </tbody>
 </table>
 
-<button class="btn btn-dark float-right"
-        data-toggle="modal" data-target="#exampleModalCenter" onclick="Dodaj()">
-    Dodaj
-</button>
+<div style="text-align: end; margin-bottom: 25px;">
+    <button class="btn btn-dark"
+            data-toggle="modal" data-target="#exampleModalCenter" onclick="Dodaj()">
+        Dodaj
+    </button>
+</div>
 
-
-<ul>
-    <partial name="_PaginationPartial" view-data="ViewData" model="Model" />
-</ul>
-@Html.Partial("_ModalPartial")
+<partial name="_PaginationPartial" view-data="ViewData" model="Model" />
+<partial name="_ModalPartial" />
 
 <script>
     function Uredi(Id, url) {
@@ -117,3 +113,9 @@
         }
     }, 5000)
 </script>
+
+<style>
+    ul{
+        justify-content: center;
+    }
+</style>

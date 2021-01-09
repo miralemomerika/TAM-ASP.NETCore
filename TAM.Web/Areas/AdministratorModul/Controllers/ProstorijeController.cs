@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TAM.Core;
 using TAM.Service.Interfaces;
+using TAM.Web.Helper;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
@@ -20,7 +21,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ProstorijaService = prostorijaService;
         }
 
-        public IActionResult Prikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
+        public IActionResult Prikaz(string pretrazivanje, int pageNumber = 1, 
+            int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
             ViewBag.CurrentFilter = pretrazivanje;
@@ -31,18 +33,12 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 podaci = podaci.Where(x => x.Naziv.Contains(pretrazivanje));
                 BrojKategorija = podaci.Count();
             }
-            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
-            var rezultat = new PagedResult<Prostorija>
-            {
-                Data = podaci.AsNoTracking().ToList(),
-                TotalItems = BrojKategorija,
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            };
+
             ViewData["Title"] = "Prikaz";
             ViewData["Controller"] = "Prostorije";
-            ViewData["Action"] = "Prikaz";
-            return View(rezultat);
+            ViewData["Action"] = "Prikaz";       
+
+            return View(PomocneMetode.Paginacija<Prostorija>(pretrazivanje, podaci, pageNumber, pageSize));
         }
 
         public IActionResult Dodaj()

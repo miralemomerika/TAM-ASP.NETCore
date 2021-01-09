@@ -52,6 +52,11 @@ namespace TAM.Web.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            [Phone]
+            [Display(Name = "Phone number")]
+            public string PhoneNumber { get; set; }
+
+            [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -83,7 +88,8 @@ namespace TAM.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new KorisnickiRacun { UserName = Input.Email, Email = Input.Email,
-                FirstName = Input.FirstName, LastName = Input.LastName };
+                FirstName = Input.FirstName, LastName = Input.LastName,
+                PhoneNumber = Input.PhoneNumber };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

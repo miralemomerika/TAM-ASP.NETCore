@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TAM.Core;
 using TAM.Service.Classes;
 using TAM.Service.Interfaces;
+using TAM.Web.Helper;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
@@ -23,7 +24,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             TipPolaznikaService = tipPolaznikaService;
         }
 
-        public IActionResult TipPolaznikaPrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
+        public IActionResult TipPolaznikaPrikaz(string pretrazivanje, int pageNumber = 1, 
+            int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
             ViewBag.CurrentFilter = pretrazivanje;
@@ -38,14 +40,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 podaci = podaci.Where(x => x.Text.Contains(pretrazivanje));
                 BrojKategorija = podaci.Count();
             }
-            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
-            var rezultat = new PagedResult<SelectListItem>
-            {
-                Data = podaci.AsNoTracking().ToList(),
-                TotalItems = BrojKategorija,
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            };
+
             TempData["naslov"] = "Tip polaznika";
             TempData["urlUredi"] = "/AdministratorModul/Polaznici/TipPolaznikaUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Polaznici/TipPolaznikaDodaj";
@@ -53,7 +48,9 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ViewData["Title"] = "TipPolaznikaPrikaz";
             ViewData["Controller"] = "Polaznici";
             ViewData["Action"] = "TipPolaznikaPrikaz";
-            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", rezultat);
+
+            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", 
+                PomocneMetode.Paginacija<SelectListItem>(pretrazivanje, podaci, pageNumber, pageSize));
         }
 
         public IActionResult TipPolaznikaUredi(int Id)

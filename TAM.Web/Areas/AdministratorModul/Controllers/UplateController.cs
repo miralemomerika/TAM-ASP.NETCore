@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TAM.Service.Classes;
 using TAM.Service.Interfaces;
+using TAM.Web.Helper;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
@@ -21,7 +22,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             SvrhaUplateService = svrhaUplateService;
         }
 
-        public IActionResult SvrhaUplatePrikaz(string pretrazivanje, int pageNumber = 1, int pageSize = 3)
+        public IActionResult SvrhaUplatePrikaz(string pretrazivanje, int pageNumber = 1, 
+            int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
             ViewBag.CurrentFilter = pretrazivanje;
@@ -36,14 +38,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 podaci = podaci.Where(x => x.Text.Contains(pretrazivanje));
                 BrojKategorija = podaci.Count();
             }
-            podaci = podaci.Skip(ExcludeRecords).Take(pageSize);
-            var rezultat = new PagedResult<SelectListItem>
-            {
-                Data = podaci.AsNoTracking().ToList(),
-                TotalItems = BrojKategorija,
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            };
+
             TempData["naslov"] = "Svrha uplate";
             TempData["urlUredi"] = "/AdministratorModul/Uplate/SvrhaUplateUredi";
             TempData["urlDodaj"] = "/AdministratorModul/Uplate/SvrhaUplateDodaj";
@@ -51,7 +46,9 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ViewData["Title"] = "SvrhaUplatePrikaz";
             ViewData["Controller"] = "Uplate";
             ViewData["Action"] = "SvrhaUplatePrikaz";
-            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", rezultat);
+
+            return View("/Areas/Shared/SelectListItemPrikaz.cshtml", 
+                PomocneMetode.Paginacija<SelectListItem>(pretrazivanje, podaci, pageNumber, pageSize));
         }
 
         public IActionResult SvrhaUplateUredi(int Id)

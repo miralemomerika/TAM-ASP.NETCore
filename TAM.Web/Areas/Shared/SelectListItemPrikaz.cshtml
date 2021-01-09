@@ -11,13 +11,10 @@
 
 @model cloudscribe.Pagination.Models.PagedResult<SelectListItem>
 
-<br />
-<br />
-<br />
-<form asp-action="@Naslov2" method="get">
+<form asp-action="@Naslov2" method="get" class="mb-3 mt-3">
     <div>
-        <input type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
-        <button type="submit" value="Search"><i class="fa fa-search"></i></button>
+        <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi"/>
+        <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
     </div>
 </form>
 
@@ -77,18 +74,21 @@
     </tbody>
 </table>
 
-<button class="btn btn-dark float-right" onclick="AjaxForma(0, '@UrlDodaj')"
-        data-toggle="modal" data-target="#exampleModalCenter">
-    Dodaj
-</button>
+<div style="text-align: end; margin-bottom: 25px;">
+    <button class="btn btn-dark" onclick="AjaxForma(0, '@UrlDodaj')"
+            data-toggle="modal" data-target="#exampleModalCenter">
+        Dodaj
+    </button>
+</div>
 
-<ul>
+<ul style="display: flex; flex-direction: column">
     <partial name="_PaginationPartial" view-data="ViewData" model="Model" />
 </ul>
-@Html.Partial("_ModalPartial")
+
+<partial name="_ModalPartial" />
 
 <script>
-    function AjaxForma(Id, Url, del) {
+    function AjaxForma(Id, Url) {
         var url = Url + "?Id=" + Id;
         $.get(url, function (res) {
             $("#forma").html(res);
@@ -106,4 +106,8 @@
     }, 3000)
 </script>
 
-
+<style>
+    ul {
+        justify-content: center;
+    }
+</style>

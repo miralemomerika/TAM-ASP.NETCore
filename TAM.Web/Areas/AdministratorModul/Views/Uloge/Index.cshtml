@@ -1,14 +1,22 @@
 ﻿@using TAM.ViewModels
 
 @{
-    ViewData["Title"] = "Index";
+    var Naslov = ViewData["Title"].ToString();
+    var Controller = ViewData["Controller"].ToString();
+    var Akcija = ViewData["Action"].ToString();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model List<KorisnikUlogaVM>
+@model cloudscribe.Pagination.Models.PagedResult<KorisnikUlogaVM>
 
-<h1>Uloge</h1>
-<table class="table table-hover">
+<form asp-action="@Naslov" method="get" class="mb-3 mt-3">
+    <div>
+        <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
+        <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
+    </div>
+</form>
+
+<table class="table table-hover mb-5">
     <thead class="card-header">
         <tr>
             <th>Ime</th>
@@ -19,7 +27,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model)
+        @foreach (var user in Model.Data)
         {
             <tr>
                 <td>@user.FirstName</td>
@@ -38,15 +46,9 @@
     </tbody>
 </table>
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
 
-            <div id="forma" class="modal-body">
-            </div>
-        </div>
-    </div>
-</div>
+<partial name="_PaginationPartial" view-data="ViewData" model="Model" />
+<partial name="_ModalPartial" />
 
 <script>
     function Uredi(userId) {
@@ -55,3 +57,9 @@
         })
     }
 </script>
+
+<style>
+    ul {
+        justify-content: center;
+    }
+</style>
