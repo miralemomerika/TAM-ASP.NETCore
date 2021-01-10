@@ -13,7 +13,7 @@
 
 <form asp-action="@Naslov2" method="get" class="mb-3 mt-3">
     <div>
-        <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi"/>
+        <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
         <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
     </div>
 </form>
@@ -32,6 +32,15 @@
 {
     <div id="alert" class="alert alert-success" role="alert">
         @TempData["successAdd"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["exception"] != null)
+{
+    <div id="alert" class="alert alert-danger" role="alert">
+        @TempData["exception"].ToString()
         <button type="button" class="close" aria-label="Close" onclick="remove(this)">
             <span aria-hidden="true">&times;</span>
         </button>

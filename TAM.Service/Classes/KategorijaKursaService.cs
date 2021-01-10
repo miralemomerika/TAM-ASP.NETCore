@@ -19,27 +19,65 @@ namespace TAM.Service.Classes
 
         public void Add(KategorijaKursa kategorijaKursa)
         {
-            KategorijaKursaRepository.Add(kategorijaKursa);
+            try
+            {
+                KategorijaKursaRepository.Add(kategorijaKursa);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void Delete(KategorijaKursa kategorijaKursa)
         {
-            KategorijaKursaRepository.Delete(kategorijaKursa);
+            try
+            {
+                KategorijaKursaRepository.Delete(kategorijaKursa);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public IEnumerable<KategorijaKursa> GetAll()
         {
-            return KategorijaKursaRepository.GetAll();
+            try
+            {
+                return KategorijaKursaRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
 
         public KategorijaKursa GetById(int id)
         {
-            return KategorijaKursaRepository.GetById(id);
+            try
+            {
+                return KategorijaKursaRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void Update(KategorijaKursa kategorijaKursa)
         {
-            KategorijaKursaRepository.Update(kategorijaKursa);
+            try
+            {
+                KategorijaKursaRepository.Update(kategorijaKursa);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

@@ -18,27 +18,63 @@ namespace TAM.Service.Classes
 
         public IEnumerable<SvrhaUplate> GetAll()
         {
-            return SvrhaUplateRepository.GetAll();
+            try
+            {
+                return SvrhaUplateRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public SvrhaUplate GetById(int Id)
         {
-            return SvrhaUplateRepository.GetById(Id);
+            try
+            {
+                return SvrhaUplateRepository.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void Update(SvrhaUplate svrha)
         {
-            SvrhaUplateRepository.Update(svrha);
+            try
+            {
+                SvrhaUplateRepository.Update(svrha);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void Delete(SvrhaUplate svrha)
         {
-            SvrhaUplateRepository.Delete(svrha);
+            try
+            {
+                SvrhaUplateRepository.Delete(svrha);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void Add(SvrhaUplate svrha)
         {
-            SvrhaUplateRepository.Add(svrha);
+            try
+            {
+                SvrhaUplateRepository.Add(svrha);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

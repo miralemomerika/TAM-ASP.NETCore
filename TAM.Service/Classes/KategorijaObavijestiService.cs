@@ -11,7 +11,6 @@ namespace TAM.Service.Classes
     {
 
         readonly IRepository<KategorijaObavijesti> KategorijaObavijestiRepository;
-
         public KategorijaObavijestiService(IRepository<KategorijaObavijesti> repository)
         {
             KategorijaObavijestiRepository = repository;
@@ -19,27 +18,68 @@ namespace TAM.Service.Classes
 
         public void Add(KategorijaObavijesti kategorijaObavijesti)
         {
-            KategorijaObavijestiRepository.Add(kategorijaObavijesti);
+            try
+            {
+                KategorijaObavijestiRepository.Add(kategorijaObavijesti);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public void Delete(KategorijaObavijesti kategorijaObavijesti)
         {
-            KategorijaObavijestiRepository.Delete(kategorijaObavijesti);
+            try
+            {
+                KategorijaObavijestiRepository.Delete(kategorijaObavijesti);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public IEnumerable<KategorijaObavijesti> GetAll()
         {
-            return KategorijaObavijestiRepository.GetAll();
+            try
+            {
+                return KategorijaObavijestiRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public KategorijaObavijesti GetById(int id)
         {
-            return KategorijaObavijestiRepository.GetById(id);
+
+            try
+            {
+                return KategorijaObavijestiRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public void Update(KategorijaObavijesti kategorijaObavijesti)
         {
-            KategorijaObavijestiRepository.Update(kategorijaObavijesti);
+
+            try
+            {
+                KategorijaObavijestiRepository.Update(kategorijaObavijesti);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

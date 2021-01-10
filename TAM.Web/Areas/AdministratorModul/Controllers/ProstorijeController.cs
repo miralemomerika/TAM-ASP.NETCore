@@ -16,9 +16,11 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
     public class ProstorijeController : Controller
     {
         readonly IProstorijaService ProstorijaService;
-        public ProstorijeController(IProstorijaService prostorijaService)
+        readonly IExceptionHandlerService ExceptionHandlerService;
+        public ProstorijeController(IProstorijaService prostorijaService, IExceptionHandlerService exceptionHandlerService)
         {
             ProstorijaService = prostorijaService;
+            ExceptionHandlerService = exceptionHandlerService;
         }
 
         public IActionResult Prikaz(string pretrazivanje, int pageNumber = 1, 
@@ -53,37 +55,75 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         {
             TempData["action"] = "Spasi";
             TempData["nazivTeksta"] = "Uredi prostoriju";
-
-            return View("Forma", ProstorijaService.GetById(Id));
+            Prostorija prostorija;
+            try
+            {
+                prostorija = ProstorijaService.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("Prikaz");
+            }
+            return View("Forma", prostorija);
         }
 
         public IActionResult ObrisiView(int Id)
         {
             TempData["action"] = "Obrisi";
             TempData["nazivTeksta"] = "Potvrda";
-
-            return View("Forma", ProstorijaService.GetById(Id));
+            Prostorija prostorija;
+            try
+            {
+                prostorija = ProstorijaService.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("Prikaz");
+            }
+            return View("Forma", prostorija);
         }
 
         public IActionResult Obrisi(Prostorija prostorija)
         {
-            ProstorijaService.Delete(prostorija);
-            TempData["deleted"] = "Uspješno ste obrisali prostoriju.";
+            try
+            {
+                ProstorijaService.Delete(prostorija);
+                TempData["deleted"] = "Uspješno ste obrisali prostoriju.";
 
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("Prikaz");
+            }
             return RedirectToAction("Prikaz");
         }
 
         public IActionResult Spasi(Prostorija prostorija)
         {
-            if (prostorija.Id == 0)
+            try
             {
-                ProstorijaService.Add(prostorija);
-                TempData["successAdd"] = "Uspješno ste dodali prostoriju.";
+                if (prostorija.Id == 0)
+                {
+                    ProstorijaService.Add(prostorija);
+                    TempData["successAdd"] = "Uspješno ste dodali prostoriju.";
+                }
+                else
+                {
+                    ProstorijaService.Update(prostorija);
+                    TempData["successUpdate"] = "Uspješno ste uredili prostoriju.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ProstorijaService.Update(prostorija);
-                TempData["successUpdate"] = "Uspješno ste uredili prostoriju.";
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("Prikaz");
             }
             return RedirectToAction("Prikaz");
         }

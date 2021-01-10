@@ -36,6 +36,15 @@
         </button>
     </div>
 }
+@if (TempData["exception"] != null)
+{
+    <div id="alert" class="alert alert-danger" role="alert">
+        @TempData["exception"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 @if (TempData["successUpdate"] != null)
 {
     <div id="alert" class="alert alert-success" role="alert">
@@ -115,7 +124,7 @@
 </script>
 
 <style>
-    ul{
+    ul {
         justify-content: center;
     }
 </style>

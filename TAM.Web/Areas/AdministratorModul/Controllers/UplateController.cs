@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TAM.Core;
 using TAM.Service.Classes;
 using TAM.Service.Interfaces;
 using TAM.Web.Helper;
@@ -16,10 +17,12 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
     public class UplateController : Controller
     {
         readonly ISvrhaUplateService SvrhaUplateService;
+        readonly IExceptionHandlerService ExceptionHandlerService;
 
-        public UplateController(ISvrhaUplateService svrhaUplateService)
+        public UplateController(ISvrhaUplateService svrhaUplateService, IExceptionHandlerService exceptionHandlerService)
         {
             SvrhaUplateService = svrhaUplateService;
+            ExceptionHandlerService = exceptionHandlerService;
         }
 
         public IActionResult SvrhaUplatePrikaz(string pretrazivanje, int pageNumber = 1, 
@@ -53,7 +56,18 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult SvrhaUplateUredi(int Id)
         {
-            var svrha = SvrhaUplateService.GetById(Id);
+            SvrhaUplate svrha;
+            try
+            {
+                svrha = SvrhaUplateService.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("SvrhaUplatePrikaz");
+            }
+            
 
             TempData["action"] = "SvrhaUplateSpasi";
             TempData["controller"] = "Uplate";
@@ -75,25 +89,44 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult SvrhaUplateSpasi(SelectListItem svrha)
         {
-            if (svrha.Value == "0")
+            try
             {
-                SvrhaUplateService.Add(new Core.SvrhaUplate { Svrha = svrha.Text });
-                TempData["successAdd"] = "Uspješno ste dodali svrhu uplate.";
+                if (svrha.Value == "0")
+                {
+                    SvrhaUplateService.Add(new Core.SvrhaUplate { Svrha = svrha.Text });
+                    TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
+                }
+                else
+                {
+                    var uredi = SvrhaUplateService.GetById(Int32.Parse(svrha.Value));
+                    uredi.Svrha = svrha.Text;
+                    SvrhaUplateService.Update(uredi);
+                    TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var uredi = SvrhaUplateService.GetById(Int32.Parse(svrha.Value));
-                uredi.Svrha = svrha.Text;
-                SvrhaUplateService.Update(uredi);
-                TempData["successUpdate"] = "Uspješno ste uredili svrhu uplate.";
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("SvrhaUplatePrikaz");
             }
             return RedirectToAction("SvrhaUplatePrikaz");
         }
 
         public IActionResult SvrhaUplateObrisiView(int Id)
         {
-            var svrha = SvrhaUplateService.GetById(Id);
+            SvrhaUplate svrha;
+            try
+            {
+                svrha = SvrhaUplateService.GetById(Id);
 
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("SvrhaUplatePrikaz");
+            }
             TempData["action"] = "Obrisi";
             TempData["controller"] = "Uplate";
             TempData["nazivTeksta"] = "Potvrda";
@@ -104,8 +137,17 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult Obrisi(SelectListItem svrha)
         {
-            SvrhaUplateService.Delete(SvrhaUplateService.GetById(Int32.Parse(svrha.Value)));
-            TempData["deleted"] = "Uspješno ste obrisali svrhu uplate.";
+            try
+            {
+                SvrhaUplateService.Delete(SvrhaUplateService.GetById(Int32.Parse(svrha.Value)));
+                TempData["deleted"] = "Uspješno ste obrisali svrhu uplate.";
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("SvrhaUplatePrikaz");
+            }
 
             return RedirectToAction("SvrhaUplatePrikaz");
         }

@@ -15,10 +15,12 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
     public class DogadjajiController : Controller
     {
         readonly ITipDogadjajaService TipDogadjajaService;
+        readonly IExceptionHandlerService ExceptionHandlerService;
 
-        public DogadjajiController(ITipDogadjajaService tipDogadjajaService)
+        public DogadjajiController(ITipDogadjajaService tipDogadjajaService, IExceptionHandlerService exceptionHandlerService)
         {
             TipDogadjajaService = tipDogadjajaService;
+            ExceptionHandlerService = exceptionHandlerService;
         }
 
         
@@ -53,7 +55,18 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult TipDogadjajaUredi(int Id)
         {
-            var TipDogadjaja = TipDogadjajaService.GetById(Id);
+            Core.TipDogadjaja TipDogadjaja;
+            try
+            {
+                TipDogadjaja=TipDogadjajaService.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("TipDogadjajaPrikaz");
+            }
+            
 
             TempData["action"] = "TipDogadjajaSpasi";
             TempData["controller"] = "Dogadjaji";
@@ -75,24 +88,44 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult TipDogadjajaSpasi(SelectListItem TipDogadjaja)
         {
-            if (TipDogadjaja.Value == "0")
+            try
             {
-                TipDogadjajaService.Add(new Core.TipDogadjaja { Naziv = TipDogadjaja.Text });
-                TempData["successAdd"] = "Uspješno ste dodali tip događaj.";
+                if (TipDogadjaja.Value == "0")
+                {
+                    TipDogadjajaService.Add(new Core.TipDogadjaja { Naziv = TipDogadjaja.Text });
+                    TempData["successAdd"] = "Uspješno ste dodali tip događaja.";
+                }
+                else
+                {
+                    var uredi = TipDogadjajaService.GetById(Int32.Parse(TipDogadjaja.Value));
+                    uredi.Naziv = TipDogadjaja.Text;
+                    TipDogadjajaService.Update(uredi);
+                    TempData["successUpdate"] = "Uspješno ste uredili tip događaja.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var uredi = TipDogadjajaService.GetById(Int32.Parse(TipDogadjaja.Value));
-                uredi.Naziv = TipDogadjaja.Text;
-                TipDogadjajaService.Update(uredi);
-                TempData["successUpdate"] = "Uspješno ste uredili tip događaja.";
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";                
+                return RedirectToAction("TipDogadjajaPrikaz");
             }
             return RedirectToAction("TipDogadjajaPrikaz");
         }
 
         public IActionResult TipDogadjajaObrisiView(int Id)
         {
-            var TipDogadjaja = TipDogadjajaService.GetById(Id);
+            Core.TipDogadjaja TipDogadjaja;
+            try
+            {
+                TipDogadjaja = TipDogadjajaService.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("TipDogadjajaPrikaz");
+            }
+            
 
             TempData["action"] = "Obrisi";
             TempData["controller"] = "Dogadjaji";
@@ -104,8 +137,17 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult Obrisi(SelectListItem TipDogadjaja)
         {
-            TipDogadjajaService.Delete(TipDogadjajaService.GetById(Int32.Parse(TipDogadjaja.Value)));
-            TempData["deleted"] = "Uspješno ste obrisali tip događaja.";
+            try
+            {
+                TipDogadjajaService.Delete(TipDogadjajaService.GetById(Int32.Parse(TipDogadjaja.Value)));
+                TempData["deleted"] = "Uspješno ste obrisali tip događaja.";
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("TipDogadjajaPrikaz");
+            }
 
             return RedirectToAction("TipDogadjajaPrikaz");
         }
