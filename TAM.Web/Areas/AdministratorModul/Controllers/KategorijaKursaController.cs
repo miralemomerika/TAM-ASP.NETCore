@@ -92,14 +92,14 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 if (kategorijaKursa.Value == "0")
                 {
                     KategorijaKursaService.Add(new Core.KategorijaKursa { Naziv = kategorijaKursa.Text });
-                    TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
+                    TempData["successAdd"] = "Uspješno ste dodali kategoriju kursa.";
                 }
                 else
                 {
                     var uredi = KategorijaKursaService.GetById(Int32.Parse(kategorijaKursa.Value));
                     uredi.Naziv = kategorijaKursa.Text;
                     KategorijaKursaService.Update(uredi);
-                    TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
+                    TempData["successUpdate"] = "Uspješno ste uredili kategoriju kursa.";
                 }
             }
             catch (Exception ex)
@@ -139,7 +139,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             try
             {
                 KategorijaKursaService.Delete(KategorijaKursaService.GetById(Int32.Parse(kategorijaKursa.Value)));
-                TempData["deleted"] = "Obrisali ste kategoriju.";
+                TempData["deleted"] = "Uspješno ste obrisali kategoriju kursa.";
 
             }
             catch (Exception ex)

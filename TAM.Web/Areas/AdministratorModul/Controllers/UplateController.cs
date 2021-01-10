@@ -140,7 +140,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             try
             {
                 SvrhaUplateService.Delete(SvrhaUplateService.GetById(Int32.Parse(svrha.Value)));
-                TempData["deleted"] = "Obrisali ste kategoriju.";
+                TempData["deleted"] = "Uspješno ste obrisali svrhu uplate.";
             }
             catch (Exception ex)
             {

@@ -141,7 +141,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             try
             {
                 TipPolaznikaService.Delete(TipPolaznikaService.GetById(Int32.Parse(tipPolaznika.Value)));
-                TempData["deleted"] = "Obrisali ste tip polaznika.";
+                TempData["deleted"] = "Uspješno ste obrisali tip polaznika.";
             }
             catch (Exception ex)
             {

@@ -92,7 +92,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             try
             {
                 ProstorijaService.Delete(prostorija);
-                TempData["deleted"] = "Obrisali ste prostoriju.";
+                TempData["deleted"] = "Uspješno ste obrisali prostoriju.";
 
             }
             catch (Exception ex)

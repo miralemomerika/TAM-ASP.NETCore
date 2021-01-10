@@ -32,6 +32,7 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Lozinka")]
             public string Password { get; set; }
         }
 

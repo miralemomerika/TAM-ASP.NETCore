@@ -93,14 +93,14 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 if (TipDogadjaja.Value == "0")
                 {
                     TipDogadjajaService.Add(new Core.TipDogadjaja { Naziv = TipDogadjaja.Text });
-                    TempData["successAdd"] = "Uspješno ste dodali događaj.";
+                    TempData["successAdd"] = "Uspješno ste dodali tip događaja.";
                 }
                 else
                 {
                     var uredi = TipDogadjajaService.GetById(Int32.Parse(TipDogadjaja.Value));
                     uredi.Naziv = TipDogadjaja.Text;
                     TipDogadjajaService.Update(uredi);
-                    TempData["successUpdate"] = "Uspješno ste uredili događaj.";
+                    TempData["successUpdate"] = "Uspješno ste uredili tip događaja.";
                 }
             }
             catch (Exception ex)
@@ -140,7 +140,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             try
             {
                 TipDogadjajaService.Delete(TipDogadjajaService.GetById(Int32.Parse(TipDogadjaja.Value)));
-                TempData["deleted"] = "Obrisali ste događaj.";
+                TempData["deleted"] = "Uspješno ste obrisali tip događaja.";
             }
             catch (Exception ex)
             {
