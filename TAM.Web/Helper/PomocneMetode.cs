@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TAM.Core;
 using TAM.ViewModels;
 
 namespace TAM.Web.Helper
@@ -28,6 +29,15 @@ namespace TAM.Web.Helper
                 PageSize = pageSize
             };
             return rezultat;
+        }
+        public static ExceptionHandler GenerisiException(Exception ex)
+        {
+            string poruka = ex.Message + Environment.NewLine;
+            poruka += ex?.StackTrace + Environment.NewLine;
+            poruka += ex?.Source + Environment.NewLine;
+            poruka += ex?.InnerException + Environment.NewLine;
+            DateTime dateTime = DateTime.Now;
+            return new ExceptionHandler { SadrzajGreske = poruka, DatumIVrijemeGreske = dateTime };
         }
     }
 }

@@ -17,10 +17,11 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
     {
 
         readonly IKategorijaObavijestiService KategorijaObavijestiService;
-
-        public ObavijestiController(IKategorijaObavijestiService kategorijaObavijestiService)
+        readonly IExceptionHandlerService ExceptionHandlerService;
+        public ObavijestiController(IKategorijaObavijestiService kategorijaObavijestiService, IExceptionHandlerService exceptionHandlerService)
         {
             KategorijaObavijestiService = kategorijaObavijestiService;
+            ExceptionHandlerService = exceptionHandlerService;
         }
      
         public IActionResult KategorijaObavijestiPrikaz(string pretrazivanje, int pageNumber = 1,
@@ -54,7 +55,17 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult KategorijaObavijestiUredi(int id)
         {
-            var kategorijaObavijesti = KategorijaObavijestiService.GetById(id);
+            Core.KategorijaObavijesti kategorijaObavijesti;
+            try
+            {
+                kategorijaObavijesti = KategorijaObavijestiService.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("KategorijaObavijestiPrikaz");
+            }
 
             TempData["action"] = "KategorijaObavijestiSpasi";
             TempData["controller"] = "Obavijesti";
@@ -76,17 +87,26 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult KategorijaObavijestiSpasi(SelectListItem kategorijaObavijesti)
         {
-            if (kategorijaObavijesti.Value == "0")
+            try
             {
-                KategorijaObavijestiService.Add(new Core.KategorijaObavijesti { Naziv = kategorijaObavijesti.Text });
-                TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
+                if (kategorijaObavijesti.Value == "0")
+                {
+                    KategorijaObavijestiService.Add(new Core.KategorijaObavijesti { Naziv = kategorijaObavijesti.Text });
+                    TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
+                }
+                else
+                {
+                    var uredi = KategorijaObavijestiService.GetById(Int32.Parse(kategorijaObavijesti.Value));
+                    uredi.Naziv = kategorijaObavijesti.Text;
+                    KategorijaObavijestiService.Update(uredi);
+                    TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var uredi = KategorijaObavijestiService.GetById(Int32.Parse(kategorijaObavijesti.Value));
-                uredi.Naziv = kategorijaObavijesti.Text;
-                KategorijaObavijestiService.Update(uredi);
-                TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("KategorijaObavijestiPrikaz");
             }
 
             return RedirectToAction("KategorijaObavijestiPrikaz");
@@ -94,7 +114,20 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult KategorijaObavijestiObrisiView(int id)
         {
-            var kategorijaObavijesti = KategorijaObavijestiService.GetById(id);
+            Core.KategorijaObavijesti kategorijaObavijesti;
+
+            try
+            {
+                kategorijaObavijesti=KategorijaObavijestiService.GetById(id);
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("KategorijaObavijestiPrikaz");
+            }
+            
 
             TempData["action"] = "Obrisi";
             TempData["controller"] = "Obavijesti";
@@ -106,8 +139,17 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult Obrisi(SelectListItem kategorijaObavijesti)
         {
-            KategorijaObavijestiService.Delete(KategorijaObavijestiService.GetById(Int32.Parse(kategorijaObavijesti.Value)));
-            TempData["deleted"] = "Obrisali ste kategoriju.";
+            try
+            {
+                KategorijaObavijestiService.Delete(KategorijaObavijestiService.GetById(Int32.Parse(kategorijaObavijesti.Value)));
+                TempData["deleted"] = "Obrisali ste kategoriju.";
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("KategorijaObavijestiPrikaz");
+            }
 
             return RedirectToAction("KategorijaObavijestiPrikaz");
         }

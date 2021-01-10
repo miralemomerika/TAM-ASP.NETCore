@@ -17,11 +17,13 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
     [Area("AdministratorModul")]
     public class PolazniciController : Controller
     {
-        readonly ITipPolaznikaService TipPolaznikaService;
+        readonly ITipPolaznikaService TipPolaznikaService;       
+        readonly IExceptionHandlerService ExceptionHandlerService;       
 
-        public PolazniciController(ITipPolaznikaService tipPolaznikaService)
+        public PolazniciController(ITipPolaznikaService tipPolaznikaService, IExceptionHandlerService exceptionHandlerService)
         {
             TipPolaznikaService = tipPolaznikaService;
+            ExceptionHandlerService = exceptionHandlerService;
         }
 
         public IActionResult TipPolaznikaPrikaz(string pretrazivanje, int pageNumber = 1, 
@@ -55,7 +57,18 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult TipPolaznikaUredi(int Id)
         {
-            var tipPolaznika = TipPolaznikaService.GetById(Id);
+            TipPolaznika tipPolaznika;
+            try
+            {
+               tipPolaznika = TipPolaznikaService.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("TipPolaznikaPrikaz");
+            }
+           
 
             TempData["action"] = "TipPolaznikaSpasi";
             TempData["controller"] = "Polaznici";
@@ -77,25 +90,44 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult TipPolaznikaSpasi(SelectListItem tipPolaznika)
         {
-            if (tipPolaznika.Value == "0")
+            try
             {
-                TipPolaznikaService.Add(new Core.TipPolaznika { Naziv = tipPolaznika.Text });
-                TempData["successAdd"] = "Uspješno ste dodali tip polaznika.";
+                if (tipPolaznika.Value == "0")
+                {
+                    TipPolaznikaService.Add(new Core.TipPolaznika { Naziv = tipPolaznika.Text });
+                    TempData["successAdd"] = "Uspješno ste dodali tip polaznika.";
+                }
+                else
+                {
+                    var uredi = TipPolaznikaService.GetById(Int32.Parse(tipPolaznika.Value));
+                    uredi.Naziv = tipPolaznika.Text;
+                    TipPolaznikaService.Update(uredi);
+                    TempData["successUpdate"] = "Uspješno ste uredili tip polaznika.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var uredi = TipPolaznikaService.GetById(Int32.Parse(tipPolaznika.Value));
-                uredi.Naziv = tipPolaznika.Text;
-                TipPolaznikaService.Update(uredi);
-                TempData["successUpdate"] = "Uspješno ste uredili tip polaznika.";
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("TipPolaznikaPrikaz");
             }
+           
             return RedirectToAction("TipPolaznikaPrikaz");
         }
 
         public IActionResult TipPolaznikaObrisiView(int Id)
         {
-            var tipPolaznika = TipPolaznikaService.GetById(Id);
-
+            TipPolaznika tipPolaznika;
+            try
+            {
+                tipPolaznika = TipPolaznikaService.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("TipPolaznikaPrikaz");
+            }
             TempData["action"] = "Obrisi";
             TempData["controller"] = "Polaznici";
             TempData["nazivTeksta"] = "Potvrda";
@@ -106,8 +138,19 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult Obrisi(SelectListItem tipPolaznika)
         {
-            TipPolaznikaService.Delete(TipPolaznikaService.GetById(Int32.Parse(tipPolaznika.Value)));
-            TempData["deleted"] = "Obrisali ste tip polaznika.";
+            try
+            {
+                TipPolaznikaService.Delete(TipPolaznikaService.GetById(Int32.Parse(tipPolaznika.Value)));
+                TempData["deleted"] = "Obrisali ste tip polaznika.";
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("TipPolaznikaPrikaz");
+
+            }
+            
 
             return RedirectToAction("TipPolaznikaPrikaz");
         }

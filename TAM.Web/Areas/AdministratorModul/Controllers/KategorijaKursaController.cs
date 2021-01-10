@@ -17,10 +17,11 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
     {
 
         readonly IKategorijaKursaService KategorijaKursaService;
-       
-        public KategorijaKursaController (IKategorijaKursaService kategorijaKursaService)
+        readonly IExceptionHandlerService ExceptionHandlerService;
+        public KategorijaKursaController (IKategorijaKursaService kategorijaKursaService, IExceptionHandlerService exceptionHandlerService)
         {
             KategorijaKursaService = kategorijaKursaService;
+            ExceptionHandlerService = exceptionHandlerService;
         }
        
         public IActionResult KategorijaKursaPrikaz(string pretrazivanje, int pageNumber = 1, 
@@ -54,7 +55,17 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult KategorijaKursaUredi(int id)
         {
-            var kategorijaKursa = KategorijaKursaService.GetById(id);
+            Core.KategorijaKursa kategorijaKursa;
+            try
+            {
+                kategorijaKursa = KategorijaKursaService.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("KategorijaKursaPrikaz");
+            }
 
             TempData["action"] = "KategorijaKursaSpasi";
             TempData["controller"] = "KategorijaKursa";
@@ -76,17 +87,26 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult KategorijaKursaSpasi(SelectListItem kategorijaKursa)
         {
-            if (kategorijaKursa.Value == "0")
+            try
             {
-                KategorijaKursaService.Add(new Core.KategorijaKursa { Naziv = kategorijaKursa.Text });
-                TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
+                if (kategorijaKursa.Value == "0")
+                {
+                    KategorijaKursaService.Add(new Core.KategorijaKursa { Naziv = kategorijaKursa.Text });
+                    TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
+                }
+                else
+                {
+                    var uredi = KategorijaKursaService.GetById(Int32.Parse(kategorijaKursa.Value));
+                    uredi.Naziv = kategorijaKursa.Text;
+                    KategorijaKursaService.Update(uredi);
+                    TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var uredi = KategorijaKursaService.GetById(Int32.Parse(kategorijaKursa.Value));
-                uredi.Naziv = kategorijaKursa.Text;
-                KategorijaKursaService.Update(uredi);
-                TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("KategorijaKursaPrikaz");
             }
 
             return RedirectToAction("KategorijaKursaPrikaz");
@@ -94,8 +114,18 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult KategorijaKursaObrisiView(int id)
         {
-            var kategorijaKursa = KategorijaKursaService.GetById(id);
+            Core.KategorijaKursa kategorijaKursa;
+            try
+            {
+                kategorijaKursa = KategorijaKursaService.GetById(id);
 
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("KategorijaKursaPrikaz");
+            }
             TempData["action"] = "Obrisi";
             TempData["controller"] = "KategorijaKursa";
             TempData["nazivTeksta"] = "Potvrda";
@@ -106,9 +136,18 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult Obrisi(SelectListItem kategorijaKursa)
         {
-            KategorijaKursaService.Delete(KategorijaKursaService.GetById(Int32.Parse(kategorijaKursa.Value)));
-            TempData["deleted"] = "Obrisali ste kategoriju.";
+            try
+            {
+                KategorijaKursaService.Delete(KategorijaKursaService.GetById(Int32.Parse(kategorijaKursa.Value)));
+                TempData["deleted"] = "Obrisali ste kategoriju.";
 
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("KategorijaKursaPrikaz");
+            }
             return RedirectToAction("KategorijaKursaPrikaz");
         }
     }

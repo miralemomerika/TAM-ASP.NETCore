@@ -19,12 +19,30 @@ namespace TAM.Service.Classes
 
         public void Add(TipPolaznika tipPolaznika)
         {
-            TipPolaznikaRepository.Add(tipPolaznika);
+            try
+            {
+                TipPolaznikaRepository.Add(tipPolaznika);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
 
         public void Delete(TipPolaznika tipPolaznika)
         {
-            TipPolaznikaRepository.Delete(tipPolaznika);
+            try
+            {
+                TipPolaznikaRepository.Delete(tipPolaznika);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
 
         public IEnumerable<TipPolaznika> GetAll()
@@ -34,7 +52,16 @@ namespace TAM.Service.Classes
 
         public TipPolaznika GetById(int Id)
         {
-            return TipPolaznikaRepository.GetById(Id);
+            try
+            {
+                return TipPolaznikaRepository.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
 
         public void Update(TipPolaznika tipPolaznika)

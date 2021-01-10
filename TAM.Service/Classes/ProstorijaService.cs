@@ -18,27 +18,66 @@ namespace TAM.Service.Classes
 
         public void Add(Prostorija prostorija)
         {
-            ProstorijaRepository.Add(prostorija);
+            try
+            {
+                if (prostorija.Naziv == null)
+                    throw new Exception("Ne mogu se dodati null vrijednosti");
+                ProstorijaRepository.Add(prostorija);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public void Delete(Prostorija prostorija)
         {
-            ProstorijaRepository.Delete(prostorija);
+            try
+            {
+                ProstorijaRepository.Delete(prostorija);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public IEnumerable<Prostorija> GetAll()
         {
-            return ProstorijaRepository.GetAll();
+            try
+            {
+                return ProstorijaRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public Prostorija GetById(int Id)
         {
-            return ProstorijaRepository.GetById(Id);
+            try
+            {
+                return ProstorijaRepository.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void Update(Prostorija prostorija)
         {
-            ProstorijaRepository.Update(prostorija);
+            try
+            {
+                ProstorijaRepository.Update(prostorija);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

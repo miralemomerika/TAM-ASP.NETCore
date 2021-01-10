@@ -19,19 +19,44 @@ namespace TAM.Repository
 
         public void Add(TEntity entity)
         {
-            DbSet.Add(entity);
-            DbContext.SaveChanges();
+            try
+            {               
+                DbSet.Add(entity);
+                DbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
 
         public void Delete(TEntity entity)
         {
-            DbSet.Remove(entity);
-            DbContext.SaveChanges();
+            try
+            {              
+                DbSet.Remove(entity);
+                DbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
         }
         public void Update(TEntity entity)
         {
-            DbContext.Entry(entity).State = EntityState.Modified;
-            DbContext.SaveChanges();
+            try
+            {
+                DbContext.Entry(entity).State = EntityState.Modified;
+                DbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
         public IEnumerable<TEntity> GetAll()
         {
@@ -40,7 +65,17 @@ namespace TAM.Repository
 
         public TEntity GetById(int entityId)
         {
-            return DbSet.Find(entityId);
+            try
+            {
+                if (DbSet.Find(entityId) == null)
+                    throw new Exception("Entitet ne postoji u bazi");
+                return DbSet.Find(entityId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
         }
     }
 }

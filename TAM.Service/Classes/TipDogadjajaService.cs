@@ -17,27 +17,67 @@ namespace TAM.Service.Classes
         }
         public void Add(TipDogadjaja tipDogadjaja)
         {
-            TipDogadjajaRepository.Add(tipDogadjaja);
+            try
+            {
+                TipDogadjajaRepository.Add(tipDogadjaja);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public void Delete(TipDogadjaja tipDogadjaja)
         {
-            TipDogadjajaRepository.Delete(tipDogadjaja);
+            try
+            {
+                TipDogadjajaRepository.Delete(tipDogadjaja);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public IEnumerable<TipDogadjaja> GetAll()
         {
-            return TipDogadjajaRepository.GetAll();
+            try
+            {
+                return TipDogadjajaRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public TipDogadjaja GetById(int Id)
         {
-            return TipDogadjajaRepository.GetById(Id);
+            try
+            {
+                return TipDogadjajaRepository.GetById(Id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public void Update(TipDogadjaja tipDogadjaja)
         {
-            TipDogadjajaRepository.Update(tipDogadjaja);
+            try
+            {
+                TipDogadjajaRepository.Update(tipDogadjaja);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }
