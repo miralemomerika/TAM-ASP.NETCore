@@ -68,7 +68,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         public IActionResult Obrisi(Prostorija prostorija)
         {
             ProstorijaService.Delete(prostorija);
-            TempData["deleted"] = "Obrisali ste prostoriju.";
+            TempData["deleted"] = "Uspješno ste obrisali prostoriju.";
 
             return RedirectToAction("Prikaz");
         }

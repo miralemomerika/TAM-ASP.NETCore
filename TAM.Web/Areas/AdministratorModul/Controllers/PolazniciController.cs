@@ -107,7 +107,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         public IActionResult Obrisi(SelectListItem tipPolaznika)
         {
             TipPolaznikaService.Delete(TipPolaznikaService.GetById(Int32.Parse(tipPolaznika.Value)));
-            TempData["deleted"] = "Obrisali ste tip polaznika.";
+            TempData["deleted"] = "Uspješno ste obrisali tip polaznika.";
 
             return RedirectToAction("TipPolaznikaPrikaz");
         }

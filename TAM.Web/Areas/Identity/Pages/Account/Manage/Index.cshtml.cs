@@ -23,6 +23,7 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
+        [Display(Name = "Korisničko ime")]
         public string Username { get; set; }
 
         [TempData]
@@ -34,20 +35,25 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Broj telefona")]
             public string PhoneNumber { get; set; }
+
+            [EmailAddress]
+            public string Email { get; set; }
         }
 
         private async Task LoadAsync(KorisnickiRacun user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var email = await _userManager.GetEmailAsync(user);
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Email = email
             };
         }
 
@@ -83,13 +89,25 @@ namespace TAM.Web.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "Greska prilikom promijene broja telefona.";
+                    return RedirectToPage();
+                }
+            }
+
+            var email = await _userManager.GetEmailAsync(user);
+            if (Input.Email != email)
+            {
+                var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
+                var userNameResult = await _userManager.SetUserNameAsync(user, Input.Email);
+                if (!setEmailResult.Succeeded || !userNameResult.Succeeded)
+                {
+                    StatusMessage = "Greska prilikom promijene emaila.";
                     return RedirectToPage();
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Profil ažuriran";
             return RedirectToPage();
         }
     }

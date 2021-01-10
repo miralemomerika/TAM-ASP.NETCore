@@ -78,14 +78,14 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             if (svrha.Value == "0")
             {
                 SvrhaUplateService.Add(new Core.SvrhaUplate { Svrha = svrha.Text });
-                TempData["successAdd"] = "Uspješno ste dodali kategoriju.";
+                TempData["successAdd"] = "Uspješno ste dodali svrhu uplate.";
             }
             else
             {
                 var uredi = SvrhaUplateService.GetById(Int32.Parse(svrha.Value));
                 uredi.Svrha = svrha.Text;
                 SvrhaUplateService.Update(uredi);
-                TempData["successUpdate"] = "Uspješno ste uredili kategoriju.";
+                TempData["successUpdate"] = "Uspješno ste uredili svrhu uplate.";
             }
             return RedirectToAction("SvrhaUplatePrikaz");
         }
@@ -105,7 +105,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         public IActionResult Obrisi(SelectListItem svrha)
         {
             SvrhaUplateService.Delete(SvrhaUplateService.GetById(Int32.Parse(svrha.Value)));
-            TempData["deleted"] = "Obrisali ste kategoriju.";
+            TempData["deleted"] = "Uspješno ste obrisali svrhu uplate.";
 
             return RedirectToAction("SvrhaUplatePrikaz");
         }
