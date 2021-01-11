@@ -35,6 +35,8 @@ namespace TAM.Service.Classes
         {
             try
             {
+                if (prostorija.Naziv == null)
+                    throw new Exception("Ne mogu se obrisati null vrijednosti");
                 ProstorijaRepository.Delete(prostorija);
             }
             catch (Exception ex)
@@ -72,6 +74,8 @@ namespace TAM.Service.Classes
         {
             try
             {
+                if (prostorija.Naziv == null)
+                    throw new Exception("Ne mogu se urediti null vrijednosti");
                 ProstorijaRepository.Update(prostorija);
             }
             catch (Exception ex)
