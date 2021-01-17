@@ -17,19 +17,19 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         private readonly SignInManager<KorisnickiRacun> _signInManager;
         private readonly UserManager<KorisnickiRacun> _userManager;
-        //private readonly ILogger<RegisterModel> _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
         //private readonly IEmailSender _emailSender;
 
         public UposleniController(
             UserManager<KorisnickiRacun> userManager,
-            SignInManager<KorisnickiRacun> signInManager
-            //,ILogger<RegisterModel> logger,
-            //IEmailSender emailSender
+            SignInManager<KorisnickiRacun> signInManager,
+            RoleManager<IdentityRole> roleManager
+            //,IEmailSender emailSender
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            //_logger = logger;
+            _roleManager = roleManager;
             //_emailSender = emailSender;
         }
 
@@ -40,12 +40,16 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult Registracija()
         {
+            var role = _roleManager.Roles.Select(x => x.Name).ToList();
+            TempData["Role"] = role;
+
             return View(new UposleniRegistracijaVM());
         }
         public async Task<IActionResult> Registruj(UposleniRegistracijaVM Input)
         {
             //returnUrl = returnUrl ?? Url.Content("~/");
             //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
                 var user = new KorisnickiRacun
@@ -59,7 +63,12 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    //_logger.LogInformation("User created a new account with password.");
+                    var roleresult = await _userManager.AddToRoleAsync(user, Input.TipUposlenog);
+
+                    if (!roleresult.Succeeded)
+                    {
+                        throw new Exception("Nije moguce dodati rolu");
+                    }
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

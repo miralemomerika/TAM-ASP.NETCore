@@ -19,20 +19,44 @@ namespace TAM.ViewModels
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
         [Display(Name = "Lozinka")]
         public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Potvrdi lozinku")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
 
         [Required]
         [Display(Name = "Ime")]
         public string FirstName { get; set; }
+
         [Required]
         [Display(Name = "Prezime")]
         public string LastName { get; set; }
+
+        public string TipUposlenog { get; set; }
+
+        public UposleniRegistracijaVM()
+        {
+            Password = GenerisiLozinku(8);
+        }
+
+        private string GenerisiLozinku(int duzina)
+        {
+            string velikaSlova = "ASDFGHJKLERTZUIOPWQYXCVBNM";
+            string malaSlova = velikaSlova.ToLower();
+            string specijalniZnakovi = "?*!#%&";
+            string brojevi = "0123456789";
+            
+            return RandomZnakovi(velikaSlova, 1) + RandomZnakovi(specijalniZnakovi, 1)
+                + RandomZnakovi(brojevi,1) + RandomZnakovi(malaSlova, duzina - 3);
+        }
+
+        private string RandomZnakovi(string tekst, int duzina)
+        {
+            Random rnd = new Random();
+            string rezultat = "";
+            for(int i=0; i<duzina; i++)
+            {
+                rezultat += tekst[rnd.Next(tekst.Length)];
+            }
+            return rezultat;
+        }
     }
 }
