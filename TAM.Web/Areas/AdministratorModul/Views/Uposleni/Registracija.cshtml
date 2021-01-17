@@ -1,0 +1,71 @@
+﻿@using TAM.ViewModels
+
+@{
+    ViewData["Title"] = "Registracija";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var tipovi = (List<string>)TempData["Role"];
+}
+
+@model UposleniRegistracijaVM
+
+<h1 style="text-align: center">@ViewData["Title"]</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Registruj" asp-controller="Uposleni">
+            <hr />
+            <div class="form-group">
+                <label asp-for="@Model.FirstName"></label>
+                <input asp-for="@Model.FirstName" class="form-control" />
+                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.LastName"></label>
+                <input asp-for="@Model.LastName" class="form-control" />
+                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Email"></label>
+                <input asp-for="@Model.Email" class="form-control" />
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.PhoneNumber"></label>
+                <input asp-for="@Model.PhoneNumber" class="form-control" />
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="@Model.Password"></label>
+                <input asp-for="@Model.Password" class="form-control" />
+                <span asp-validation-for="@Model.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Tip uposlenog</label>
+                @for(int i=0; i<tipovi.Count; i++)
+                {
+                    <div class="radio">
+                        <label>
+                            @if(i==0)
+                            {
+                                <input type="radio" id="@tipovi[i]"  value="@tipovi[i]" asp-for="@Model.TipUposlenog" checked />
+                            }
+                            else
+                            {
+                                <input type="radio" id="@tipovi[i]" value="@tipovi[i]" asp-for="@Model.TipUposlenog" />
+                            }
+                            @tipovi[i]
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="form-group" style="text-align: end">
+                <button type="submit" class="btn btn-primary">Registracija</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
