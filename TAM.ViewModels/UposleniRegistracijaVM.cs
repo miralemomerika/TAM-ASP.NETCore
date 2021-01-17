@@ -7,26 +7,26 @@ namespace TAM.ViewModels
 {
     public class UposleniRegistracijaVM
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Polje je obavezno")]
+        [EmailAddress(ErrorMessage = "Polje mora biti u formatu emaila")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [Phone]
+        [Required(ErrorMessage = "Polje je obavezno")]
+        [DataType(DataType.PhoneNumber)]
         [Display(Name = "Broj telefona")]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Polje je obavezno")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [Display(Name = "Lozinka")]
         public string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Polje je obavezno")]
         [Display(Name = "Ime")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Polje je obavezno")]
         [Display(Name = "Prezime")]
         public string LastName { get; set; }
 

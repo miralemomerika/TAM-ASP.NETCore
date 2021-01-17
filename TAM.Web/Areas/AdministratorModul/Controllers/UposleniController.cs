@@ -47,9 +47,6 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         }
         public async Task<IActionResult> Registruj(UposleniRegistracijaVM Input)
         {
-            //returnUrl = returnUrl ?? Url.Content("~/");
-            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             if (ModelState.IsValid)
             {
                 var user = new KorisnickiRacun
@@ -84,10 +81,6 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
                     }
                 }
                 foreach (var error in result.Errors)
