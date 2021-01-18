@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +39,8 @@ namespace TAM.Web
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
             services.AddScoped(typeof(IRepository<>), typeof(Repository.Repository<>));
             services.AddTransient<ISvrhaUplateService, SvrhaUplateService>();
             services.AddTransient<ITipPolaznikaService, TipPolaznikaService>();
@@ -48,6 +49,7 @@ namespace TAM.Web
             services.AddTransient<IKategorijaKursaService, KategorijaKursaService>();
             services.AddTransient<IKategorijaObavijestiService, KategorijaObavijestiService>();
             services.AddTransient<IExceptionHandlerService, ExceptionHandlerService>();
+            services.AddTransient<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
