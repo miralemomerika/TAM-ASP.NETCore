@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TAM.Core;
+using TAM.Service.Interfaces;
 using TAM.ViewModels;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
@@ -18,19 +19,18 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         private readonly SignInManager<KorisnickiRacun> _signInManager;
         private readonly UserManager<KorisnickiRacun> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        //private readonly IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
 
         public UposleniController(
             UserManager<KorisnickiRacun> userManager,
             SignInManager<KorisnickiRacun> signInManager,
-            RoleManager<IdentityRole> roleManager
-            //,IEmailSender emailSender
-            )
+            RoleManager<IdentityRole> roleManager,
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-            //_emailSender = emailSender;
+            _emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -67,16 +67,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                         throw new Exception("Nije moguce dodati rolu");
                     }
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code },
-                        protocol: Request.Scheme);
+                    await PosaljiLozinkuMailomAsync(Input.Email, Input.Password);
 
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                       // $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -90,6 +82,18 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             }
 
             return View("Index");
+        }
+
+        private async Task PosaljiLozinkuMailomAsync(string email, string lozinka)
+        {
+            string subject = "Lozinka za korisnicki racun";
+            string htmlMessage = @"Postovani,<br/><br/>" +
+                                "Lozinka za vas korisnicki racun je: <b>{0}</b><br/>" +
+                                "Molimo Vas da nakon prijave promijenite svoju lozinku." +
+                                "<br/><br/>" +
+                                "Lijep pozdrav!";
+            htmlMessage = string.Format(htmlMessage, lozinka);
+            await _emailSender.SendEmail(email, subject, htmlMessage);
         }
     }
 }
