@@ -10,10 +10,12 @@
         <p>
             <strong>Brisanje podataka će prouzrokovati brisanje vašeg računa!</strong>
         </p>
-        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
+        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group"
+              style="display: inline">
             <button class="btn btn-primary" type="submit">Preuzmi</button>
+
         </form>
-        <p>
+        <p style="display: inline">
             <a id="delete" asp-page="DeletePersonalData" class="btn btn-primary">Obrisi</a>
         </p>
     </div>

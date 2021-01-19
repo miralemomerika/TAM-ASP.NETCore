@@ -68,12 +68,6 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     }
 
                     await PosaljiLozinkuMailomAsync(Input.Email, Input.Password);
-
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
-                    }
                 }
                 foreach (var error in result.Errors)
                 {
@@ -87,11 +81,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         private async Task PosaljiLozinkuMailomAsync(string email, string lozinka)
         {
             string subject = "Lozinka za korisnicki racun";
-            string htmlMessage = @"Postovani,<br/><br/>" +
-                                "Lozinka za vas korisnicki racun je: <b>{0}</b><br/>" +
-                                "Molimo Vas da nakon prijave promijenite svoju lozinku." +
-                                "<br/><br/>" +
-                                "Lijep pozdrav!";
+            string htmlMessage = @"Poštovani,<br/><br/>" + "Lozinka za vas korisnički račun je: <b>{0}</b><br/>" + "Molimo Vas da nakon prijave promijenite svoju lozinku." + "<br/><br/>" + "Lijep pozdrav!" + "<br/>" + "Kulturni centar TAM";
             htmlMessage = string.Format(htmlMessage, lozinka);
             await _emailSender.SendEmail(email, subject, htmlMessage);
         }
