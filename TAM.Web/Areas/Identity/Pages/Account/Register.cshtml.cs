@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using TAM.Core;
+using TAM.Service.Interfaces;
 
 namespace TAM.Web.Areas.Identity.Pages.Account
 {
@@ -103,8 +103,13 @@ namespace TAM.Web.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    await _emailSender.SendEmail(Input.Email, "Potvrda maila",
+                        $"Poštovani, <br/><br/> Molimo vas da za kompletiranje vase registracije kliknite <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>ovdje</a>." +
+                        $"<br/><br/> Lijep pozdrav!" +
+                        $"<br/> Kulturni centar TAM.");
+
+                    _userManager.Options.SignIn.RequireConfirmedAccount = true;
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
