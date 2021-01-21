@@ -74,8 +74,8 @@ namespace TAM.Repository
             catch (Exception ex)
             {
                 throw ex;
-            }
-           
+            }          
         }
+        
     }
 }
