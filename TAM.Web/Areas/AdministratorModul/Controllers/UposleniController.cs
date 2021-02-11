@@ -20,17 +20,20 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         private readonly UserManager<KorisnickiRacun> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
+        private readonly IPortirService _portirService;
 
         public UposleniController(
             UserManager<KorisnickiRacun> userManager,
             SignInManager<KorisnickiRacun> signInManager,
             RoleManager<IdentityRole> roleManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IPortirService portirService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _emailSender = emailSender;
+            _portirService = portirService;
         }
 
         public IActionResult Index()
@@ -68,6 +71,18 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     }
 
                     await PosaljiLozinkuMailomAsync(Input.Email, Input.Password);
+                    if(Input.TipUposlenog == "Portir")
+                    {
+                        Portir portir = new Portir
+                        {
+                            KorisnickiRacun = user
+                        };
+                        _portirService.Add(portir);
+                    }
+                    else if (Input.TipUposlenog == "Predavac")
+                    {
+                        
+                    }
                 }
                 foreach (var error in result.Errors)
                 {

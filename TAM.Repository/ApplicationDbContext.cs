@@ -22,5 +22,6 @@ namespace TAM.Repository
         public DbSet<KategorijaObavijesti> KategorijaObavijesti { get; set; }
         public DbSet<ExceptionHandler> ExceptionHandler { get; set; }
         public DbSet<Kurs> Kurs { get; set; }
+        public DbSet<Portir> Portir { get; set; }
     }
 }
