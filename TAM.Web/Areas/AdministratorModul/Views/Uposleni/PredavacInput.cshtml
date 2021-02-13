@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Predavac";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model UposleniRegistracijaVM
+
+<div class="form-group">
+    <label asp-for="@Model.Titula"></label>
+    <input asp-for="@Model.Titula" class="form-control" value="pof.dr" />
+</div>
+<div class="form-group">
+    <label asp-for="@Model.CV"></label>
+    <input asp-for="@Model.CV" type="file" />
+</div>

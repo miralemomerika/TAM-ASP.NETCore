@@ -23,5 +23,6 @@ namespace TAM.Repository
         public DbSet<ExceptionHandler> ExceptionHandler { get; set; }
         public DbSet<Kurs> Kurs { get; set; }
         public DbSet<Portir> Portir { get; set; }
+        public DbSet<Predavac> Predavac { get; set; }
     }
 }

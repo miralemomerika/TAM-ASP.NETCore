@@ -1,9 +1,6 @@
-﻿@using TAM.ViewModels
-
-@{
+﻿@{
     ViewData["Title"] = "Registracija";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var tipovi = (List<string>)TempData["Role"];
 }
 
 @model UposleniRegistracijaVM
@@ -12,7 +9,7 @@
 
 <div class="row justify-content-center">
     <div class="col-md-4">
-        <form asp-action="Registruj" asp-controller="Uposleni">
+        <form asp-action="Registruj" asp-controller="Uposleni" enctype="multipart/form-data">
             <hr />
             <div class="form-group">
                 <label asp-for="@Model.FirstName"></label>
@@ -39,28 +36,14 @@
                 <input asp-for="@Model.Password" class="form-control" />
                 <span asp-validation-for="@Model.Password" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label>Tip uposlenog</label>
-                @for(int i=0; i<tipovi.Count; i++)
-                {
-                    <div class="radio">
-                        <label>
-                            @if(i==0)
-                            {
-                                <input type="radio" id="@tipovi[i]"  value="@tipovi[i]" asp-for="@Model.TipUposlenog" checked />
-                            }
-                            else
-                            {
-                                <input type="radio" id="@tipovi[i]" value="@tipovi[i]" asp-for="@Model.TipUposlenog" />
-                            }
-                            @tipovi[i]
-                        </label>
-                    </div>
-                }
+                <label asp-for="TipUposlenogId"></label>
+                <select asp-for="TipUposlenogId" asp-items="@Model.TipUposlenog" class="form-control"
+                        onchange="TipUposlenogPromjenjen(this)"></select>
             </div>
+            <div id="content"></div>
             <div class="form-group" style="text-align: end">
-                <button type="submit" class="btn btn-primary">Registracija</button>
+                <button type="submit" class="btn btn-primary mt-3">Registracija</button>
             </div>
         </form>
     </div>
@@ -69,3 +52,16 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<script>
+    function TipUposlenogPromjenjen(objekat) {
+        if (objekat.options[objekat.selectedIndex].text == "Predavac") {
+            $.get("PredavacInput", function (res) {
+                $("#content").html(res);
+            })
+        }
+        else {
+            $("#content").html(null);
+        }
+    }
+</script>

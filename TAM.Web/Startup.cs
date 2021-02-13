@@ -52,6 +52,7 @@ namespace TAM.Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IKursService, KursService>();
             services.AddTransient<IPortirService, PortirService>();
+            services.AddTransient<IPredavacService, PredavacService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
