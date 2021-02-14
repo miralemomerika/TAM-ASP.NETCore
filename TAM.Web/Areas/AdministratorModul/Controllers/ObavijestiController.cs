@@ -9,6 +9,9 @@ using TAM.Service.Classes;
 using cloudscribe.Pagination.Models;
 using Microsoft.EntityFrameworkCore;
 using TAM.Web.Helper;
+using TAM.ViewModels;
+using static TAM.ViewModels.ObavijestPrikazVM;
+using TAM.Core;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
@@ -17,13 +20,201 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
     {
 
         readonly IKategorijaObavijestiService KategorijaObavijestiService;
+        readonly IObavijestService ObavijestService;
         readonly IExceptionHandlerService ExceptionHandlerService;
-        public ObavijestiController(IKategorijaObavijestiService kategorijaObavijestiService, IExceptionHandlerService exceptionHandlerService)
+        public ObavijestiController(IKategorijaObavijestiService kategorijaObavijestiService, 
+            IExceptionHandlerService exceptionHandlerService, IObavijestService obavijestService)
         {
             KategorijaObavijestiService = kategorijaObavijestiService;
             ExceptionHandlerService = exceptionHandlerService;
+            ObavijestService = obavijestService;
         }
-     
+        //dio za obavijesti
+        public IActionResult Prikaz(string pretrazivanje, int pageNumber=1, int pageSize=5)
+        {
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            ViewBag.CurrentFilter = pretrazivanje;
+            var temp = ObavijestService.GetAll().AsQueryable();
+            var obavijesti = new ObavijestPrikazVM
+            {
+                Zapisi = temp.Include(i => i.KategorijaObavijesti)
+                .Include(i => i.KorisnickiRacun)
+                .Select
+                (
+                    x => new ObavijestPrikazVM.Zapis
+                    {
+                        Autor = x.KorisnickiRacun.FirstName + " " + x.KorisnickiRacun.LastName,
+                        Datum = x.DatumIVrijeme.ToString("dd.MM.yyyy HH:mm"),
+                        Naslov=x.Naslov,
+                        Sadrzaj=(x.Sadrzaj.Length>30 ? x.Sadrzaj.Substring(0,30)+"...":x.Sadrzaj),
+                        Id=x.Id
+                    }
+                ).ToList()
+            };
+            var podaci = obavijesti.Zapisi.ToList().AsQueryable();
+            var brojObavijesti = podaci.Count();
+            if (!String.IsNullOrEmpty(pretrazivanje))
+            {
+                podaci = podaci.Where(x => x.Naslov.ToLower().Contains(pretrazivanje.ToLower())||x.Sadrzaj.ToLower().Contains(pretrazivanje.ToLower()));
+                brojObavijesti = podaci.Count();
+            }
+            ViewData["Title"] = "Prikaz";
+            ViewData["Controller"] = "Obavijesti";
+            ViewData["Action"] = "Prikaz";
+            return View(PomocneMetode.Paginacija<Zapis>(pretrazivanje, podaci, pageNumber, pageSize));
+        }
+
+        public IActionResult Dodaj()
+        {
+            TempData["action"] = "Spasi";           
+            TempData["nazivTeksta"] = "Dodaj obavijest";
+            ObavijestDodajVM obavijestDodajVM = new ObavijestDodajVM();
+            List<SelectListItem> kategorije = KategorijaObavijestiService.GetAll()
+                .Select
+                (
+                    x=> new SelectListItem
+                    {
+                        Text=x.Naziv,
+                        Value=x.Id.ToString()
+                    }
+
+                ).ToList();         
+            obavijestDodajVM.KategorijaObavijesti = kategorije;
+            obavijestDodajVM.Dodaj = true;
+            return View("Forma", obavijestDodajVM);          
+        }
+
+        public IActionResult Uredi(int ObavijestId)
+        {
+            TempData["action"] = "Spasi";
+            TempData["nazivTeksta"] = "Uredi obavijest";
+            Obavijest obavijest;
+            try
+            {
+                obavijest = ObavijestService.GetById(ObavijestId);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("Prikaz");
+            }
+            ObavijestDodajVM obavijestDodajVM = new ObavijestDodajVM()
+            {
+                Id = obavijest.Id,
+                DatumIVrijeme = obavijest.DatumIVrijeme,
+                Dodaj = false,
+                Naslov = obavijest.Naslov,
+                Sadrzaj = obavijest.Sadrzaj
+            };
+            List<SelectListItem> kategorije = KategorijaObavijestiService.GetAll()
+                .Select
+                (
+                    x => new SelectListItem
+                    {
+                        Text = x.Naziv,
+                        Value = x.Id.ToString()
+                    }
+
+                ).ToList();
+            obavijestDodajVM.KategorijaObavijesti = kategorije;
+            return View("Forma", obavijestDodajVM);
+        }
+
+
+        public IActionResult Spasi(ObavijestDodajVM obavijestDodajVM)
+        {
+            try
+            {
+                if (obavijestDodajVM.Dodaj == true)
+                {
+                    Obavijest obavijest = new Obavijest()
+                    {
+                        DatumIVrijeme=DateTime.Now,
+                        KategorijaObavijestiId=obavijestDodajVM.KategorijaObavijestiId,
+                        Naslov=obavijestDodajVM.Naslov,
+                        Sadrzaj= obavijestDodajVM.Sadrzaj,
+                        KorisnickiRacunId= TempData["korisnikId"].ToString()
+                    };
+                    ObavijestService.Add(obavijest);
+                    TempData["successAdd"] = "Uspješno ste dodali obavijest.";
+                }
+                else
+                {
+                    Obavijest obavijest = ObavijestService.GetById(obavijestDodajVM.Id);
+                    obavijest.Naslov = obavijestDodajVM.Naslov;
+                    obavijest.Sadrzaj = obavijestDodajVM.Sadrzaj;
+                    obavijest.KategorijaObavijestiId = obavijestDodajVM.KategorijaObavijestiId;
+                    ObavijestService.Update(obavijest);
+                    TempData["successUpdate"] = "Uspješno ste uredili obavijest.";
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("Prikaz");
+            }
+            return RedirectToAction("Prikaz");
+        }
+
+        public IActionResult ObrisiView(int ObavijestId)
+        {
+            TempData["action"] = "Obrisi";
+            TempData["nazivTeksta"] = "Potvrda";
+            Obavijest obavijest;
+            try
+            {
+                obavijest = ObavijestService.GetById(ObavijestId);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("Prikaz");
+            }
+            ObavijestDodajVM obavijestDodajVM = new ObavijestDodajVM()
+            {
+                Id = obavijest.Id,
+                DatumIVrijeme = obavijest.DatumIVrijeme,
+                Dodaj = false,
+                Naslov = obavijest.Naslov,
+                Sadrzaj = obavijest.Sadrzaj
+            };
+            List<SelectListItem> kategorije = KategorijaObavijestiService.GetAll()
+                .Select
+                (
+                    x => new SelectListItem
+                    {
+                        Text = x.Naziv,
+                        Value = x.Id.ToString()
+                    }
+
+                ).ToList();
+            obavijestDodajVM.KategorijaObavijesti = kategorije;
+            return View("Forma", obavijestDodajVM);
+        }
+
+        public IActionResult Obrisi(ObavijestDodajVM obavijestDodajVM)
+        {
+
+            try
+            {
+                Obavijest obavijest = ObavijestService.GetById(obavijestDodajVM.Id);
+                ObavijestService.Delete(obavijest);
+                TempData["deleted"] = "Uspješno ste obrisali kurs.";
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+                return RedirectToAction("Prikaz");
+            }
+            return RedirectToAction("Prikaz");
+        }
+
+        //kategorija obavijesti
+
         public IActionResult KategorijaObavijestiPrikaz(string pretrazivanje, int pageNumber = 1,
             int pageSize = 5)
         {
@@ -129,7 +320,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             }
             
 
-            TempData["action"] = "Obrisi";
+            TempData["action"] = "KategorijaObavijestiObrisi";
             TempData["controller"] = "Obavijesti";
             TempData["nazivTeksta"] = "Potvrda";
 
@@ -137,7 +328,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 new SelectListItem { Value = kategorijaObavijesti.Id.ToString(), Text = kategorijaObavijesti.Naziv });
         }
 
-        public IActionResult Obrisi(SelectListItem kategorijaObavijesti)
+        public IActionResult KategorijaObavijestiObrisi(SelectListItem kategorijaObavijesti)
         {
             try
             {

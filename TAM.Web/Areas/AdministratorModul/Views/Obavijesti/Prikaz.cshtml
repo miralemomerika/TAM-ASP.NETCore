@@ -1,0 +1,124 @@
+﻿@using TAM.ViewModels
+@{
+    var Naslov = ViewData["Title"].ToString();
+    var Controller = ViewData["Controller"].ToString();
+    var Akcija = ViewData["Action"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model cloudscribe.Pagination.Models.PagedResult<ObavijestPrikazVM.Zapis>
+
+<form asp-action="@Naslov" method="get" class="mt-3 mb-3">
+    <div>
+        <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
+        <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
+    </div>
+</form>
+<br />
+@if (TempData["deleted"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["deleted"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successAdd"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successAdd"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["exception"] != null)
+{
+    <div id="alert" class="alert alert-danger" role="alert">
+        @TempData["exception"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successUpdate"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successUpdate"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<table class="table table-hover">
+    <thead class="card-header">
+        <tr align="center">
+            <th>Naslov</th>
+            <th>Autor</th>
+            <th>Datum i vrijeme</th>
+            <th>Sadrzaj</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr align="center">
+                <td>@item.Naslov</td>
+                <td>@item.Autor</td>
+                <td>@item.Datum</td>
+                <td>@item.Sadrzaj</td>
+                <td>
+                    @*<button class="btn btn-info" onclick="Uredi(@item.Id)">
+                        Uredi
+                    </button>*@
+                    <a class="btn btn-info" href="Uredi?ObavijestId=@item.Id">Uredi</a>
+                    @*<button class="btn btn-danger" onclick="Obrisi(@item.Id)">
+                        Obrisi
+                    </button>*@
+                    <a class="btn btn-danger" href="ObrisiView?ObavijestId=@item.Id">Obrisi</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div style="text-align: end; margin-bottom: 25px;">
+    <a class="btn btn-primary" href="Dodaj">Dodaj</a>
+</div>
+
+
+
+<partial name="_PaginationPartial" view-data="ViewData" model="Model" />
+
+<script>
+    function Uredi(Id, url) {
+        $.get("/AdministratorModul/Obavijesti/Uredi?Id=" + Id, function (res) {
+            $("#forma").html(res);
+        })
+    }
+
+
+    function Obrisi(Id, url) {
+        $.get("/AdministratorModul/Obavijesti/ObrisiView?Id=" + Id, function (res) {
+            $("#forma").html(res);
+        })
+    }
+    function remove(el) {
+        $(el).parent().remove();
+    }
+
+    setTimeout(function () {
+        if ($('#alert').length > 0) {
+            $('#alert').remove();
+        }
+    }, 5000)
+</script>
+
+<style>
+    ul {
+        justify-content: center;
+    }
+</style>
