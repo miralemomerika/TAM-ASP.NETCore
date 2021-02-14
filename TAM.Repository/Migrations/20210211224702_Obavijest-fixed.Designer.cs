@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TAM.Repository;
 
 namespace TAM.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210211224702_Obavijest-fixed")]
+    partial class Obavijestfixed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,32 +299,6 @@ namespace TAM.Repository.Migrations
                     b.ToTable("Kurs");
                 });
 
-            modelBuilder.Entity("TAM.Core.Portir", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Portir");
-                });
-
-            modelBuilder.Entity("TAM.Core.Predavac", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CVUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Titula")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Predavac");
-                });
-
             modelBuilder.Entity("TAM.Core.Obavijest", b =>
                 {
                     b.Property<int>("Id")
@@ -479,24 +455,6 @@ namespace TAM.Repository.Migrations
                     b.HasOne("TAM.Core.KategorijaKursa", "KategorijaKursa")
                         .WithMany()
                         .HasForeignKey("KategorijaKursaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TAM.Core.Portir", b =>
-                {
-                    b.HasOne("TAM.Core.KorisnickiRacun", "KorisnickiRacun")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TAM.Core.Predavac", b =>
-                {
-                    b.HasOne("TAM.Core.KorisnickiRacun", "KorisnickiRacun")
-                        .WithMany()
-                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

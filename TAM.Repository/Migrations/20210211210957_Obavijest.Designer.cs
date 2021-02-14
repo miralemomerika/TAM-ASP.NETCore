@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TAM.Repository;
 
 namespace TAM.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210211210957_Obavijest")]
+    partial class Obavijest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,32 +299,6 @@ namespace TAM.Repository.Migrations
                     b.ToTable("Kurs");
                 });
 
-            modelBuilder.Entity("TAM.Core.Portir", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Portir");
-                });
-
-            modelBuilder.Entity("TAM.Core.Predavac", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CVUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Titula")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Predavac");
-                });
-
             modelBuilder.Entity("TAM.Core.Obavijest", b =>
                 {
                     b.Property<int>("Id")
@@ -337,7 +313,6 @@ namespace TAM.Repository.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("KorisnickiRacunId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Naslov")
@@ -483,24 +458,6 @@ namespace TAM.Repository.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TAM.Core.Portir", b =>
-                {
-                    b.HasOne("TAM.Core.KorisnickiRacun", "KorisnickiRacun")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TAM.Core.Predavac", b =>
-                {
-                    b.HasOne("TAM.Core.KorisnickiRacun", "KorisnickiRacun")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TAM.Core.Obavijest", b =>
                 {
                     b.HasOne("TAM.Core.KategorijaObavijesti", "KategorijaObavijesti")
@@ -511,9 +468,7 @@ namespace TAM.Repository.Migrations
 
                     b.HasOne("TAM.Core.KorisnickiRacun", "KorisnickiRacun")
                         .WithMany()
-                        .HasForeignKey("KorisnickiRacunId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KorisnickiRacunId");
                 });
 #pragma warning restore 612, 618
         }
