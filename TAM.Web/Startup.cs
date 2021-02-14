@@ -51,6 +51,8 @@ namespace TAM.Web
             services.AddTransient<IExceptionHandlerService, ExceptionHandlerService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IKursService, KursService>();
+            services.AddTransient<IPortirService, PortirService>();
+            services.AddTransient<IPredavacService, PredavacService>();
             services.AddTransient<IObavijestService, ObavijestService>();
         }
 
