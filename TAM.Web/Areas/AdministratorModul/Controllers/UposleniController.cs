@@ -126,6 +126,11 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult PredavacInput()
         {
+            TempData["titule"] = new List<SelectListItem>
+            {
+                new SelectListItem{Value = "mr.sc", Text = "mr.sc"},
+                new SelectListItem{Value = "dr.sc", Text = "dr.sc"}
+            };
             return View();
         }
 
