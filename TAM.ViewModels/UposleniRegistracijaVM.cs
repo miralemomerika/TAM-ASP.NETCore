@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -30,7 +32,12 @@ namespace TAM.ViewModels
         [Display(Name = "Prezime")]
         public string LastName { get; set; }
 
-        public string TipUposlenog { get; set; }
+        [Display(Name = "Tip uposlenog")]
+        public string TipUposlenogId { get; set; }
+        public List<SelectListItem> TipUposlenog { get; set; }
+
+        public string Titula { get; set; }
+        public IFormFile CV { get; set; }
 
         public UposleniRegistracijaVM()
         {

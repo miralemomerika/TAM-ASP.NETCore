@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TAM.Repository;
 
 namespace TAM.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210211190750_Portir added")]
+    partial class Portiradded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,22 +309,6 @@ namespace TAM.Repository.Migrations
                     b.ToTable("Portir");
                 });
 
-            modelBuilder.Entity("TAM.Core.Predavac", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CVUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Titula")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Predavac");
-                });
-
             modelBuilder.Entity("TAM.Core.Prostorija", b =>
                 {
                     b.Property<int>("Id")
@@ -449,15 +435,6 @@ namespace TAM.Repository.Migrations
                 });
 
             modelBuilder.Entity("TAM.Core.Portir", b =>
-                {
-                    b.HasOne("TAM.Core.KorisnickiRacun", "KorisnickiRacun")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TAM.Core.Predavac", b =>
                 {
                     b.HasOne("TAM.Core.KorisnickiRacun", "KorisnickiRacun")
                         .WithMany()
