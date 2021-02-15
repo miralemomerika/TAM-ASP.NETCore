@@ -31,7 +31,7 @@ namespace TAM.Service.Classes
             return PortirRepository.GetAll();
         }
 
-        public Portir GetById(int Id)
+        public Portir GetById(string Id)
         {
             return PortirRepository.GetById(Id);
         }

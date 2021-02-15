@@ -2,7 +2,59 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var Naslov = ViewData["Title"].ToString();
+    var Akcija = ViewData["Action"].ToString();
+    var Controller = ViewData["Controller"].ToString();
 }
 
-<h1>Pregled uposlenih</h1>
-<a class="btn btn-primary" asp-controller="Uposleni" asp-action="Registracija">Registruj</a>
+
+@model cloudscribe.Pagination.Models.PagedResult<KorisnikUlogaVM>
+
+<form asp-action="@Naslov" method="get" class="mb-3 mt-3">
+    <div>
+        <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
+        <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
+    </div>
+</form>
+
+<table class="table table-hover mb-5">
+    <thead class="card-header">
+        <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Titula</th>
+            <th>Email</th>
+            <th>Uloge</th>
+            <th>CV</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Data)
+        {
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Titula</td>
+                <td>@user.Email</td>
+                <td>@string.Join(" , ", user.Roles.ToList())</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(user.CVUrl))
+                    {
+                        <a href="~/upload/@user.CVUrl" target="_blank">CV</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_PaginationPartial" view-data="ViewData" model="Model" />
+<partial name="_ModalPartial" />
+
+<a class="btn btn-primary float-right" asp-controller="Uposleni" asp-action="Registracija">Registruj</a>
+
+<style>
+    ul {
+        justify-content: center;
+    }
+</style>
