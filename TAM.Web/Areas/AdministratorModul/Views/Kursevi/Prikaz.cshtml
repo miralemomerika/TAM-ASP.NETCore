@@ -16,43 +16,7 @@
         <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
     </div>
 </form>
-<br />
-@if (TempData["deleted"] != null)
-{
-    <div id="alert" class="alert alert-success" role="alert">
-        @TempData["deleted"].ToString()
-        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-}
-@if (TempData["successAdd"] != null)
-{
-    <div id="alert" class="alert alert-success" role="alert">
-        @TempData["successAdd"].ToString()
-        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-}
-@if (TempData["exception"] != null)
-{
-    <div id="alert" class="alert alert-danger" role="alert">
-        @TempData["exception"].ToString()
-        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-}
-@if (TempData["successUpdate"] != null)
-{
-    <div id="alert" class="alert alert-success" role="alert">
-        @TempData["successUpdate"].ToString()
-        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-}
+<partial name="_AlertPartial" />
 <table class="table table-hover">
     <thead class="card-header">
         <tr align="center">
