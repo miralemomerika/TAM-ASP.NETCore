@@ -12,5 +12,6 @@ namespace TAM.Repository
         void Delete(TEntity entity); 
         IEnumerable<TEntity> GetAll();
         TEntity GetById(int entityId);
+        TEntity GetById(string entityId);
     }
 }

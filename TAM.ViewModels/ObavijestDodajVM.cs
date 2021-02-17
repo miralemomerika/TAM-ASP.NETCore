@@ -10,7 +10,7 @@ namespace TAM.ViewModels
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Polje je obavezno")]
-        [StringLength(30, ErrorMessage = "Naslov obavijesti mora sadržavati između 3 i 30 slova.", MinimumLength = 3)]
+        [StringLength(100, ErrorMessage = "Naslov obavijesti mora sadržavati između 5 i 100 slova.", MinimumLength = 5)]
         public string Naslov { get; set; }
         public DateTime DatumIVrijeme { get; set; }
         [Required(ErrorMessage = "Polje je obavezno")]

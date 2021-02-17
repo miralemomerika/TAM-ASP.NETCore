@@ -8,7 +8,7 @@ namespace TAM.Service.Interfaces
     public interface IPortirService
     {
         public IEnumerable<Portir> GetAll();
-        public Portir GetById(int Id);
+        public Portir GetById(string Id);
         public void Update(Portir portir);
         public void Delete(Portir portir);
         public void Add(Portir portir);

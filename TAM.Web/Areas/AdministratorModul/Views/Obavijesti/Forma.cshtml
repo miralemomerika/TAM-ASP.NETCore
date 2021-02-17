@@ -43,16 +43,18 @@
     {
         <div class="form-group">
             <label for="Naslov">Naslov:</label>
-            <input asp-for="Naslov" value="@Model.Naslov" type="text" class="form-control mb-3" />
+            <input asp-for="Naslov" value="@Model.Naslov" type="text" class="form-control mb-3"
+                   style="width: 40%"/>
             <span asp-validation-for="Naslov" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label for="KategorijaObavijestiId">Kategorija obavijesti:</label>
-            <select asp-for="KategorijaObavijestiId" asp-items="Model.KategorijaObavijesti"></select>
+            <select asp-for="KategorijaObavijestiId" asp-items="Model.KategorijaObavijesti"
+                    class="form-control" style="width: 40%"></select>
         </div>
         <div class="form-group">
             <label for="Sadrzaj">Sadrzaj:</label>
-            <textarea asp-for="Sadrzaj" value="@Model.Sadrzaj" rows="10" cols="50" class="form-control mb-3"></textarea>
+            <textarea asp-for="Sadrzaj" value="@Model.Sadrzaj" rows="7" cols="50" class="form-control mb-3"></textarea>
             <span asp-validation-for="Sadrzaj" class="text-danger"></span>
         </div>
 

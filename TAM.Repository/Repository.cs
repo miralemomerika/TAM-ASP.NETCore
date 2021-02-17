@@ -29,7 +29,6 @@ namespace TAM.Repository
 
                 throw ex;
             }
-           
         }
 
         public void Delete(TEntity entity)
@@ -76,6 +75,20 @@ namespace TAM.Repository
                 throw ex;
             }          
         }
-        
+
+        public TEntity GetById(string entityId)
+        {
+            try
+            {
+                if (DbSet.Find(entityId) == null)
+                    throw new Exception("Entitet ne postoji u bazi");
+                return DbSet.Find(entityId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

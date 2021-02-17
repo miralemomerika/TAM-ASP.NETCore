@@ -8,7 +8,7 @@ namespace TAM.Service.Interfaces
     public interface IPredavacService
     {
         public IEnumerable<Predavac> GetAll();
-        public Predavac GetById(int Id);
+        public Predavac GetById(string Id);
         public void Update(Predavac predavac);
         public void Delete(Predavac predavac);
         public void Add(Predavac predavac);

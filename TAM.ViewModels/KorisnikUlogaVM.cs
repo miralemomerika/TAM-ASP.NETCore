@@ -11,5 +11,7 @@ namespace TAM.ViewModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<string> Roles { get; set; }
+        public string CVUrl { get; set; }
+        public string Titula { get; set; }
     }
 }

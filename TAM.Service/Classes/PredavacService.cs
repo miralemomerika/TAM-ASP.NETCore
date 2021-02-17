@@ -30,7 +30,7 @@ namespace TAM.Service.Classes
             return PredavacRepository.GetAll();
         }
 
-        public Predavac GetById(int Id)
+        public Predavac GetById(string Id)
         {
             return PredavacRepository.GetById(Id);
         }
