@@ -74,23 +74,33 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             var model = new List<KorisnikUlogaUpravljanjeVM>(); 
 
             foreach (var role in _roleManager.Roles.ToList()) 
-            { 
-                var userRolesViewModel = new KorisnikUlogaUpravljanjeVM
-                { 
-                    RoleId = role.Id, 
-                    RoleName = role.Name
-                }; 
-
-                if (await _userManager.IsInRoleAsync(user, role.Name)) 
-                { 
-                    userRolesViewModel.Selected = true; 
-                } 
-                else 
-                { 
-                    userRolesViewModel.Selected = false; 
+            {
+                KorisnikUlogaUpravljanjeVM userRolesViewModel = new KorisnikUlogaUpravljanjeVM();
+                if(role.Name == "Administrator")
+                {
+                    userRolesViewModel.RoleId = role.Id;
+                    userRolesViewModel.RoleName = role.Name;
+                    if (await _userManager.IsInRoleAsync(user, role.Name))
+                    {
+                        userRolesViewModel.Selected = true;
+                    }
+                    else
+                    {
+                        userRolesViewModel.Selected = false;
+                    }
+                    model.Add(userRolesViewModel);
                 }
-                model.Add(userRolesViewModel); 
-            } 
+                if (await _userManager.IsInRoleAsync(user, role.Name)) 
+                {
+                    if (role.Name != "Administrator")
+                    {
+                        userRolesViewModel.RoleId = role.Id;
+                        userRolesViewModel.RoleName = role.Name;
+                        userRolesViewModel.Selected = true;
+                        model.Add(userRolesViewModel);
+                    }
+                } 
+            }
             return View(model); 
         }
 
@@ -120,7 +130,6 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 ModelState.AddModelError("", "Cannot add selected roles to user");
                 return View(model);
             } 
-
             return RedirectToAction("Index"); 
         }
         private async Task<List<string>> GetUserRoles(KorisnickiRacun user) 

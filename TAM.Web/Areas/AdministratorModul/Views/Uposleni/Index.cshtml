@@ -16,7 +16,43 @@
         <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
     </div>
 </form>
-
+<br />
+@if (TempData["deleted"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["deleted"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successAdd"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successAdd"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["exception"] != null)
+{
+    <div id="alert" class="alert alert-danger" role="alert">
+        @TempData["exception"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successUpdate"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successUpdate"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 <table class="table table-hover mb-5">
     <thead class="card-header">
         <tr>
@@ -51,10 +87,29 @@
 <partial name="_PaginationPartial" view-data="ViewData" model="Model" />
 <partial name="_ModalPartial" />
 
-<a class="btn btn-primary float-right" asp-controller="Uposleni" asp-action="Registracija">Registruj</a>
+<a class="btn btn-primary float-right" asp-controller="Uposleni" asp-action="Registracija">Dodaj</a>
 
 <style>
     ul {
         justify-content: center;
     }
 </style>
+
+<script>
+    function Uredi(userId) {
+        $.get("/AdministratorModul/Uloge/Upravljanje?userId=" + userId + "&uposleni=" + true,
+            function (res) {
+                $("#forma").html(res);
+            })
+    }
+
+    function remove(el) {
+        $(el).parent().remove();
+    }
+
+    setTimeout(function () {
+        if ($('#alert').length > 0) {
+            $('#alert').remove();
+        }
+    }, 5000)
+</script>

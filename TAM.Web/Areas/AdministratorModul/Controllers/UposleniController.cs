@@ -62,10 +62,17 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 {
                     if (item == "Predavac")
                     {
-                        var predavac = _predavacService.GetById(thisViewModel.UserId);
                         flag = true;
-                        thisViewModel.CVUrl = predavac.CVUrl;
-                        thisViewModel.Titula = predavac.Titula;
+                        try
+                        {
+                            var predavac = _predavacService.GetById(thisViewModel.UserId);
+                            thisViewModel.CVUrl = predavac.CVUrl;
+                            thisViewModel.Titula = predavac.Titula;
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                     }
                     if(item == "Portir")
                     {
@@ -129,7 +136,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                         throw new Exception("Nije moguce dodati rolu");
                     }
 
-                    await PosaljiLozinkuMailomAsync(Input.Email, Input.Password);
+                    //await PosaljiLozinkuMailomAsync(Input.Email, Input.Password);
                     if(rola.Name == "Portir")
                     {
                         Portir portir = new Portir
@@ -137,6 +144,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                             KorisnickiRacun = user
                         };
                         _portirService.Add(portir);
+                        TempData["successAdd"] = "Portir uspjesno registrovan.";
                     }
                     else if (rola.Name == "Predavac")
                     {
@@ -160,6 +168,11 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                             predavac.CVUrl = fileName;
                         }
                         _predavacService.Add(predavac);
+                        TempData["successAdd"] = "Predavac uspjesno registrovan.";
+                    }
+                    else
+                    {
+                        TempData["successAdd"] = "Administrator uspjesno registrovan.";
                     }
                 }
                 foreach (var error in result.Errors)

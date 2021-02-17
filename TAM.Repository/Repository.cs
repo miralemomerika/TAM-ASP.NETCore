@@ -29,7 +29,6 @@ namespace TAM.Repository
 
                 throw ex;
             }
-           
         }
 
         public void Delete(TEntity entity)
