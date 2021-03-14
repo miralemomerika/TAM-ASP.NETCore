@@ -91,7 +91,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         {
             try
             {
-                ProstorijaService.Delete(prostorija);
+                var obrisi = ProstorijaService.GetById(prostorija.Id);
+                ProstorijaService.Delete(obrisi);
                 TempData["deleted"] = "Uspješno ste obrisali prostoriju.";
 
             }
