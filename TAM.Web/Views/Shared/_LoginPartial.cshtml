@@ -4,19 +4,19 @@
 @inject UserManager<KorisnickiRacun> UserManager
 
 @{ 
-    string korisnikImePrezime = "";
+    string korisnikIme = "";
     if(SignInManager.IsSignedIn(User))
     {
         var korisnik = @UserManager.FindByNameAsync(User.Identity.Name).Result;
-        korisnikImePrezime = korisnik.FirstName + " " + korisnik.LastName;
+        korisnikIme = korisnik.FirstName;
     }
 }
 
-<ul class="navbar-nav">
+<ul class="navbar-nav" style="align-items: center">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@korisnikImePrezime</a>
+        <a  class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@korisnikIme</a>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

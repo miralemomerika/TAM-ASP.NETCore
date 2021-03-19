@@ -22,6 +22,8 @@ namespace TAM.Service.Classes
             {
                 if (prostorija.Naziv == null)
                     throw new Exception("Ne mogu se dodati null vrijednosti");
+                if (prostorija.BrojMjesta < 0)
+                    throw new Exception("Kapacitet prostorije ne moze biti negativan");
                 ProstorijaRepository.Add(prostorija);
             }
             catch (Exception ex)
