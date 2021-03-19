@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TAM.Repository", "TAM.Repos
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TAM.Service", "TAM.Service\TAM.Service.csproj", "{5DB01427-0BA4-48A0-A630-1ACD39408372}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAM.ViewModels", "TAM.ViewModels\TAM.ViewModels.csproj", "{7F647EA8-47C8-41E4-9B79-7F8D006643F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TAM.ViewModels", "TAM.ViewModels\TAM.ViewModels.csproj", "{7F647EA8-47C8-41E4-9B79-7F8D006643F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TAM.Test", "TAM_Unit_Test_Testing\TAM.Test.csproj", "{66E5F535-D74D-46CA-A28C-9DC970FAAADA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7F647EA8-47C8-41E4-9B79-7F8D006643F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F647EA8-47C8-41E4-9B79-7F8D006643F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F647EA8-47C8-41E4-9B79-7F8D006643F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66E5F535-D74D-46CA-A28C-9DC970FAAADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66E5F535-D74D-46CA-A28C-9DC970FAAADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66E5F535-D74D-46CA-A28C-9DC970FAAADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66E5F535-D74D-46CA-A28C-9DC970FAAADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

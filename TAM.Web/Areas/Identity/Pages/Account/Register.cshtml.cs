@@ -46,31 +46,34 @@ namespace TAM.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Obavezno polje")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Obavezno polje")]
             [Phone]
             [Display(Name = "Broj telefona")]
             public string PhoneNumber { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Obavezno polje")]
+            [StringLength(100, ErrorMessage = "Password ne smije biti duži od 100 karaktera")]
             [DataType(DataType.Password)]
+            [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*[#$^+=!*()@%&]).{6,}$"
+                , ErrorMessage = "Minimalno 6 karaktera koji sadrže najmanje jedno veliko i jedno malo slovo" +
+                ", jedan broj i jedan specijalni znak.")]
             [Display(Name = "Lozinka")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Potvrdi lozinku")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Potvrda lozinke nije ista kao i lozinka.")]
             public string ConfirmPassword { get; set; }
 
-            [Required] 
+            [Required(ErrorMessage = "Obavezno polje")] 
             [Display(Name = "Ime")] 
             public string FirstName { get; set; }
-            [Required] 
+            [Required(ErrorMessage = "Obavezno polje")]
             [Display(Name = "Prezime")] 
             public string LastName { get; set; }
         }
