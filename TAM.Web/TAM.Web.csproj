@@ -15,9 +15,11 @@
   <ItemGroup>
     <PackageReference Include="cloudscribe.Pagination.Models" Version="1.1.0" />
     <PackageReference Include="cloudscribe.Web.Pagination" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.13" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
@@ -28,6 +30,7 @@
     <ProjectReference Include="..\TAM.Repository\TAM.Repository.csproj" />
     <ProjectReference Include="..\TAM.Service\TAM.Service.csproj" />
     <ProjectReference Include="..\TAM.ViewModels\TAM.ViewModels.csproj" />
+    <ProjectReference Include="..\TAM.API\TAM.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>

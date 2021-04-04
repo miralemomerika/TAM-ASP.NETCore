@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,10 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using TAM.API.Controllers;
 using TAM.Core;
 using TAM.Repository;
 using TAM.Service.Classes;
@@ -36,7 +42,34 @@ namespace TAM.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-            services.AddControllersWithViews();
+
+            var jwtSettings = Configuration.GetSection("JWTSettings");
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
+            {
+                opt.Cookie.HttpOnly = true;
+                opt.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                opt.LoginPath = "/Identity/Account/Login";
+                opt.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                opt.SlidingExpiration = true;
+
+            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
+                    ValidAudience = jwtSettings.GetSection("validAudience").Value,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
+                };
+            });
+
+            services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddRazorPages();
 
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
@@ -54,6 +87,19 @@ namespace TAM.Web
             services.AddTransient<IPortirService, PortirService>();
             services.AddTransient<IPredavacService, PredavacService>();
             services.AddTransient<IObavijestService, ObavijestService>();
+
+            services.AddScoped<JwtHandler>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Policy",
+                    builder =>
+                    {
+                        builder.WithOrigins("*")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +109,7 @@ namespace TAM.Web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                IdentityModelEventSource.ShowPII = true;
             }
             else
             {
@@ -76,6 +123,9 @@ namespace TAM.Web
             app.UseRouting();
 
             app.UseAuthentication();
+
+            app.UseCors("Policy");
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
