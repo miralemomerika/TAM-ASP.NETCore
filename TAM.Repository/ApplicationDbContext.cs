@@ -25,5 +25,7 @@ namespace TAM.Repository
         public DbSet<Portir> Portir { get; set; }
         public DbSet<Predavac> Predavac { get; set; }
         public DbSet<Obavijest> Obavijest { get; set; }
+        public DbSet<Polaznik> Polaznik { get; set; }
+        public DbSet<Prijava> Prijava { get; set; }
     }
 }

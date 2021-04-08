@@ -78,20 +78,5 @@ namespace TAM.API.Controllers
 
             return Ok(new OdgovorLoginDto { IsAuthSuccessful = true, Token = token });
         }
-
-        [HttpGet("Test")]
-        public IActionResult Test()
-        {
-            var res = new List<int>();
-
-            res.Add(1);
-            res.Add(2);
-            res.Add(3);
-            res.Add(4);
-            res.Add(5);
-
-            return Ok(res);
-        }
-
     }
 }
