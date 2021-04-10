@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TAM.Repository;
 
 namespace TAM.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210410154634_Dogadjaj-added")]
+    partial class Dogadjajadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,15 +170,10 @@ namespace TAM.Repository.Migrations
                     b.Property<bool>("Odobren")
                         .HasColumnType("bit");
 
-                    b.Property<string>("OrganizatorId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("TipDogadjajaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrganizatorId");
 
                     b.HasIndex("TipDogadjajaId");
 
@@ -562,10 +559,6 @@ namespace TAM.Repository.Migrations
 
             modelBuilder.Entity("TAM.Core.Dogadjaj", b =>
                 {
-                    b.HasOne("TAM.Core.Organizator", "Organizator")
-                        .WithMany()
-                        .HasForeignKey("OrganizatorId");
-
                     b.HasOne("TAM.Core.TipDogadjaja", "TipDogadjaja")
                         .WithMany()
                         .HasForeignKey("TipDogadjajaId")
