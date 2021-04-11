@@ -14,6 +14,7 @@ namespace TAM.Repository
         {
         }
 
+        public DbSet<KorisnickiRacun> KorisnickiRacun { get; set; }
         public DbSet<SvrhaUplate> SvrhaUplate { get; set; }
         public DbSet<TipPolaznika> TipPolaznika { get; set; }
         public DbSet<TipDogadjaja> TipDogadjaja { get; set; }

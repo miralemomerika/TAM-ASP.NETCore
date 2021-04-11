@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20210211210829_Obavijest.cs" />
     <Compile Remove="Migrations\20210211210829_Obavijest.Designer.cs" />
+    <Compile Remove="Migrations\20210409161111_korisnicki racun added.cs" />
+    <Compile Remove="Migrations\20210409161111_korisnicki racun added.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
