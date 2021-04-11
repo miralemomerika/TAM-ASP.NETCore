@@ -35,7 +35,10 @@ namespace TAM.API.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim (ClaimTypes.Name, user.Email)
+                new Claim (ClaimTypes.NameIdentifier, user.Id),
+                new Claim (ClaimTypes.Name, user.UserName),
+                new Claim (ClaimTypes.Email, user.Email),
+                //new Claim (ClaimTypes.Role, user)
             };
 
             return claims;

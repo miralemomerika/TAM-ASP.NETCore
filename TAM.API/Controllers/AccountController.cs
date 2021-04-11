@@ -15,7 +15,8 @@ using TAM.Core;
 using NETCore.MailKit.Core;
 using System.Text.Encodings.Web;
 using TAM.Service.Interfaces;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
+using TAM.ViewModels;
 
 namespace TAM.API.Controllers
 {
@@ -26,18 +27,38 @@ namespace TAM.API.Controllers
 
         private readonly UserManager<KorisnickiRacun> userManager;
         private readonly SignInManager<KorisnickiRacun> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly Service.Interfaces.IEmailSender emailSender;
         private readonly JwtHandler jwtHandler;
 
         public AccountController(UserManager<KorisnickiRacun> _userManager,
                                   SignInManager<KorisnickiRacun> _signInManager,
                                   Service.Interfaces.IEmailSender _emailSender,
-                                  JwtHandler _jwtHandler)
+                                  JwtHandler _jwtHandler,
+                                  RoleManager<IdentityRole> _roleManager)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             emailSender = _emailSender;
             jwtHandler = _jwtHandler;
+            roleManager = _roleManager;
+        }
+
+        [HttpGet("Roles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roleList = roleManager.Roles
+                .Where(x => x.Name == "Organizator" || x.Name == "Polaznik")
+                .Select(x => new RolesVM
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
+
+            if (roleList == null)
+                return NotFound();
+
+            return Ok(roleList);
         }
 
         [HttpPost("Registration")]
@@ -57,6 +78,7 @@ namespace TAM.API.Controllers
                 PhoneNumber = dto.PhoneNumber
             };
 
+            var role = roleManager.FindByIdAsync(dto.Role).Result;
             var result = await userManager.CreateAsync(user, dto.Password);
 
             if (!result.Succeeded)
@@ -68,6 +90,14 @@ namespace TAM.API.Controllers
 
             if (result.Succeeded)
             {
+                var roleResult = await userManager.AddToRoleAsync(user, role.Name);
+                var roleError = roleResult.Errors.Select(e => e.Description);
+
+                if (!roleResult.Succeeded)
+                    return BadRequest(new OdgovorRegistracijaDto { Errors = roleError });
+
+
+
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                 var param = new Dictionary<string, string>
                 {

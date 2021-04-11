@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TAM.Core\TAM.Core.csproj" />
     <ProjectReference Include="..\TAM.Service\TAM.Service.csproj" />
+    <ProjectReference Include="..\TAM.ViewModels\TAM.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
