@@ -17,6 +17,7 @@ using System.Text.Encodings.Web;
 using TAM.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TAM.ViewModels;
+using TAM.Repository;
 
 namespace TAM.API.Controllers
 {
@@ -30,18 +31,22 @@ namespace TAM.API.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly Service.Interfaces.IEmailSender emailSender;
         private readonly JwtHandler jwtHandler;
+        readonly ITipPolaznikaService TipPolaznikaService;
+
 
         public AccountController(UserManager<KorisnickiRacun> _userManager,
                                   SignInManager<KorisnickiRacun> _signInManager,
                                   Service.Interfaces.IEmailSender _emailSender,
                                   JwtHandler _jwtHandler,
-                                  RoleManager<IdentityRole> _roleManager)
+                                  RoleManager<IdentityRole> _roleManager,
+                                  ITipPolaznikaService _TipPolaznikaService)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             emailSender = _emailSender;
             jwtHandler = _jwtHandler;
             roleManager = _roleManager;
+            TipPolaznikaService = _TipPolaznikaService;
         }
 
         [HttpGet("Roles")]
@@ -54,6 +59,17 @@ namespace TAM.API.Controllers
                 Id = x.Id,
                 Name = x.Name
             }).ToList();
+
+            if (roleList == null)
+                return NotFound();
+
+            return Ok(roleList);
+        }
+
+        [HttpGet("GetStudentType")]
+        public async Task<IActionResult> GetStudentType()
+        {
+            var roleList = TipPolaznikaService.GetAll();
 
             if (roleList == null)
                 return NotFound();
