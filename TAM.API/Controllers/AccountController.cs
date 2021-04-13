@@ -141,43 +141,15 @@ namespace TAM.API.Controllers
             if (user == null || !await userManager.CheckPasswordAsync(user, korisnikLoginDto.Password))
                 return Unauthorized(new OdgovorLoginDto { ErrorMessage = "Sorry we couldn\'t log you in. Try different email or password" });
 
-            if (!await userManager.IsEmailConfirmedAsync(user))
-                return Unauthorized(new OdgovorLoginDto { ErrorMessage = "Email is not confirmed" });
+            //if (!await userManager.IsEmailConfirmedAsync(user))
+            //    return Unauthorized(new OdgovorLoginDto { ErrorMessage = "Email is not confirmed" });
 
             var signinCredentials = jwtHandler.GetSigningCredentials();
-            var claims = jwtHandler.GetClaims(user);
+            var claims = await jwtHandler.GetClaims(user);
             var tokenOptions = jwtHandler.GenerateTokenOptions(signinCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
             return Ok(new OdgovorLoginDto { IsAuthSuccessful = true, Token = token });
-        }
-
-        [HttpGet("Test")]
-        public IActionResult Test()
-        {
-            var res = new List<int>();
-
-            res.Add(1);
-            res.Add(2);
-            res.Add(3);
-            res.Add(4);
-            res.Add(5);
-
-            return Ok(res);
-        }
-
-        [HttpGet("EmailConfirmation")]
-        public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
-        {
-            var user = await userManager.FindByEmailAsync(email);
-            if (user == null)
-                return BadRequest("Invalid Email Confirmation Request");
-
-            var confirmResult = await userManager.ConfirmEmailAsync(user, token);
-            if (!confirmResult.Succeeded)
-                return BadRequest("Invalid Email Confirmation Request");
-
-            return Ok();
         }
 
     }
