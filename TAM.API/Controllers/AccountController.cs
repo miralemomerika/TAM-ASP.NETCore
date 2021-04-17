@@ -15,7 +15,9 @@ using TAM.Core;
 using NETCore.MailKit.Core;
 using System.Text.Encodings.Web;
 using TAM.Service.Interfaces;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
+using TAM.ViewModels;
+using TAM.Repository;
 
 namespace TAM.API.Controllers
 {
@@ -26,18 +28,59 @@ namespace TAM.API.Controllers
 
         private readonly UserManager<KorisnickiRacun> userManager;
         private readonly SignInManager<KorisnickiRacun> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly Service.Interfaces.IEmailSender emailSender;
         private readonly JwtHandler jwtHandler;
+        private readonly ITipPolaznikaService TipPolaznikaService;
+        private readonly IPolaznikService polaznikService;
+        private readonly IOrganizatorService organizatorService;
+
 
         public AccountController(UserManager<KorisnickiRacun> _userManager,
                                   SignInManager<KorisnickiRacun> _signInManager,
                                   Service.Interfaces.IEmailSender _emailSender,
-                                  JwtHandler _jwtHandler)
+                                  JwtHandler _jwtHandler,
+                                  RoleManager<IdentityRole> _roleManager,
+                                  ITipPolaznikaService _TipPolaznikaService,
+                                  IPolaznikService _polaznikService,
+                                  IOrganizatorService _organizatorService)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             emailSender = _emailSender;
             jwtHandler = _jwtHandler;
+            roleManager = _roleManager;
+            TipPolaznikaService = _TipPolaznikaService;
+            polaznikService = _polaznikService;
+            organizatorService = _organizatorService;
+        }
+
+        [HttpGet("Roles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roleList = roleManager.Roles
+                .Where(x => x.Name == "Organizator" || x.Name == "Polaznik")
+                .Select(x => new RolesVM
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
+
+            if (roleList == null)
+                return NotFound();
+
+            return Ok(roleList);
+        }
+
+        [HttpGet("GetStudentType")]
+        public async Task<IActionResult> GetStudentType()
+        {
+            var roleList = TipPolaznikaService.GetAll();
+
+            if (roleList == null)
+                return NotFound();
+
+            return Ok(roleList);
         }
 
         [HttpPost("Registration")]
@@ -58,6 +101,7 @@ namespace TAM.API.Controllers
             };
 
             var result = await userManager.CreateAsync(user, dto.Password);
+            var role = roleManager.FindByIdAsync(dto.Role).Result;
 
             if (!result.Succeeded)
             {
@@ -68,6 +112,31 @@ namespace TAM.API.Controllers
 
             if (result.Succeeded)
             {
+                var roleResult = await userManager.AddToRoleAsync(user, role.Name);
+                var roleError = roleResult.Errors.Select(e => e.Description);
+
+                if (!roleResult.Succeeded)
+                    return BadRequest(new OdgovorRegistracijaDto { Errors = roleError });
+
+                if(role.Name == "Polaznik")
+                {
+                    Polaznik polaznik = new Polaznik
+                    {
+                        KorisnickiRacun = user,
+                        TipPolaznikaId = dto.StudentType
+                    };
+                    polaznikService.Add(polaznik);
+                }
+                else if(role.Name == "Organizator")
+                {
+                    Organizator organizator = new Organizator
+                    {
+                        KorisnickiRacun = user, 
+                        Institucija = dto.Institution
+                    };
+                    organizatorService.Add(organizator);
+                }
+
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                 var param = new Dictionary<string, string>
                 {

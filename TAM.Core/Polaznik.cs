@@ -11,7 +11,7 @@ namespace TAM.Core
         [Key, ForeignKey("KorisnickiRacun")]
         public string Id { get; set; }
         public virtual KorisnickiRacun KorisnickiRacun { get; set; }
-        public int TipPolaznikaId { get; set; }
+        public int? TipPolaznikaId { get; set; }
         public virtual TipPolaznika TipPolaznika { get; set; }
     }
 }

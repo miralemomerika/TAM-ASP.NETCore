@@ -30,6 +30,11 @@ namespace TAM.API.Dto
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        public string Role { get; set; }
+
         public string ClientURI { get; set; }
+        public string? Institution { get; set; }
+        public int? StudentType { get; set; }
     }
 }
