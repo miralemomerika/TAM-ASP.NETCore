@@ -99,7 +99,7 @@ namespace TAM.API.Controllers
                 return Unauthorized(new OdgovorLoginDto { ErrorMessage = "Email is not confirmed" });
 
             var signinCredentials = jwtHandler.GetSigningCredentials();
-            var claims = jwtHandler.GetClaims(user);
+            var claims = await jwtHandler.GetClaims(user);
             var tokenOptions = jwtHandler.GenerateTokenOptions(signinCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 

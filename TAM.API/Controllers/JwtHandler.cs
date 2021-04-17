@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TAM.Core;
 
 namespace TAM.API.Controllers
 {
@@ -16,14 +17,16 @@ namespace TAM.API.Controllers
 
         private readonly IConfiguration configuration;
         private readonly IConfigurationSection jwtSettings;
+        private readonly UserManager<KorisnickiRacun> userManager;
 
-        public JwtHandler(IConfiguration _configuration)
+        public JwtHandler(IConfiguration _configuration, UserManager<KorisnickiRacun> _userManager)
         {
             configuration = _configuration;
             jwtSettings = _configuration.GetSection("JwtSettings");
+            userManager = _userManager;
         }
 
-        public SigningCredentials GetSigningCredentials() 
+        public SigningCredentials GetSigningCredentials()
         {
             var key = Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value);
             var secret = new SymmetricSecurityKey(key);
@@ -31,13 +34,20 @@ namespace TAM.API.Controllers
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public List<Claim> GetClaims(IdentityUser user)
+        public async Task<List<Claim>> GetClaims(IdentityUser user)
         {
             var claims = new List<Claim>
             {
-                new Claim (ClaimTypes.Name, user.Email)
+                new Claim (ClaimTypes.NameIdentifier, user.Id),
+                new Claim (ClaimTypes.Name, user.UserName),
+                new Claim (ClaimTypes.Email, user.Email),
             };
 
+            var roles = await userManager.GetRolesAsync((KorisnickiRacun)user);
+            foreach (var item in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, item));
+            }
             return claims;
         }
 
