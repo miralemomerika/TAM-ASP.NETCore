@@ -35,6 +35,6 @@ namespace TAM.API.Dto
 
         public string ClientURI { get; set; }
         public string? Institution { get; set; }
-        public string? StudentType { get; set; }
+        public int? StudentType { get; set; }
     }
 }

@@ -41,7 +41,6 @@ namespace TAM.API.Controllers
                 new Claim (ClaimTypes.NameIdentifier, user.Id),
                 new Claim (ClaimTypes.Name, user.UserName),
                 new Claim (ClaimTypes.Email, user.Email),
-                //new Claim (ClaimTypes.Role, user)
             };
 
             var roles = await userManager.GetRolesAsync((KorisnickiRacun)user);

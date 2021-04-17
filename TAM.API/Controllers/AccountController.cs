@@ -31,7 +31,9 @@ namespace TAM.API.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly Service.Interfaces.IEmailSender emailSender;
         private readonly JwtHandler jwtHandler;
-        readonly ITipPolaznikaService TipPolaznikaService;
+        private readonly ITipPolaznikaService TipPolaznikaService;
+        private readonly IPolaznikService polaznikService;
+        private readonly IOrganizatorService organizatorService;
 
 
         public AccountController(UserManager<KorisnickiRacun> _userManager,
@@ -39,7 +41,9 @@ namespace TAM.API.Controllers
                                   Service.Interfaces.IEmailSender _emailSender,
                                   JwtHandler _jwtHandler,
                                   RoleManager<IdentityRole> _roleManager,
-                                  ITipPolaznikaService _TipPolaznikaService)
+                                  ITipPolaznikaService _TipPolaznikaService,
+                                  IPolaznikService _polaznikService,
+                                  IOrganizatorService _organizatorService)
         {
             userManager = _userManager;
             signInManager = _signInManager;
@@ -47,6 +51,8 @@ namespace TAM.API.Controllers
             jwtHandler = _jwtHandler;
             roleManager = _roleManager;
             TipPolaznikaService = _TipPolaznikaService;
+            polaznikService = _polaznikService;
+            organizatorService = _organizatorService;
         }
 
         [HttpGet("Roles")]
@@ -94,8 +100,8 @@ namespace TAM.API.Controllers
                 PhoneNumber = dto.PhoneNumber
             };
 
-            var role = roleManager.FindByIdAsync(dto.Role).Result;
             var result = await userManager.CreateAsync(user, dto.Password);
+            var role = roleManager.FindByIdAsync(dto.Role).Result;
 
             if (!result.Succeeded)
             {
@@ -112,7 +118,24 @@ namespace TAM.API.Controllers
                 if (!roleResult.Succeeded)
                     return BadRequest(new OdgovorRegistracijaDto { Errors = roleError });
 
-
+                if(role.Name == "Polaznik")
+                {
+                    Polaznik polaznik = new Polaznik
+                    {
+                        KorisnickiRacun = user,
+                        TipPolaznikaId = dto.StudentType
+                    };
+                    polaznikService.Add(polaznik);
+                }
+                else if(role.Name == "Organizator")
+                {
+                    Organizator organizator = new Organizator
+                    {
+                        KorisnickiRacun = user, 
+                        Institucija = dto.Institution
+                    };
+                    organizatorService.Add(organizator);
+                }
 
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                 var param = new Dictionary<string, string>
