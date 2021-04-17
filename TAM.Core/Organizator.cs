@@ -12,5 +12,10 @@ namespace TAM.Core
         public string Id { get; set; }
         public virtual KorisnickiRacun KorisnickiRacun { get; set; }
         public string Institucija { get; set; }
+
+        public override string ToString()
+        {
+            return KorisnickiRacun.FirstName + " " +KorisnickiRacun.LastName;
+        }
     }
 }

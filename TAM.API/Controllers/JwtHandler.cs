@@ -26,7 +26,7 @@ namespace TAM.API.Controllers
             userManager = _userManager;
         }
 
-        public SigningCredentials GetSigningCredentials() 
+        public SigningCredentials GetSigningCredentials()
         {
             var key = Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value);
             var secret = new SymmetricSecurityKey(key);
