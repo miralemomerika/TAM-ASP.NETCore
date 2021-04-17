@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,13 @@ namespace TAM.API.Controllers
         public async Task<IActionResult> Prijave()
         {
             return Ok(await _prijavaService.GetAll());
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Polaznik")]
+        public async Task<IActionResult> Prijave([FromBody] int id)
+        {
+            return Ok(await _prijavaService.Add(id));
         }
     }
 }

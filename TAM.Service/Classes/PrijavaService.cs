@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +23,25 @@ namespace TAM.Service.Classes
         {
             _context = context;
             _userManager = userManager;
-            _korisnickiRacun = _context.KorisnickiRacun.First(x => x.UserName == httpContextAccessor
+            _korisnickiRacun = _context.KorisnickiRacun.FirstOrDefault(x => x.UserName == httpContextAccessor
               .HttpContext.User.Identity.Name);
+        }
+
+        public async Task<Prijava> Add(int kursId)
+        {
+            var prijava = new Prijava
+            {
+                KursId = kursId,
+                PolaznikId = _context.Polaznik.Find(_korisnickiRacun.Id).Id,
+                Datum = DateTime.Now
+            };
+            _context.Prijava.Add(prijava);
+            _context.SaveChanges();
+            return prijava;
         }
 
         public async Task<IEnumerable<Prijava>> GetAll()
         {
-            var role = await _userManager.GetRolesAsync(_korisnickiRacun);
             return _context.Prijava.AsEnumerable();
         }
     }
