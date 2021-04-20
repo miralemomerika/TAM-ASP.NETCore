@@ -43,7 +43,9 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                         Cijena=i.Cijena,
                         Id=i.Id,
                         KategorijaKursa=i.KategorijaKursa.Naziv,
-                        Naziv=i.Naziv
+                        Naziv=i.Naziv,
+                        Opis = i.Opis,
+                        Kapacitet = i.Kapacitet,
                     }
                 ).ToList()
             };
@@ -101,6 +103,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 Naziv = kurs.Naziv,
                 KategorijaKursaId = kurs.KategorijaKursaId,
                 Id = kurs.Id,
+                Opis = kurs.Opis,
+                Kapacitet = kurs.Kapacitet,
                 Dodaj = false
             };
             List<SelectListItem> kategorije = KategorijaKursaService.GetAll()
@@ -137,6 +141,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 Naziv = kurs.Naziv,
                 KategorijaKursaId = kurs.KategorijaKursaId,
                 Id = kurs.Id,
+                Kapacitet = kurs.Kapacitet,
+                Opis = kurs.Opis,
                 Dodaj=false
             };
             List<SelectListItem> kategorije = KategorijaKursaService.GetAll()
@@ -180,7 +186,9 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                         BrojCasova = kursDodajVM.BrojCasova,
                         Naziv = kursDodajVM.Naziv,
                         Cijena = kursDodajVM.Cijena,
-                        KategorijaKursaId = kursDodajVM.KategorijaKursaId
+                        KategorijaKursaId = kursDodajVM.KategorijaKursaId,
+                        Kapacitet = kursDodajVM.Kapacitet,
+                        Opis = kursDodajVM.Opis
                     };
                     KursService.Add(kurs);
                     TempData["successAdd"] = "Uspješno ste dodali kurs.";
@@ -192,6 +200,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     kurs.BrojCasova = kursDodajVM.BrojCasova;
                     kurs.Naziv = kursDodajVM.Naziv;
                     kurs.KategorijaKursaId = kursDodajVM.KategorijaKursaId;
+                    kurs.Kapacitet = kursDodajVM.Kapacitet;
+                    kurs.Opis = kursDodajVM.Opis;
                     KursService.Update(kurs);
                     TempData["successUpdate"] = "Uspješno ste uredili kurs.";
                 }
