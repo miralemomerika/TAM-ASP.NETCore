@@ -21,13 +21,6 @@ namespace TAM.API.Controllers
             _prijavaService = prijavaService;
         }
 
-        [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Polaznik")]
-        public async Task<IActionResult> Prijave()
-        {
-            return Ok(await _prijavaService.GetAll());
-        }
-
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Polaznik")]
         public async Task<IActionResult> Prijave([FromBody] int id)
