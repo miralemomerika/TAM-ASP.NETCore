@@ -33,36 +33,46 @@
     <input asp-for="Id" value="@Model.Id" hidden />
     <input asp-for="Dodaj" value="@Model.Dodaj" hidden />
     @if (@NazivTeksta != "Potvrda")
-        {
-    <div class="form-group">
-        <label for="Naziv">Naziv:</label>
-        <input asp-for="Naziv" value="@Model.Naziv" type="text" class="form-control mb-3" />
-        <span asp-validation-for="Naziv" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label for="Cijena">Cijena:</label>
-        <input asp-for="Cijena" value="@Model.Cijena" type="number" step="0.01" class="form-control mb-3" />
-        <span asp-validation-for="Cijena" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label for="BrojCasova">Broj casova:</label>
-        <input asp-for="BrojCasova" value="@Model.BrojCasova" type="number" class="form-control mb-3" />
-        <span asp-validation-for="BrojCasova" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label for="KategorijaKursaId">Kategorija kursa:</label>        
-        <select asp-for="KategorijaKursaId" asp-items="Model.KategorijaKursa"
-                class="form-control"></select>   
-   
-    </div>
-    <input type="submit" class="btn btn-primary float-right" value="Spremi" />
+    {
+        <div class="form-group">
+            <label for="Naziv">Naziv:</label>
+            <input asp-for="Naziv" value="@Model.Naziv" type="text" class="form-control mb-3" />
+            <span asp-validation-for="Naziv" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="Cijena">Cijena:</label>
+            <input asp-for="Cijena" value="@Model.Cijena" type="number" step="0.01" class="form-control mb-3" />
+            <span asp-validation-for="Cijena" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="BrojCasova">Broj casova:</label>
+            <input asp-for="BrojCasova" value="@Model.BrojCasova" type="number" class="form-control mb-3" />
+            <span asp-validation-for="BrojCasova" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="BrojCasova">Kapacitet:</label>
+            <input asp-for="Kapacitet" value="@Model.Kapacitet" type="number" class="form-control mb-3" />
+            <span asp-validation-for="Kapacitet" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="BrojCasova">Kratak opis:</label>
+            <input asp-for="Opis" value="@Model.Opis" type="text" class="form-control mb-3" />
+            <span asp-validation-for="Opis" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="KategorijaKursaId">Kategorija kursa:</label>
+            <select asp-for="KategorijaKursaId" asp-items="Model.KategorijaKursa"
+                    class="form-control"></select>
+
+        </div>
+        <input type="submit" class="btn btn-primary float-right" value="Spremi" />
     }
     else
     {
-            <div class="form-group">
-                <label for="Naziv"><strong>Jeste li sigurni da želite izbrisati ovaj zapis?</strong></label>
-                <input asp-for="Naziv" value="@Model.Naziv" type="text" class="form-control mb-3" disabled />
-            </div>
-            <input type="submit" class="btn btn-danger float-right" value="Obrisi" />
+        <div class="form-group">
+            <label for="Naziv"><strong>Jeste li sigurni da želite izbrisati ovaj zapis?</strong></label>
+            <input asp-for="Naziv" value="@Model.Naziv" type="text" class="form-control mb-3" disabled />
+        </div>
+        <input type="submit" class="btn btn-danger float-right" value="Obrisi" />
     }
 </form>

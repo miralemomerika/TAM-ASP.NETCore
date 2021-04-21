@@ -20,6 +20,12 @@ namespace TAM.ViewModels
         [Required(ErrorMessage = "Polje je obavezno")]
         [Range(10, Int32.MaxValue, ErrorMessage = "Broj casova ne smije biti manji od 10.")]
         public int BrojCasova { get; set; }
+        [Required]
+        [Range(5, Int32.MaxValue, ErrorMessage = "Kapacitet kursa ne smije biti manji od 5")]
+        public int Kapacitet { get; set; }
+        [Required(ErrorMessage = "Polje je obavezno")]
+        [StringLength(50, ErrorMessage = "Kratki opis kursa mora sadržavati između 10 i 50 slova.", MinimumLength = 10)]
+        public string Opis { get; set; }
         public bool Dodaj { get; set; }
     }
 }

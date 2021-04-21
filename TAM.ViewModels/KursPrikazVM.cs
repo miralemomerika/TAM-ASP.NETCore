@@ -13,6 +13,8 @@ namespace TAM.ViewModels
             public string KategorijaKursa { get; set; }
             public float Cijena { get; set; }
             public int BrojCasova { get; set; }
+            public int Kapacitet { get; set; }
+            public string Opis { get; set; }
         }
         public List<Zapis> Zapisi { get; set; }
     }
