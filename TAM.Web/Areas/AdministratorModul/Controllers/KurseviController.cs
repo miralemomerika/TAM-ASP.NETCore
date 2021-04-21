@@ -27,7 +27,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ExceptionHandlerService = exceptionHandlerService;
             KategorijaKursaService = kategorijaKursaService;
         }
-        public IActionResult Prikaz(string pretrazivanje, int pageNumber = 1,
+        public IActionResult Prikaz(int PotrebnoOrganizovati, string pretrazivanje, int pageNumber = 1,
             int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
@@ -46,6 +46,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                         Naziv=i.Naziv,
                         Opis = i.Opis,
                         Kapacitet = i.Kapacitet,
+                        PotrebnoOrganizovati = i.PotrebnoOrganizovati
                     }
                 ).ToList()
             };
@@ -59,6 +60,14 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ViewData["Title"] = "Prikaz";
             ViewData["Controller"] = "Kursevi";
             ViewData["Action"] = "Prikaz";
+            Nullable<int> zaOrganizovati = podaci.Where(x => x.PotrebnoOrganizovati == true).Count();
+            if (zaOrganizovati == 0)
+                zaOrganizovati = null;
+            ViewData["ZaOrganizovati"] = zaOrganizovati;
+            if (PotrebnoOrganizovati != 0)
+            {
+                podaci = podaci.Where(x => x.PotrebnoOrganizovati == true);
+            }
             return View(PomocneMetode.Paginacija<Zapis>(pretrazivanje, podaci, pageNumber, pageSize));
         }
 
@@ -175,6 +184,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             }
             return RedirectToAction("Prikaz");
         }
+
         public IActionResult Spasi(KursDodajVM kursDodajVM)
         {            
             try

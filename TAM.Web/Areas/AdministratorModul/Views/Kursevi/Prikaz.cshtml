@@ -4,88 +4,115 @@
     var Naslov = ViewData["Title"].ToString();
     var Controller = ViewData["Controller"].ToString();
     var Akcija = ViewData["Action"].ToString();
+    var ZaOrganizovati = (Nullable<int>)ViewData["ZaOrganizovati"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 @model cloudscribe.Pagination.Models.PagedResult<KursPrikazVM.Zapis>
 
-<form asp-action="@Naslov" method="get" class="mt-3 mb-3">
-    <div>
-        <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
-        <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
+    <div id="Sve">
+        <form asp-action="@Naslov" method="get" class="mt-3 mb-3">
+            <div>
+                <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
+                <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
+        <div class="mb-2">
+            <button class="btn btn-primary" onclick="Filtriraj(0)">Svi kursevi</button>
+            <button class="btn btn-primary" onclick="Filtriraj(1)">
+                Kursevi koje je potrebno organizovati
+                <span class="badge badge-light">@ZaOrganizovati</span>
+            </button>
+        </div>
+        <partial name="_AlertPartial" />
+        <table class="table table-hover">
+            <thead class="card-header">
+                <tr align="center">
+                    <th>Naziv kursa</th>
+                    <th>Kategorija</th>
+                    <th>Cijena</th>
+                    <th>Broj casova</th>
+                    <th>Kapacitet</th>
+                    <th>Opis</th>
+                    <th>Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Data)
+                {
+                    <tr align="center">
+                        <td>@item.Naziv</td>
+                        <td>@item.KategorijaKursa</td>
+                        <td>@item.Cijena KM</td>
+                        <td>@item.BrojCasova</td>
+                        <td>@item.Kapacitet</td>
+                        <td id="opis">@item.Opis</td>
+                        <td>
+                            <button class="btn btn-info" onclick="Uredi(@item.Id)"
+                                    data-toggle="modal" data-target="#exampleModalCenter">
+                                Uredi
+                            </button>
+                            <button class="btn btn-danger" onclick="Obrisi(@item.Id)"
+                                    data-toggle="modal" data-target="#exampleModalCenter">
+                                Obrisi
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div style="text-align: end; margin-bottom: 25px;">
+            <button class="btn btn-dark"
+                    data-toggle="modal" data-target="#exampleModalCenter" onclick="Dodaj()">
+                Dodaj
+            </button>
+        </div>
+
+        <partial name="_PaginationPartial" view-data="ViewData" model="Model" />
+        <partial name="_ModalPartial" />
     </div>
-</form>
-<partial name="_AlertPartial" />
-<table class="table table-hover">
-    <thead class="card-header">
-        <tr align="center">
-            <th>Naziv kursa</th>
-            <th>Kategorija</th>
-            <th>Cijena</th>
-            <th>Broj casova</th>
-            <th>Kapacitet</th>
-            <th>Opis</th>
-            <th>Akcija</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Data)
-        {
-            <tr align="center">
-                <td>@item.Naziv</td>
-                <td>@item.KategorijaKursa</td>
-                <td>@item.Cijena KM</td>
-                <td>@item.BrojCasova</td>
-                <td>@item.Kapacitet</td>
-                <td>@item.Opis</td>
-                <td>
-                    <button class="btn btn-info" onclick="Uredi(@item.Id)"
-                            data-toggle="modal" data-target="#exampleModalCenter">
-                        Uredi
-                    </button>
-                    <button class="btn btn-danger" onclick="Obrisi(@item.Id)"
-                            data-toggle="modal" data-target="#exampleModalCenter">
-                        Obrisi
-                    </button>
-                </td>
-            </tr>
+
+    <script>
+        function Uredi(Id, url) {
+            $.get("/AdministratorModul/Kursevi/Uredi?Id=" + Id, function (res) {
+                $("#forma").html(res);
+            })
         }
-    </tbody>
-</table>
 
-<div style="text-align: end; margin-bottom: 25px;">
-    <button class="btn btn-dark"
-            data-toggle="modal" data-target="#exampleModalCenter" onclick="Dodaj()">
-        Dodaj
-    </button>
-</div>
+        function Dodaj() {
+            $.get("/AdministratorModul/Kursevi/Dodaj", function (res) {
+                $("#forma").html(res);
+            })
+        }
 
-<partial name="_PaginationPartial" view-data="ViewData" model="Model" />
-<partial name="_ModalPartial" />
+        function Obrisi(Id, url) {
+            $.get("/AdministratorModul/Kursevi/ObrisiView?Id=" + Id, function (res) {
+                $("#forma").html(res);
+            })
+        }
 
-<script>
-    function Uredi(Id, url) {
-        $.get("/AdministratorModul/Kursevi/Uredi?Id=" + Id, function (res) {
-            $("#forma").html(res);
-        })
-    }
+        function Filtriraj(PotrebnoOrganizovati) {
+            $.get("/AdministratorModul/Kursevi/Prikaz?PotrebnoOrganizovati=" + PotrebnoOrganizovati, function (res) {
+                $("#Sve").html(res);
+            })
+        }
+    </script>
 
-    function Dodaj() {
-        $.get("/AdministratorModul/Kursevi/Dodaj", function (res) {
-            $("#forma").html(res);
-        })
-    }
+    <style>
+        ul {
+            justify-content: center;
+        }
 
-    function Obrisi(Id, url) {
-        $.get("/AdministratorModul/Kursevi/ObrisiView?Id=" + Id, function (res) {
-            $("#forma").html(res);
-        })
-    }
-</script>
+        #opis {
+            white-space: nowrap;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-<style>
-    ul {
-        justify-content: center;
-    }
-</style>
+        .badge {
+            margin-left: 5px;
+        }
+    </style>

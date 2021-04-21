@@ -15,6 +15,7 @@ namespace TAM.ViewModels
             public int BrojCasova { get; set; }
             public int Kapacitet { get; set; }
             public string Opis { get; set; }
+            public bool PotrebnoOrganizovati { get; set; }
         }
         public List<Zapis> Zapisi { get; set; }
     }
