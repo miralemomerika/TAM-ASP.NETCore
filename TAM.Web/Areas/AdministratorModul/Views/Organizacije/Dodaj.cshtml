@@ -38,8 +38,8 @@
         <span asp-validation-for="Predavaci" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="DatumPocetka">Datum pocetka: </label>
-        <input asp-for="@Model.DatumPocetka" type="date" class="form-control mb-3" />
+        <label for="DatumPocetka">Datum i vrijeme pocetka: </label>
+        <input asp-for="@Model.DatumPocetka" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control mb-3" />
         <span asp-validation-for="DatumPocetka" class="text-danger"></span>
     </div>
     <div class="form-group">

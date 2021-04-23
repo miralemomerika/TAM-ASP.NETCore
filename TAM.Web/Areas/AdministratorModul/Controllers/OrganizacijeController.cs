@@ -20,16 +20,21 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         private IOrganizacijaKursaService _organizacijaKursaService;
         private IPrijavaService _prijavaService;
         private IPohadjanjeService _pohadjanjeService;
+        private IEmailSender _emailSender;
+        private IExceptionHandlerService _exceptionHandlerService;
 
         public OrganizacijeController(IKursService kursService, IPredavacService predavacService,
             IOrganizacijaKursaService organizacijaKursaService, IPrijavaService prijavaService,
-            IPohadjanjeService pohadjanjeService)
+            IPohadjanjeService pohadjanjeService, IEmailSender emailSender,
+            IExceptionHandlerService exceptionHandlerService)
         {
             _kursService = kursService;
             _predavacService = predavacService;
             _organizacijaKursaService = organizacijaKursaService;
             _prijavaService = prijavaService;
             _pohadjanjeService = pohadjanjeService;
+            _emailSender = emailSender;
+            _exceptionHandlerService = exceptionHandlerService;
         }
 
         public IActionResult Index(string pretrazivanje, int pageNumber = 1,
@@ -48,9 +53,9 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 BrojKategorija = model.Count();
             }
 
-            ViewData["Title"] = "Prikaz";
-            ViewData["Controller"] = "Kursevi";
-            ViewData["Action"] = "Prikaz";
+            ViewData["Title"] = "Index";
+            ViewData["Controller"] = "Organizacije";
+            ViewData["Action"] = "Index";
 
             return View(PomocneMetode.Paginacija<OrganizacijaKursa>(pretrazivanje, model, pageNumber, pageSize));
         }
@@ -66,8 +71,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     Text = $"{x.KorisnickiRacun.FirstName} {x.KorisnickiRacun.LastName}",
                     Value = x.Id
                 }).ToList(),
-                DatumPocetka = DateTime.Now,
-                DatumZavrsetka = DateTime.Now.AddDays(30)
+                DatumPocetka = DateTime.Now.AddDays(5),
+                DatumZavrsetka = DateTime.Now.AddDays(35)
             };
             model.Uredi = false;
             TempData["action"] = "Spasi";
@@ -76,31 +81,62 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 
         public IActionResult Spasi(OrganizacijaDodajVM model)
         {
-            var organizacija = new OrganizacijaKursa
+            try
             {
-                KursId = model.Kurs.Id,
-                PredavacId = model.PredavacId,
-                DatumPocetka = model.DatumPocetka,
-                DatumZavrsetka = model.DatumZavrsetka
-            };
-            _organizacijaKursaService.Add(organizacija);
-            var kurs = _kursService.GetById(model.Kurs.Id);
-            var prijave = _prijavaService.GetAll().AsQueryable();
-            var polaznici = prijave.Where(x => x.KursId == kurs.Id)
-                .OrderByDescending(x => x.Datum).Take(kurs.Kapacitet).ToList();
+                var organizacija = new OrganizacijaKursa
+                {
+                    KursId = model.Kurs.Id,
+                    PredavacId = model.PredavacId,
+                    DatumPocetka = model.DatumPocetka,
+                    DatumZavrsetka = model.DatumZavrsetka
+                };
+                _organizacijaKursaService.Add(organizacija);
+                var kurs = _kursService.GetById(model.Kurs.Id);
+                var prijave = _prijavaService.GetAll().AsQueryable();
+                var polaznici = prijave.Where(x => x.KursId == kurs.Id)
+                    .OrderByDescending(x => x.Datum).Take(kurs.Kapacitet)
+                    .Include(x => x.Polaznik.KorisnickiRacun)
+                    .Select(x => x.Polaznik).ToList();
+                foreach (var item in polaznici)
+                {
+                    Pohadjanje pohadjanje = new Pohadjanje
+                    {
+                        OrganizacijaKursaId = organizacija.Id,
+                        PolaznikId = item.Id,
+                        Pohadja = true
+                    };
+                    _pohadjanjeService.Add(pohadjanje);
+                }
+                kurs.PotrebnoOrganizovati = false;
+                _kursService.Update(kurs);
+                Task.Factory.StartNew(() => ObavijestiPolaznike(polaznici, organizacija));
+                TempData["successAdd"] = "Uspješno ste organizovali kurs.";
+            }
+            catch (Exception ex)
+            {
+                _exceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+            }
+            return RedirectToAction("Index");
+        }
+
+        private async Task ObavijestiPolaznike(List<Polaznik> polaznici, OrganizacijaKursa organizacijaKursa)
+        {
+            string subject = "Obaviještenje o početku održavanja kursa";
+            string htmlMessage = @"Poštovani,<br/><br/>" + 
+                "Obaviještavamo vas da će se kurs: " +
+                "<b>{0}</b><br/>" + "Održati dana: " +
+                "<b>{1}.</b> sa početkom u <b>{2}.</b> sati.<br/>" +
+                "Očekujemo vaš dolazak :)" +
+                "<br/><br/><br/>" + "Lijep pozdrav!" + "<br/>" + 
+                "Kulturni centar TAM";
+            htmlMessage = string.Format(htmlMessage, organizacijaKursa.Kurs.Naziv, 
+                organizacijaKursa.DatumPocetka.ToString("dd.MM.yyyy"), 
+                organizacijaKursa.DatumPocetka.ToString("HH.mm"));
             foreach (var item in polaznici)
             {
-                Pohadjanje pohadjanje = new Pohadjanje
-                {
-                    OrganizacijaKursaId = organizacija.Id,
-                    PolaznikId = item.PolaznikId,
-                    Pohadja = true
-                };
-                _pohadjanjeService.Add(pohadjanje);
+               await _emailSender.SendEmail(item.KorisnickiRacun.Email, subject, htmlMessage);
             }
-            kurs.PotrebnoOrganizovati = false;
-            _kursService.Update(kurs);
-            return RedirectToAction("Index");
         }
     }
 }
