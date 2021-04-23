@@ -47,5 +47,10 @@ namespace TAM.Service.Classes
             _context.SaveChanges();
             return prijava;
         }
+
+        public IEnumerable<Prijava> GetAll()
+        {
+            return _context.Prijava.AsEnumerable();
+        }
     }
 }
