@@ -16,6 +16,11 @@ namespace TAM.Service.Classes
             _repository = repository;
         }
 
+        public IEnumerable<Pohadjanje> GetAll()
+        {
+            return _repository.GetAll();
+        }
+
         public void Add(Pohadjanje pohadjanje)
         {
             _repository.Add(pohadjanje);

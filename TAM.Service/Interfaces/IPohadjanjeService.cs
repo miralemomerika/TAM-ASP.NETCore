@@ -8,5 +8,6 @@ namespace TAM.Service.Interfaces
     public interface IPohadjanjeService
     {
         public void Add(Pohadjanje pohadjanje);
+        public IEnumerable<Pohadjanje> GetAll();
     }
 }

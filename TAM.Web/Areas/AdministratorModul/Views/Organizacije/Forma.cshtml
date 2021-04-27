@@ -47,5 +47,7 @@
         <input asp-for="@Model.DatumZavrsetka" type="date" class="form-control mb-3" />
         <span asp-validation-for="DatumZavrsetka" class="text-danger"></span>
     </div>
+    <input asp-for="Uredi" value="@Model.Uredi" hidden />
+    <input asp-for="Id" value="@Model.Id" hidden />
     <input type="submit" class="btn btn-primary float-right" value="Spremi" />
 </form>
