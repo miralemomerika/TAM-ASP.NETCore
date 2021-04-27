@@ -1,0 +1,59 @@
+﻿@using TAM.Core
+
+@{
+    var Naslov = ViewData["Title"].ToString();
+    var Controller = ViewData["Controller"].ToString();
+    var Akcija = ViewData["Action"].ToString();
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model cloudscribe.Pagination.Models.PagedResult<OrganizacijaKursa>
+
+<form asp-action="@Naslov" method="get" class="mt-3 mb-3">
+        <div>
+            <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
+            <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
+        </div>
+    </form>
+<partial name="_AlertPartial" />
+<table class="table table-hover">
+    <thead class="card-header">
+        <tr align="center">
+            <th>Naziv kursa</th>
+            <th>Predavac</th>
+            <th>Datum pocetka</th>
+            <th>Vrijeme pocetka</th>
+            <th>Datum zavrsetka</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr align="center">
+                <td>@item.Kurs.Naziv</td>
+                <td>@(item.Predavac.KorisnickiRacun.FirstName + " " + item.Predavac.KorisnickiRacun.LastName)</td>
+                <td>@item.DatumPocetka.ToString("dd.MM.yyyy")</td>
+                <td>@item.DatumPocetka.ToString("HH.mm")</td>
+                <td>@item.DatumZavrsetka.ToString("dd.MM.yyyy")</td>
+                <td>
+                    <button class="btn btn-info" onclick="Uredi(@item.Id)"
+                            data-toggle="modal" data-target="#exampleModalCenter">
+                        Uredi
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<partial name="_PaginationPartial" view-data="ViewData" model="Model" />
+<partial name="_ModalPartial" />
+
+<script>
+    function Uredi(Id) {
+        $.get("/AdministratorModul/Organizacije/Uredi?Id=" + Id, function (res) {
+            $("#forma").html(res);
+        })
+    }
+</script>
