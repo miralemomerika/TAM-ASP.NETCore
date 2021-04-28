@@ -83,5 +83,10 @@ namespace TAM.Service.Classes
                 throw er;
             }
         }
+
+        public IEnumerable<Prijava> GetAll()
+        {
+            return _context.Prijava.AsEnumerable();
+        }
     }
 }

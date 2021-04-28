@@ -4,18 +4,17 @@ using System.Text;
 
 namespace TAM.ViewModels
 {
-    public class KursPrikazVM
+    public class DogadjajPrikazVM
     {
         public class Zapis
         {
             public int Id { get; set; }
             public string Naziv { get; set; }
-            public string KategorijaKursa { get; set; }
-            public float Cijena { get; set; }
-            public int BrojCasova { get; set; }
-            public int Kapacitet { get; set; }
+            public string DatumIVrijemeOdrzavanja { get; set; }
+            public bool Odobren { get; set; }
+            public string TipDogadjaja { get; set; }
+            public string ImeOrganizatora { get; set; }
             public string Opis { get; set; }
-            public bool PotrebnoOrganizovati { get; set; }
         }
         public List<Zapis> Zapisi { get; set; }
     }

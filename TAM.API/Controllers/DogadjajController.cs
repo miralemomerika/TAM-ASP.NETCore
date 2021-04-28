@@ -19,12 +19,16 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
     public class DogadjajController : ControllerBase
     {
         readonly IDogadjajService _dogadjajService;
+        readonly ITipDogadjajaService _tipDogadjajaService;
         readonly ApplicationDbContext _context;
         readonly IExceptionHandlerService _exceptionHandlerService;
         private KorisnickiRacun _korisnickiRacun;
+
         public DogadjajController(IDogadjajService dogadjajService, ApplicationDbContext context,
-            IExceptionHandlerService exceptionHandlerService, IHttpContextAccessor httpContextAccessor)
+            IExceptionHandlerService exceptionHandlerService, IHttpContextAccessor httpContextAccessor,
+            ITipDogadjajaService tipDogadjajaService)
         {
+            _tipDogadjajaService = tipDogadjajaService;
             _dogadjajService = dogadjajService;
             _context = context;
             _exceptionHandlerService = exceptionHandlerService;
@@ -34,8 +38,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             }
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("o")]
+        public IActionResult GetOrganizator()
         {
             try
             {
@@ -50,11 +54,42 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                         Naziv=x.Naziv,
                         Id=x.Id,
                         Odobren=x.Odobren,
-                        TipDogadjaja=x.TipDogadjaja.Naziv                    
+                        TipDogadjaja=x.TipDogadjaja.Naziv ,
+                        Opis=x.Opis
                     });
                 }
 
                 //_context.Organizator.First(y => y.Id == x.OrganizatorId).ToString();
+                return Ok(dogadjajiget);
+            }
+            catch (Exception ex)
+            {
+                _exceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                return BadRequest("Dogadjaji nisu pronadjeni");
+            }
+        }
+        
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
+            {
+                var dogadjaji = _dogadjajService.GetAll();
+                dogadjaji = dogadjaji.OrderBy(x=>x.DatumIVrijemeOdrzavanja).Where(x => x.DatumIVrijemeOdrzavanja > DateTime.Now && x.Odobren);
+                var dogadjajiget = new List<DogadjajGetDto>();
+                foreach (var x in dogadjaji)
+                {
+                    dogadjajiget.Add(new DogadjajGetDto
+                    {
+                        DatumIVrijemeOdrzavanja = x.DatumIVrijemeOdrzavanja.ToString("dd.MM.yyyy. HH:mm"),
+                        ImeOrganizatora = x.Organizator.KorisnickiRacun.FirstName + " " + x.Organizator.KorisnickiRacun.LastName,
+                        Naziv = x.Naziv,
+                        Id = x.Id,
+                        Odobren = x.Odobren,
+                        TipDogadjaja = x.TipDogadjaja.Naziv,
+                        Opis = x.Opis
+                    });
+                }
                 return Ok(dogadjajiget);
             }
             catch (Exception ex)
@@ -77,7 +112,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     DatumIVrijemeOdrzavanja = temp.DatumIVrijemeOdrzavanja.ToString("dd.MM.yyyy. HH:mm"),
                     ImeOrganizatora = _context.Organizator.First(y => y.Id == temp.OrganizatorId).ToString(),
                     Odobren = temp.Odobren,
-                    TipDogadjaja = temp.TipDogadjaja.Naziv
+                    TipDogadjaja = temp.TipDogadjaja.Naziv,
+                    Opis = temp.Opis
                 };
                 return Ok(dogadjaj);
             }
@@ -89,7 +125,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]       
-        public IActionResult Create(API.Dto.DogadjajPostDto dogadjaj)
+        public IActionResult Create(API.Dto.DogadjajRequestDto dogadjaj)
         {
             try
             {
@@ -100,7 +136,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     TipDogadjajaId = dogadjaj.TipDogadjajaId,
                     Naziv = dogadjaj.Naziv,
                     Odobren = false,
-                    OrganizatorId = _korisnickiRacun.Id
+                    OrganizatorId = _korisnickiRacun.Id,
+                    Opis=dogadjaj.Opis
                 };
                 _dogadjajService.Add(temp);
                 return Ok();
@@ -129,15 +166,15 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         }
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IActionResult Update([FromBody] DogadjajGetDto dogadjaj)
+        public IActionResult Update([FromBody] DogadjajRequestDto dogadjaj)
         {
             try
             {
                 Core.Dogadjaj temp = _dogadjajService.GetById(dogadjaj.Id);
-                //temp.Naziv = dogadjaj.Naziv;
-                //temp.Odobren = dogadjaj.Odobren;
-                //temp.TipDogadjaja = dogadjaj.TipDogadjaja;
-                //temp.DatumIVrijemeOdrzavanja = DateTime.ParseExact(dogadjaj.DatumIVrijemeOdrzavanja, "dd.MM.yyyy. HH:mm", null);
+                temp.Naziv = dogadjaj.Naziv;
+                temp.TipDogadjajaId = dogadjaj.TipDogadjajaId;
+                temp.DatumIVrijemeOdrzavanja = dogadjaj.DatumIVrijemeOdrzavanja;
+                temp.Opis = dogadjaj.Opis;
                 _dogadjajService.Update(temp);
                 return Ok();
             }
@@ -147,6 +184,18 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 return BadRequest("Dogadjaj nije modifikovan");
             }
         }
-
+        [HttpGet("tip")]
+        public IActionResult GetTip()
+        {
+            try
+            {
+                return Ok(_tipDogadjajaService.GetAll());
+            }
+            catch (Exception ex)
+            {
+                _exceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                return BadRequest();
+            }
+        }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TAM.Repository;
 
 namespace TAM.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210421203005_Organizacija kursa added")]
+    partial class Organizacijakursaadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,11 +169,6 @@ namespace TAM.Repository.Migrations
 
                     b.Property<bool>("Odobren")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Opis")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
 
                     b.Property<string>("OrganizatorId")
                         .HasColumnType("nvarchar(450)");
@@ -422,34 +419,6 @@ namespace TAM.Repository.Migrations
                     b.ToTable("Organizator");
                 });
 
-            modelBuilder.Entity("TAM.Core.Pohadjanje", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("OcjenaPohadjanja")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrganizacijaKursaId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Pohadja")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PolaznikId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizacijaKursaId");
-
-                    b.HasIndex("PolaznikId");
-
-                    b.ToTable("Pohadjanje");
-                });
-
             modelBuilder.Entity("TAM.Core.Polaznik", b =>
                 {
                     b.Property<string>("Id")
@@ -581,34 +550,6 @@ namespace TAM.Repository.Migrations
                     b.ToTable("TipPolaznika");
                 });
 
-            modelBuilder.Entity("TAM.Core.Uplata", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Datum")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DogadjajId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Iznos")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PrijavaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DogadjajId");
-
-                    b.HasIndex("PrijavaId");
-
-                    b.ToTable("Uplata");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -719,19 +660,6 @@ namespace TAM.Repository.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TAM.Core.Pohadjanje", b =>
-                {
-                    b.HasOne("TAM.Core.OrganizacijaKursa", "OrganizacijaKursa")
-                        .WithMany()
-                        .HasForeignKey("OrganizacijaKursaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TAM.Core.Polaznik", "Polaznik")
-                        .WithMany()
-                        .HasForeignKey("PolaznikId");
-                });
-
             modelBuilder.Entity("TAM.Core.Polaznik", b =>
                 {
                     b.HasOne("TAM.Core.KorisnickiRacun", "KorisnickiRacun")
@@ -774,17 +702,6 @@ namespace TAM.Repository.Migrations
                     b.HasOne("TAM.Core.Polaznik", "Polaznik")
                         .WithMany()
                         .HasForeignKey("PolaznikId");
-                });
-
-            modelBuilder.Entity("TAM.Core.Uplata", b =>
-                {
-                    b.HasOne("TAM.Core.Dogadjaj", "Dogadjaj")
-                        .WithMany()
-                        .HasForeignKey("DogadjajId");
-
-                    b.HasOne("TAM.Core.Prijava", "Prijava")
-                        .WithMany()
-                        .HasForeignKey("PrijavaId");
                 });
 #pragma warning restore 612, 618
         }
