@@ -54,7 +54,8 @@ namespace TAM.Web
                 opt.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 opt.SlidingExpiration = true;
 
-            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            })
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
@@ -90,6 +91,8 @@ namespace TAM.Web
             services.AddTransient<IPrijavaService, PrijavaService>();
             services.AddTransient<IPolaznikService, PolaznikService>();
             services.AddTransient<IOrganizatorService, OrganizatorService>();
+            services.AddTransient<IUplataService, UplataService>();
+            services.AddTransient<IDogadjajService, DogadjajService>();
 
             services.AddScoped<JwtHandler>();
 

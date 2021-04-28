@@ -17,14 +17,16 @@ namespace TAM.Service.Classes
         private ApplicationDbContext _context;
         private UserManager<KorisnickiRacun> _userManager;
         private KorisnickiRacun _korisnickiRacun;
+        private IRepository<Prijava> _repository;
 
         public PrijavaService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor,
-            UserManager<KorisnickiRacun> userManager)
+            UserManager<KorisnickiRacun> userManager, IRepository<Prijava> repository)
         {
             _context = context;
             _userManager = userManager;
             _korisnickiRacun = _context.KorisnickiRacun.FirstOrDefault(x => x.UserName == httpContextAccessor
               .HttpContext.User.Identity.Name);
+            _repository = repository;
         }
 
         public async Task<Prijava> Add(int kursId)
@@ -46,6 +48,40 @@ namespace TAM.Service.Classes
             _context.Entry(kurs).State = EntityState.Modified;
             _context.SaveChanges();
             return prijava;
+        }
+
+        public Prijava GetById(int Id)
+        {
+            try
+            {
+                var prijave = _repository.GetAll().AsQueryable();
+                prijave = prijave.Include(x => x.Kurs).ThenInclude(x => x.KategorijaKursa)
+                    .Include(x => x.Polaznik).ThenInclude(x => x.KorisnickiRacun);
+                var prijava = prijave.First(x => x.Id == Id);
+                return prijava;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public IEnumerable<Prijava> GetAll()
+        {
+            try
+            {
+                var prijave = _repository.GetAll().AsQueryable();
+                prijave = prijave.Include(x => x.Kurs).ThenInclude(x => x.KategorijaKursa)
+                    .Include(x => x.Polaznik).ThenInclude(x => x.KorisnickiRacun);
+                var lista = prijave.ToList();
+                return lista;
+                
+            }
+            catch (Exception er)
+            {
+
+                throw er;
+            }
         }
     }
 }

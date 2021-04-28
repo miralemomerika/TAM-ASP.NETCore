@@ -81,7 +81,7 @@ namespace TAM.Service.Classes
                     var dogadjaji = DogadjajRepository.GetAll().AsQueryable();
                     dogadjaji = dogadjaji.Include(x => x.TipDogadjaja).Include(x => x.Organizator)
                         .ThenInclude(x => x.KorisnickiRacun);
-                    dogadjaji = dogadjaji.Where(x => x.OrganizatorId == _korisnickiRacun.Id);
+                    //dogadjaji = dogadjaji.Where(x => x.OrganizatorId == _korisnickiRacun.Id);
                     var lista = dogadjaji.ToList();
                     return lista;
                 }

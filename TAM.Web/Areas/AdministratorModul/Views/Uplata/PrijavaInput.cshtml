@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "Uplata";
+    Layout = null;
+
+    var kursevi = (List<SelectListItem>)TempData["kursevi"];
+    var polaznici = (List<SelectListItem>)TempData["polaznici"];
+}
+
+@model UplataDodajVM
+
+<div class="form-group">
+    <label for="KursId">Kursevi:</label>
+    <select asp-for="KursId" asp-items="kursevi" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label for="PolaznikId">Polaznici:</label>
+    <select asp-for="PolaznikId" asp-items="polaznici" class="form-control"></select>
+</div>

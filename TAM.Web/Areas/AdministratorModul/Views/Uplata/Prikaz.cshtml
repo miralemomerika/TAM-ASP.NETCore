@@ -1,0 +1,99 @@
+﻿@using TAM.ViewModels
+@{
+    var Naslov = ViewData["Title"].ToString();
+    var Controller = ViewData["Controller"].ToString();
+    var Akcija = ViewData["Action"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model cloudscribe.Pagination.Models.PagedResult<UplataPrikazVM>
+
+<form asp-action="@Naslov" method="get" class="mt-3 mb-3">
+    <div>
+        <input class="form-control w-auto d-inline" type="text" name="pretrazivanje" value="@ViewBag.CurrentFilter" placeholder="Pretrazi" />
+        <button type="submit" value="Search" class="btn btn-primary mb-1"><i class="fa fa-search"></i></button>
+    </div>
+</form>
+<partial name="_AlertPartial" />
+<table class="table table-hover">
+    <thead class="card-header">
+        <tr align="center">
+            <th>Svrha</th>
+            <th>Uplatu izvrsio</th>
+            <th>Datum</th>
+            <th>Iznos</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr align="center">
+                <td>
+                    @if (item.NazivKursa != null)
+                        { @item.NazivKursa }
+                    else
+                        { @item.NazivDogadjaja }
+                </td>
+                <td>
+                    @if (item.Polaznik != null)
+                        { @item.Polaznik }
+                    else
+                        { @item.Organizator }
+                </td>
+                <td>@item.Datum.ToString("dd.MM.yyyy")</td>
+                <td>@item.Iznos</td>
+                <td>
+                    <button class="btn btn-info" onclick="Uredi(@item.Id)" 
+                            data-toggle="modal" data-target="#exampleModalCenter">
+                            Uredi
+                     </button>
+                    @*<a class="btn btn-info" href="Uredi?Id=@item.Id">Uredi</a>*@
+                    <button class="btn btn-danger" onclick="Obrisi(@item.Id)"
+                        data-toggle="modal" data-target="#exampleModalCenter">
+                            Obrisi
+                    </button>
+                    @*<a class="btn btn-danger" href="Obrisi?Id=@item.Id">Obrisi</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div style="text-align: end; margin-bottom: 25px;">
+    <button class="btn btn-dark" data-toggle="modal"
+            data-target="#exampleModalCenter" onclick="Dodaj()">Dodaj</button>
+</div>
+
+@section Scripts {
+    <partial name="_PaginationPartial" view-data="ViewData" model="Model" />
+    <partial name="_ModalPartial">
+}
+
+
+<script>
+    function Uredi(Id) {
+        $.get("/AdministratorModul/Uplata/Uredi?Id=" + Id, function (res) {
+            $("#forma").html(res);
+        })
+    }
+
+    function Dodaj() {
+        $.get("/AdministratorModul/Uplata/Dodaj", function (res) {
+            $("#forma").html(res);
+        })
+    }
+
+    function Obrisi(Id) {
+        $.get("/AdministratorModul/Uplata/Obrisi?Id=" + Id, function (res) {
+            $("#forma").html(res);
+        })
+    }
+</script>
+
+<style>
+    ul {
+        justify-content: center;
+    }
+</style>

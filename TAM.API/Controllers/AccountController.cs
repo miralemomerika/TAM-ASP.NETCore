@@ -164,8 +164,8 @@ namespace TAM.API.Controllers
             if (user == null || !await userManager.CheckPasswordAsync(user, korisnikLoginDto.Password))
                 return Unauthorized(new OdgovorLoginDto { ErrorMessage = "Sorry we couldn\'t log you in. Try different email or password" });
 
-            //if (!await userManager.IsEmailConfirmedAsync(user))
-            //    return Unauthorized(new OdgovorLoginDto { ErrorMessage = "Email is not confirmed" });
+            if (!await userManager.IsEmailConfirmedAsync(user))
+                return Unauthorized(new OdgovorLoginDto { ErrorMessage = "Email is not confirmed" });
 
             var signinCredentials = jwtHandler.GetSigningCredentials();
             var claims = await jwtHandler.GetClaims(user);
