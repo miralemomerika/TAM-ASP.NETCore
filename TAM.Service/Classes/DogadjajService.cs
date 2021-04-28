@@ -21,6 +21,7 @@ namespace TAM.Service.Classes
             IHttpContextAccessor httpContextAccessor,
             ApplicationDbContext context,
             UserManager<KorisnickiRacun> userManager)
+        
         {
             DogadjajRepository = repository;
             _context = context;
@@ -52,39 +53,52 @@ namespace TAM.Service.Classes
             {
                 throw ex;
             }
-        }
-
+        }        
         public IEnumerable<Dogadjaj> GetAll()
         {
             try
             {
+                if(_korisnickiRacun!=null)
+                {
+
+                
                 var roles = _userManager.GetRolesAsync(_korisnickiRacun);
-                bool isAdmin = false;
-                bool isOrganizator = false;
-                foreach (var item in roles.Result)
+                if(roles.Result.Count!=0)
                 {
-                    if (item == "Organizator")
-                        isOrganizator = true;
-                    if (item == "Administrator")
-                        isAdmin = true;
+                    bool isAdmin = false;
+                    bool isOrganizator = false;
+                    foreach (var item in roles.Result)
+                    {
+                        if (item == "Organizator")
+                            isOrganizator = true;
+                        if (item == "Administrator")
+                            isAdmin = true;
+                    }
+                    if (isAdmin)
+                    {
+                        var dogadjaji = DogadjajRepository.GetAll().AsQueryable();
+                        dogadjaji = dogadjaji.Include(x => x.TipDogadjaja).Include(x => x.Organizator)
+                            .ThenInclude(x => x.KorisnickiRacun);
+                        var lista1 = dogadjaji.ToList();
+                        return lista1;
+                    }
+                    else
+                    {
+                        var dogadjaji = DogadjajRepository.GetAll().AsQueryable();
+                        dogadjaji = dogadjaji.Include(x => x.TipDogadjaja).Include(x => x.Organizator)
+                            .ThenInclude(x => x.KorisnickiRacun);
+                        dogadjaji = dogadjaji.Where(x => x.OrganizatorId == _korisnickiRacun.Id);
+                        var lista1 = dogadjaji.ToList();
+                        return lista1;
+                    }
                 }
-                if (isAdmin)
-                {
-                    var dogadjaji = DogadjajRepository.GetAll().AsQueryable();
-                    dogadjaji = dogadjaji.Include(x => x.TipDogadjaja).Include(x => x.Organizator)
-                        .ThenInclude(x => x.KorisnickiRacun);
-                    var lista = dogadjaji.ToList();
-                    return lista;
                 }
-                else
-                {
-                    var dogadjaji = DogadjajRepository.GetAll().AsQueryable();
-                    dogadjaji = dogadjaji.Include(x => x.TipDogadjaja).Include(x => x.Organizator)
-                        .ThenInclude(x => x.KorisnickiRacun);
-                    dogadjaji = dogadjaji.Where(x => x.OrganizatorId == _korisnickiRacun.Id);
-                    var lista = dogadjaji.ToList();
-                    return lista;
-                }
+                var dogadjaji1 = DogadjajRepository.GetAll().AsQueryable();
+                dogadjaji1 = dogadjaji1.Include(x => x.TipDogadjaja).Include(x => x.Organizator)
+                    .ThenInclude(x => x.KorisnickiRacun);
+                //dogadjaji1 = dogadjaji1.Where(x => x.DatumIVrijemeOdrzavanja > DateTime.Now && x.Odobren == true);
+                var lista = dogadjaji1.ToList();
+                return lista;
 
                 //var dogadjaji = DogadjajRepository.GetAll().AsQueryable();
                 //dogadjaji = dogadjaji.Include(x => x.Organizator).ThenInclude(x => x.KorisnickiRacun);

@@ -12,5 +12,6 @@ namespace TAM.API.Dto
         public bool Odobren { get; set; }
         public string TipDogadjaja { get; set; }
         public string ImeOrganizatora { get; set; }
+        public string Opis { get; set; }
     }
 }

@@ -90,6 +90,7 @@ namespace TAM.Web
             services.AddTransient<IPrijavaService, PrijavaService>();
             services.AddTransient<IPolaznikService, PolaznikService>();
             services.AddTransient<IOrganizatorService, OrganizatorService>();
+            services.AddTransient<IDogadjajService, DogadjajService>();
 
             services.AddScoped<JwtHandler>();
 
