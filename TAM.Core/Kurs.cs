@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -21,5 +22,13 @@ namespace TAM.Core
         [ForeignKey(nameof(KategorijaKursaId))]
         public virtual KategorijaKursa KategorijaKursa { get; set; }
         public int KategorijaKursaId { get; set; }
+        [Required]
+        [Range(5, Int32.MaxValue, ErrorMessage = "Kapacitet kursa ne smije biti manji od 5")]
+        public int Kapacitet { get; set; }
+        [DefaultValue(false)]
+        public bool PotrebnoOrganizovati { get; set; }
+        [Required(ErrorMessage = "Polje je obavezno")]
+        [StringLength(50, ErrorMessage = "Kratki opis kursa mora sadržavati između 10 i 50 slova.", MinimumLength = 10)]
+        public string Opis { get; set; }
     }
 }

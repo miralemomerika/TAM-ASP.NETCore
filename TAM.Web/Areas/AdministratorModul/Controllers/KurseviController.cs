@@ -27,7 +27,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ExceptionHandlerService = exceptionHandlerService;
             KategorijaKursaService = kategorijaKursaService;
         }
-        public IActionResult Prikaz(string pretrazivanje, int pageNumber = 1,
+        public IActionResult Prikaz(int PotrebnoOrganizovati, string pretrazivanje, int pageNumber = 1,
             int pageSize = 5)
         {
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
@@ -43,7 +43,10 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                         Cijena=i.Cijena,
                         Id=i.Id,
                         KategorijaKursa=i.KategorijaKursa.Naziv,
-                        Naziv=i.Naziv
+                        Naziv=i.Naziv,
+                        Opis = i.Opis,
+                        Kapacitet = i.Kapacitet,
+                        PotrebnoOrganizovati = i.PotrebnoOrganizovati
                     }
                 ).ToList()
             };
@@ -57,6 +60,14 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             ViewData["Title"] = "Prikaz";
             ViewData["Controller"] = "Kursevi";
             ViewData["Action"] = "Prikaz";
+            Nullable<int> zaOrganizovati = podaci.Where(x => x.PotrebnoOrganizovati == true).Count();
+            if (zaOrganizovati == 0)
+                zaOrganizovati = null;
+            ViewData["ZaOrganizovati"] = zaOrganizovati;
+            if (PotrebnoOrganizovati != 0)
+            {
+                podaci = podaci.Where(x => x.PotrebnoOrganizovati == true);
+            }
             return View(PomocneMetode.Paginacija<Zapis>(pretrazivanje, podaci, pageNumber, pageSize));
         }
 
@@ -101,6 +112,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 Naziv = kurs.Naziv,
                 KategorijaKursaId = kurs.KategorijaKursaId,
                 Id = kurs.Id,
+                Opis = kurs.Opis,
+                Kapacitet = kurs.Kapacitet,
                 Dodaj = false
             };
             List<SelectListItem> kategorije = KategorijaKursaService.GetAll()
@@ -137,6 +150,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                 Naziv = kurs.Naziv,
                 KategorijaKursaId = kurs.KategorijaKursaId,
                 Id = kurs.Id,
+                Kapacitet = kurs.Kapacitet,
+                Opis = kurs.Opis,
                 Dodaj=false
             };
             List<SelectListItem> kategorije = KategorijaKursaService.GetAll()
@@ -169,6 +184,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             }
             return RedirectToAction("Prikaz");
         }
+
         public IActionResult Spasi(KursDodajVM kursDodajVM)
         {            
             try
@@ -180,7 +196,9 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                         BrojCasova = kursDodajVM.BrojCasova,
                         Naziv = kursDodajVM.Naziv,
                         Cijena = kursDodajVM.Cijena,
-                        KategorijaKursaId = kursDodajVM.KategorijaKursaId
+                        KategorijaKursaId = kursDodajVM.KategorijaKursaId,
+                        Kapacitet = kursDodajVM.Kapacitet,
+                        Opis = kursDodajVM.Opis
                     };
                     KursService.Add(kurs);
                     TempData["successAdd"] = "Uspješno ste dodali kurs.";
@@ -192,6 +210,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     kurs.BrojCasova = kursDodajVM.BrojCasova;
                     kurs.Naziv = kursDodajVM.Naziv;
                     kurs.KategorijaKursaId = kursDodajVM.KategorijaKursaId;
+                    kurs.Kapacitet = kursDodajVM.Kapacitet;
+                    kurs.Opis = kursDodajVM.Opis;
                     KursService.Update(kurs);
                     TempData["successUpdate"] = "Uspješno ste uredili kurs.";
                 }

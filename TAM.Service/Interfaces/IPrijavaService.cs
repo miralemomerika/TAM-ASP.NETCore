@@ -8,6 +8,7 @@ namespace TAM.Service.Interfaces
 {
     public interface IPrijavaService
     {
-        public Task<IEnumerable<Prijava>> GetAll();
+        public IEnumerable<Prijava> GetAll();
+        public Task<Prijava> Add(int kursId);
     }
 }
