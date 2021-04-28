@@ -58,7 +58,7 @@ namespace TAM.API.Controllers
                 issuer: jwtSettings.GetSection("validIssuer").Value,
                 audience: jwtSettings.GetSection("validAudience").Value,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings.GetSection("expiryMinutes").Value)),
+                expires: DateTime.Now.AddDays(1),
                 signingCredentials: signingCredentials);
 
             return tokenOptions;
