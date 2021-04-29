@@ -49,8 +49,8 @@ namespace TAM.Service.Classes
             try
             {
                 var uplate = repository.GetAll().AsQueryable();
-                uplate = uplate.Include(x => x.Dogadjaj).ThenInclude(x => x.Organizator).ThenInclude(x => x.KorisnickiRacun)
-                    .Include(x => x.Dogadjaj)
+                uplate = uplate.Include(x => x.Dogadjaj)
+                    .Include(x => x.Dogadjaj).ThenInclude(x => x.Organizator).ThenInclude(x => x.KorisnickiRacun)
                     .Include(x => x.Prijava).ThenInclude(x => x.Kurs)
                     .Include(x => x.Prijava).ThenInclude(x => x.Polaznik).ThenInclude(x => x.KorisnickiRacun);
                 var lista = uplate.ToList();
