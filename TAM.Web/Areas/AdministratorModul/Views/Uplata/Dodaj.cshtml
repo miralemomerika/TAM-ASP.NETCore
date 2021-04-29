@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TAM.Core
+@using TAM.ViewModels
+@{
+    var Action = TempData["action"].ToString();
+    var NazivTeksta = TempData["nazivTeksta"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model UplataDodajVM
+
+<form asp-action="@Action" asp-controller="Uplata">
+    <div class="modal-header" style="padding:1rem 0rem">
+        <h5 class="modal-title" id="exampleModalLongTitle">Dodaj</h5>
+    </div>
+    <br />
+    <input asp-for="Id" value="@Model.Id" hidden />
+    <input asp-for="NovaUplata" value="@Model.NovaUplata" hidden />
+    <div class="form-group">
+        <label for="Iznos">Iznos:</label>
+        <input asp-for="Iznos" type="number" class="form-control mb-3"/>
+        <span asp-validation-for="Iznos" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Datum">Datum:</label>
+        <br />
+        <input asp-for="Datum" value="null" type="date" class="from-control mb-3" />
+        <span asp-validation-for="Datum" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Svrhe">Svrha:</label>
+        <select asp-for="SvrhaId" asp-items="Model.Svrhe" class="form-control" 
+                onchange="svrhaUplateChanged(this)"></select>
+        <span asp-validation-for="SvrhaId" class="text-danger"></span>
+    </div>
+    <div id="content"></div>
+
+    <input type="submit" class="btn btn-primary float-right" value="Spremi" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+    function svrhaUplateChanged(obj) {
+        if (obj.options[obj.selectedIndex].text == "Kurs") {
+            $.get("PrijavaInput", function (res) {
+                $("#content").html(res);
+            })
+        }
+        else if (obj.options[obj.selectedIndex].text == "Dogadjaj") {
+            $.get("DogadjajInput", function (res) {
+                $("#content").html(res);
+            })
+        }
+        else {
+            $("#content").html(null);
+        }
+    }
+</script>

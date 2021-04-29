@@ -32,5 +32,6 @@ namespace TAM.Repository
         public DbSet<Dogadjaj> Dogadjaj { get; set; }
         public DbSet<OrganizacijaKursa> OrganizacijaKursa { get; set; }
         public DbSet<Pohadjanje> Pohadjanje { get; set; }
+        public DbSet<Uplata> Uplata { get; set; }
     }
 }

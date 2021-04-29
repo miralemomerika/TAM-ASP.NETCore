@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TAM.Core
+@using TAM.ViewModels
+@{
+    var Action = TempData["action"].ToString();
+    var NazivTeksta = TempData["nazivTeksta"].ToString();
+    var Svrha = TempData["svrha"].ToString();
+    var kursevi = (List<SelectListItem>)TempData["kursevi"] != null ? (List<SelectListItem>)TempData["kursevi"] : null;
+    var polaznici = (List<SelectListItem>)TempData["polaznici"] != null ? (List<SelectListItem>)TempData["polaznici"] : null;
+    var dogadjaji = (List<SelectListItem>)TempData["dogadjaji"] != null ? (List<SelectListItem>)TempData["dogadjaji"] : null;
+    var organizatori = (List<SelectListItem>)TempData["organizatori"] != null ? (List<SelectListItem>)TempData["organizatori"] : null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model UplataDodajVM
+
+<form asp-action="@Action" asp-controller="Uplata">
+    <div class="modal-header" style="padding:1rem 0rem">
+        <h5 class="modal-title" id="exampleModalLongTitle">Uredi</h5>
+    </div>
+    <br />
+    <input asp-for="Id" value="@Model.Id" hidden />
+    <input asp-for="NovaUplata" value="@Model.NovaUplata" hidden />
+    <div class="form-group">
+        <label for="Iznos">Iznos:</label>
+        <input asp-for="Iznos" value="@Model.Iznos" type="text" class="form-control mb-3"/>
+        <span asp-validation-for="Iznos" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Datum">Datum:</label>
+        <br />
+        <input asp-for="Datum" type="date" value="@Model.Datum.ToString("yyyy-MM-dd")" class="from-control mb-3" />
+        <span asp-validation-for="Datum" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Svrhe">Svrha:</label>
+        <select id="svrha" value="@Svrha" asp-for="SvrhaId" asp-items="Model.Svrhe" class="form-control"
+                onchange="svrhaUplateChanged(this)"></select>
+        <span asp-validation-for="SvrhaId" class="text-danger"></span>
+    </div>
+    <div id="content">
+        @if (kursevi != null)
+        {
+            <div class="form-group">
+                <label for="KursId">Kursevi:</label>
+                <select value="@Model.KursId" asp-for="@Model.KursId" asp-items="kursevi" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label for="PolaznikId">Polaznici:</label>
+                <select value="@Model.PolaznikId" asp-for="@Model.PolaznikId" asp-items="polaznici" class="form-control"></select>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label for="DogadjajId">Dogadjaji:</label>
+                <select value="@Model.DogadjajId" asp-for="@Model.DogadjajId" asp-items="dogadjaji" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label for="OrganizatorId">Organizatori:</label>
+                <select value="@Model.OrganizatorId" asp-for="@Model.OrganizatorId" asp-items="organizatori" class="form-control"></select>
+            </div>
+        }
+    </div>
+
+    <input type="submit" class="btn btn-primary float-right" value="Spremi" />
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+    function svrhaUplateChanged(obj) {
+        if (obj.options[obj.selectedIndex].text == "Kurs") {
+            $.get("PrijavaInput", function (res) {
+                $("#content").html(res);
+            })
+        }
+        else if (obj.options[obj.selectedIndex].text == "Dogadjaj") {
+            $.get("DogadjajInput", function (res) {
+                $("#content").html(res);
+            })
+        }
+        else {
+            $("#content").html(null);
+        }
+    }
+</script>
