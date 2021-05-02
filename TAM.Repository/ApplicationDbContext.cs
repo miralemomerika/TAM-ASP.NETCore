@@ -33,5 +33,6 @@ namespace TAM.Repository
         public DbSet<OrganizacijaKursa> OrganizacijaKursa { get; set; }
         public DbSet<Pohadjanje> Pohadjanje { get; set; }
         public DbSet<Uplata> Uplata { get; set; }
+        public DbSet<Recenzija> Recenzija { get; set; }
     }
 }
