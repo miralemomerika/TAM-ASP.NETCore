@@ -22,8 +22,8 @@
         <tr align="center">
             <th>Naziv kursa</th>
             <th>Predavac</th>
-            <th>Datum pocetka</th>
-            <th>Vrijeme pocetka</th>
+            <th>Datum i vrijeme pocetka</th>
+            <th>Aktivna recenzija</th>
             <th>Datum zavrsetka</th>
             <th>Akcija</th>
         </tr>
@@ -34,8 +34,14 @@
             <tr align="center">
                 <td>@item.Kurs.Naziv</td>
                 <td>@(item.Predavac.KorisnickiRacun.FirstName + " " + item.Predavac.KorisnickiRacun.LastName)</td>
-                <td>@item.DatumPocetka.ToString("dd.MM.yyyy")</td>
-                <td>@item.DatumPocetka.ToString("HH.mm")</td>
+                <td>
+                    @item.DatumPocetka.ToString("dd.MM.yyyy")
+                    @item.DatumPocetka.ToString("HH.mm")
+                </td>
+                <td>
+                    <input type="checkbox" asp-for="@item.AktivnaRecenzija" class="p-2"
+                           onclick="PromijeniAktivno(@item.Id)" />
+                </td>
                 <td>@item.DatumZavrsetka.ToString("dd.MM.yyyy")</td>
                 <td>
                     <button class="btn btn-info" onclick="Uredi(@item.Id)"
@@ -55,5 +61,11 @@
         $.get("/AdministratorModul/Organizacije/Uredi?Id=" + Id, function (res) {
             $("#forma").html(res);
         })
+    }
+
+    function PromijeniAktivno(Id) {
+        $.post("/AdministratorModul/Organizacije/PromijeniAktivno?Id=" + Id, function() {
+            alert("Uspješno promijenjena aktivnost recenzije.");
+        });
     }
 </script>
