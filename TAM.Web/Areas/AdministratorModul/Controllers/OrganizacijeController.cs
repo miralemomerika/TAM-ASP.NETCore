@@ -197,6 +197,13 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             return RedirectToAction("Index");
         }
 
+        public void PromijeniAktivno(int Id)
+        {
+            var organizacija = _organizacijaKursaService.GetById(Id);
+            organizacija.AktivnaRecenzija = !organizacija.AktivnaRecenzija;
+            _organizacijaKursaService.Update(organizacija);
+        }
+
         private async Task ObavijestiPolaznike(List<Polaznik> polaznici, 
             OrganizacijaKursa organizacijaKursa, string htmlMessage)
         {

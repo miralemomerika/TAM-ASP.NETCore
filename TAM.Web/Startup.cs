@@ -95,6 +95,7 @@ namespace TAM.Web
             services.AddTransient<IPohadjanjeService, PohadjanjeService>();
             services.AddTransient<IDogadjajService, DogadjajService>();
             services.AddTransient<IUplataService, UplataService>();
+            services.AddTransient<IRecenzijeService, RecenzijeService>();
 
             services.AddScoped<JwtHandler>();
 
