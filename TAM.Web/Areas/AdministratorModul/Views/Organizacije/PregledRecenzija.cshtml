@@ -9,8 +9,8 @@
 
 @if (Model.PostojeRecenzije)
 {
-    <h5>Procjecna ocjena kursa @Model.ProsjecnaOcjenaKursa</h5>
-    <h5>Prosjecna ocjena predavaca @Model.ProsjecnaOcjenaPredavaca</h5>
+    <h5>Procjecna ocjena kursa: @Model.ProsjecnaOcjenaKursa</h5>
+    <h5>Prosjecna ocjena predavaca: @Model.ProsjecnaOcjenaPredavaca</h5>
     <table class="table table-hover mt-3">
         <thead class="card-header">
             <tr>
@@ -31,14 +31,3 @@ else
 {
     <h5>Još uvijek nema recenzija za ovu organizaciju kursa</h5>
 }
-
-@*<div @(Model.PostojeRecenzije ? "hidden" : "")>
-    <h1> Nema recenzija! </h1>
-</div>
-<div @(Model.PostojeRecenzije ? "" : "hidden")>
-    @Model.ProsjecnaOcjenaKursa
-    <br />
-    @Model.ProsjecnaOcjenaPredavaca
-    <br />
-    @Model.Komentari.Count
-</div>*@
