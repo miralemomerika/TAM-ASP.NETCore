@@ -210,17 +210,26 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             if(model.PostojeRecenzije)
             {
                 model.Komentari = recenzije.Where(x => x.Komentar.Length > 0).Select(x => x.Komentar).ToList();
-                model.ProsjecnaOcjenaKursa = recenzije.Average(x => x.OcjenaKursa);
-                model.ProsjecnaOcjenaPredavaca = recenzije.Average(x => x.OcjenaPredavaca);
+                model.ProsjecnaOcjenaKursa = Math.Round(recenzije.Average(x => x.OcjenaKursa), 2);
+                model.ProsjecnaOcjenaPredavaca = Math.Round(recenzije.Average(x => x.OcjenaPredavaca), 2);
             }
             return View(model);
         }
 
         public void PromijeniAktivno(int Id)
         {
-            var organizacija = _organizacijaKursaService.GetById(Id);
-            organizacija.AktivnaRecenzija = !organizacija.AktivnaRecenzija;
-            _organizacijaKursaService.Update(organizacija);
+            try
+            {
+                var organizacija = _organizacijaKursaService.GetById(Id);
+                organizacija.AktivnaRecenzija = !organizacija.AktivnaRecenzija;
+                _organizacijaKursaService.Update(organizacija);
+                TempData["successAdd"] = "Uspješno promijenjen status aktivnosti recenzije.";
+            }
+            catch (Exception ex)
+            {
+                _exceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+            }
         }
 
         private async Task ObavijestiPolaznike(List<Polaznik> polaznici, 
