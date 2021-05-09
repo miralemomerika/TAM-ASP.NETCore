@@ -22,11 +22,13 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
         private IPohadjanjeService _pohadjanjeService;
         private IEmailSender _emailSender;
         private IExceptionHandlerService _exceptionHandlerService;
+        private IRecenzijeService _recenzijeService;
 
         public OrganizacijeController(IKursService kursService, IPredavacService predavacService,
             IOrganizacijaKursaService organizacijaKursaService, IPrijavaService prijavaService,
             IPohadjanjeService pohadjanjeService, IEmailSender emailSender,
-            IExceptionHandlerService exceptionHandlerService)
+            IExceptionHandlerService exceptionHandlerService,
+            IRecenzijeService recenzijeService)
         {
             _kursService = kursService;
             _predavacService = predavacService;
@@ -35,6 +37,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             _pohadjanjeService = pohadjanjeService;
             _emailSender = emailSender;
             _exceptionHandlerService = exceptionHandlerService;
+            _recenzijeService = recenzijeService;
         }
 
         public IActionResult Index(string pretrazivanje, int pageNumber = 1,
@@ -197,11 +200,36 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult PregledRecenzija(int Id)
+        {
+            var recenzije = _recenzijeService.GetAllByOrganizacijaId(Id).ToList();
+            var model = new OrganizacijePregledRecenzijaVM
+            {
+                PostojeRecenzije = recenzije.Count > 0
+            };
+            if(model.PostojeRecenzije)
+            {
+                model.Komentari = recenzije.Where(x => x.Komentar.Length > 0).Select(x => x.Komentar).ToList();
+                model.ProsjecnaOcjenaKursa = Math.Round(recenzije.Average(x => x.OcjenaKursa), 2);
+                model.ProsjecnaOcjenaPredavaca = Math.Round(recenzije.Average(x => x.OcjenaPredavaca), 2);
+            }
+            return View(model);
+        }
+
         public void PromijeniAktivno(int Id)
         {
-            var organizacija = _organizacijaKursaService.GetById(Id);
-            organizacija.AktivnaRecenzija = !organizacija.AktivnaRecenzija;
-            _organizacijaKursaService.Update(organizacija);
+            try
+            {
+                var organizacija = _organizacijaKursaService.GetById(Id);
+                organizacija.AktivnaRecenzija = !organizacija.AktivnaRecenzija;
+                _organizacijaKursaService.Update(organizacija);
+                TempData["successAdd"] = "Uspješno promijenjen status aktivnosti recenzije.";
+            }
+            catch (Exception ex)
+            {
+                _exceptionHandlerService.Add(PomocneMetode.GenerisiException(ex));
+                TempData["exception"] = "Operaciju nije moguce izvrsiti!";
+            }
         }
 
         private async Task ObavijestiPolaznike(List<Polaznik> polaznici, 

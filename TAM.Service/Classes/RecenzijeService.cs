@@ -74,6 +74,13 @@ namespace TAM.Service.Classes
                 .Select(x => x.OrganizacijaKursa).ToList();
         }
 
+        public IEnumerable<Recenzija> GetAllByOrganizacijaId(int Id)
+        {
+            var recenzije = _repository.GetAll();
+            recenzije = recenzije.Where(x => x.OrganizacijaKursaId == Id);
+            return recenzije;
+        }
+
         public Recenzija GetById(int Id)
         {
             try

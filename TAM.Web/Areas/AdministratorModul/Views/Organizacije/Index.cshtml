@@ -48,6 +48,10 @@
                             data-toggle="modal" data-target="#exampleModalCenter">
                         Uredi
                     </button>
+                    <a class="btn btn-info" onclick="PregledRecenzija(@item.Id)"
+                       data-toggle="modal" data-target="#exampleModalCenter">
+                        Recenzije
+                    </a>
                 </td>
             </tr>
         }
@@ -65,7 +69,13 @@
 
     function PromijeniAktivno(Id) {
         $.post("/AdministratorModul/Organizacije/PromijeniAktivno?Id=" + Id, function() {
-            alert("Uspješno promijenjena aktivnost recenzije.");
+            location.reload();
         });
+    }
+
+    function PregledRecenzija(Id) {
+        $.get("/AdministratorModul/Organizacije/PregledRecenzija?Id=" + Id, function (res) {
+            $("#forma").html(res);
+        })
     }
 </script>

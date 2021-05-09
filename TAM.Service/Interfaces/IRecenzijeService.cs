@@ -8,6 +8,7 @@ namespace TAM.Service.Interfaces
     public interface IRecenzijeService
     {
         public IEnumerable<Recenzija> GetAll();
+        public IEnumerable<Recenzija> GetAllByOrganizacijaId(int Id);
         public Recenzija GetById(int Id);
         public void Update(Recenzija recenzija);
         public void Delete(Recenzija recenzija);
