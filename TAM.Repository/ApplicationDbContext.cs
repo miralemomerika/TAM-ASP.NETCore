@@ -35,5 +35,6 @@ namespace TAM.Repository
         public DbSet<Uplata> Uplata { get; set; }
         public DbSet<OdrzanaNastava> OdrzanaNastava { get; set; }
         public DbSet<Dolazak> Dolazak { get; set; }
+        public DbSet<Recenzija> Recenzija { get; set; }
     }
 }
