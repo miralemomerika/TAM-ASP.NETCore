@@ -1,0 +1,68 @@
+﻿@using TAM.Core
+@using TAM.ViewModels
+@{
+    var Naslov = ViewData["Title"].ToString();
+    var Controller = ViewData["Controller"].ToString();
+    var Akcija = ViewData["Action"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model OdrzanaNastavaPrikazVM
+
+<div class="card-header">
+
+    <div>
+        <h5>Datum pocetka: @Model.DatumPocetka</h5>
+    </div>
+    <div>
+        <h5>Datum zavrsetka: @Model.DatumZavrsetka</h5>
+    </div>
+    <div>
+        <a class="btn btn-primary" href="/Nastava/Polaznici?Id=@Model.OrganizacijaId">Polaznici</a>
+    </div>
+</div>
+
+
+    <table class="table table-hover">
+        <thead class="card-header">
+            <tr align="center">
+                <th>Kurs</th>
+                <th>Datum i vrijeme odrzavanja</th>
+                <th>Prostorija</th>
+                <th>Zakljucen</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.NastavaZapisi)
+            {
+                <tr align="center">
+                    <td>@item.Kurs</td>
+                    <td>@item.DatumOdrzavanja</td>
+                    <td>@item.Prostorija</td>
+                    <td>@(item.Zakljucen ? "Da" : "Ne")</td>
+                    <td><a class="btn btn-primary" href="/Nastava/DetaljiOCasu?Id=@item.Id">Detalji</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div style="text-align: end; margin-bottom: 25px;">
+        <button class="btn btn-dark"
+                data-toggle="modal" data-target="#exampleModalCenter" onclick="Dodaj()">
+            Dodaj
+        </button>
+    </div>
+
+    <partial name="_ModalPartial" />
+
+    <script>
+
+    function Dodaj() {
+        $.get("/Nastava/Dodaj?Id=@Model.OrganizacijaId", function (res) {
+            $("#forma").html(res);
+        })
+    }
+
+    </script>
