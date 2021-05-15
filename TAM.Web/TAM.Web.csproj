@@ -36,6 +36,7 @@
   <ItemGroup>
     <Folder Include="Areas\AdministratorModul\Data\" />
     <Folder Include="Areas\AdministratorModul\Models\" />
+    <Folder Include="Areas\AdministratorModul\Views\Nastava\" />
     <Folder Include="Areas\AdministratorModul\Views\Uplate\" />
     <Folder Include="wwwroot\upload\" />
   </ItemGroup>

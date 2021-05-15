@@ -30,5 +30,10 @@ namespace TAM.Core
         [Required(ErrorMessage = "Polje je obavezno")]
         [StringLength(50, ErrorMessage = "Kratki opis kursa mora sadržavati između 10 i 50 slova.", MinimumLength = 10)]
         public string Opis { get; set; }
+
+        public override string ToString()
+        {
+            return Naziv;
+        }
     }
 }

@@ -25,5 +25,10 @@ namespace TAM.Service.Classes
         {
             _repository.Add(pohadjanje);
         }
+
+        public void Update(Pohadjanje pohadjanje)
+        {
+            _repository.Update(pohadjanje);
+        }
     }
 }

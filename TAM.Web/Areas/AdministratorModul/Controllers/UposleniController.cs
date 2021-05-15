@@ -126,7 +126,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     LastName = Input.LastName,
                     PhoneNumber = Input.PhoneNumber
                 };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, "Sifra123!");
                 if (result.Succeeded)
                 {
                     var roleresult = await _userManager.AddToRoleAsync(user, rola.Name);

@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<br />
+@if (TempData["deleted"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["deleted"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successAdd"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successAdd"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["exception"] != null)
+{
+    <div id="alert" class="alert alert-danger" role="alert">
+        @TempData["exception"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["successUpdate"] != null)
+{
+    <div id="alert" class="alert alert-success" role="alert">
+        @TempData["successUpdate"].ToString()
+        <button type="button" class="close" aria-label="Close" onclick="remove(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<script>
+    function remove(el) {
+        $(el).parent().remove();
+    }
+
+    setTimeout(function () {
+        if ($('#alert').length > 0) {
+            $('#alert').remove();
+        }
+    }, 2500)
+</script>
