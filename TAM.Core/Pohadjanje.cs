@@ -15,5 +15,6 @@ namespace TAM.Core
         public Polaznik Polaznik { get; set; }
         public int OrganizacijaKursaId { get; set; }
         public OrganizacijaKursa OrganizacijaKursa { get; set; }
+        public bool Aktivan { get; set; }
     }
 }

@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TAM.Core
+@using TAM.ViewModels
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model OdrzanaNastavaDodajVM
+
+
+<form asp-action="Spasi" asp-controller="Nastava">
+    <div class="modal-header" style="padding:1rem 0rem">
+        <h5 class="modal-title" id="exampleModalLongTitle">Kreirajte cas:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <br />   
+    <input asp-for="OrganizacijaKursaId" hidden/>
+    <div class="form-group">
+        <label for="ProstorijaId">Izaberite prostoriju:</label>
+        <select asp-for="ProstorijaId" asp-items="Model.Prostorije"
+                class="form-control"></select>
+
+    </div>
+    <input type="submit" class="btn btn-primary" value="Spasi" />
+</form>

@@ -148,7 +148,8 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                         {
                             OrganizacijaKursaId = organizacija.Id,
                             PolaznikId = item.Id,
-                            Pohadja = true
+                            Pohadja = true, 
+                            Aktivan = true
                         };
                         _pohadjanjeService.Add(pohadjanje);
                     }
