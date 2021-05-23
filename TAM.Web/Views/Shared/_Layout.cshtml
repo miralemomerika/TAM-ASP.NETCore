@@ -31,14 +31,14 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto" style="text-align: center">
                     @*<li class="nav-item active">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
-                                Home
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>*@
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                Home
+                <span class="sr-only">(current)</span>
+            </a>
+        </li>*@
                     @*<li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>*@
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </li>*@
                     @if (User.IsInRole("Administrator"))
                     {
                         <partial name="_UlogaAdministrator" />
@@ -46,6 +46,10 @@
                     @if (User.IsInRole("Portir"))
                     {
                         <partial name="_UlogaPortir" />
+                    }
+                    @if (User.IsInRole("Predavac"))
+                    {
+                        <partial name="_UlogaPredavac" />
                     }
                     <partial name="_LoginPartial" />
                 </ul>
