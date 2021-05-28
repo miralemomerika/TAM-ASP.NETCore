@@ -8,11 +8,13 @@ using TAM.Service.Interfaces;
 using TAM.Service.Classes;
 using cloudscribe.Pagination.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using TAM.Web.Helper;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
     [Area("AdministratorModul")]
+    [Authorize(Roles = "Administrator")]
     public class KategorijaKursaController : Controller
     {
 

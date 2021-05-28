@@ -10,11 +10,13 @@ using TAM.Service.Classes;
 using TAM.Service.Interfaces;
 using TAM.ViewModels;
 using TAM.Web.Helper;
+using Microsoft.AspNetCore.Authorization;
 using static TAM.ViewModels.KursPrikazVM;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
     [Area("AdministratorModul")]
+    [Authorize(Roles = "Administrator")]
     public class KurseviController : Controller
     {
         readonly IKursService KursService;

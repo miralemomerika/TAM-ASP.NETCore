@@ -51,6 +51,12 @@
                     {
                         <partial name="_UlogaPredavac" />
                     }
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Portir"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="AdministratorModul" asp-controller="Dogadjaji" asp-action="Prikaz">Događaji</a>
+                        </li>
+                    }
                     <partial name="_LoginPartial" />
                 </ul>
             </div>

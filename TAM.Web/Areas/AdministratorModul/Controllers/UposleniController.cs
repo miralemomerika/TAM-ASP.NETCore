@@ -12,11 +12,13 @@ using System.Threading.Tasks;
 using TAM.Core;
 using TAM.Service.Interfaces;
 using TAM.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using TAM.Web.Helper;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
     [Area("AdministratorModul")]
+    [Authorize(Roles = "Administrator")]
     public class UposleniController : Controller
     {
 

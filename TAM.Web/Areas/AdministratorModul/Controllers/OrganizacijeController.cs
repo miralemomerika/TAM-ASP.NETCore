@@ -9,10 +9,12 @@ using TAM.Core;
 using TAM.Service.Interfaces;
 using TAM.ViewModels;
 using TAM.Web.Helper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
     [Area("AdministratorModul")]
+    [Authorize(Roles = "Administrator")]
     public class OrganizacijeController : Controller
     {
         private IKursService _kursService;

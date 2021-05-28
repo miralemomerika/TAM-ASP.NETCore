@@ -1,4 +1,5 @@
 ﻿using cloudscribe.Pagination.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using TAM.Web.Helper;
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
     [Area("AdministratorModul")]
+    [Authorize(Roles = "Portir")]
     public class UplateController : Controller
     {
         readonly ISvrhaUplateService SvrhaUplateService;

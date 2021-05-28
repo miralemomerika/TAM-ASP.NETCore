@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cloudscribe.Pagination.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
 
     [Area("AdministratorModul")]
+    [Authorize(Roles = "Administrator")]
     public class PolazniciController : Controller
     {
         readonly ITipPolaznikaService TipPolaznikaService;       

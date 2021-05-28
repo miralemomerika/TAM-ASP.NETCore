@@ -11,11 +11,13 @@ using TAM.Core;
 using TAM.Service.Interfaces;
 using TAM.ViewModels;
 using TAM.Web.Helper;
+using Microsoft.AspNetCore.Authorization;
 using static TAM.ViewModels.NastavaVM;
 using static TAM.ViewModels.OdrzanaNastavaPrikazVM;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
+    [Authorize(Roles = "Predavac")]
     public class NastavaController : Controller
     {
         readonly IOdrzanaNastavaService _odrzanaNastavaService;
