@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TAM.Repository;
 
 namespace TAM.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210526181907_Rad-added")]
+    partial class Radadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,31 +190,6 @@ namespace TAM.Repository.Migrations
                     b.ToTable("Dogadjaj");
                 });
 
-            modelBuilder.Entity("TAM.Core.Dolazak", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OdrzanaNastavaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PohadjanjeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Prisutan")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OdrzanaNastavaId");
-
-                    b.HasIndex("PohadjanjeId");
-
-                    b.ToTable("Dolazak");
-                });
-
             modelBuilder.Entity("TAM.Core.ExceptionHandler", b =>
                 {
                     b.Property<int>("Id")
@@ -231,37 +208,37 @@ namespace TAM.Repository.Migrations
                     b.ToTable("ExceptionHandler");
                 });
 
-            //modelBuilder.Entity("TAM.Core.Ispit", b =>
-            //    {
-            //        b.Property<int>("Id")
-            //            .ValueGeneratedOnAdd()
-            //            .HasColumnType("int")
-            //            .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            modelBuilder.Entity("TAM.Core.Ispit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            //        b.Property<string>("Naslov")
-            //            .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Naslov")
+                        .HasColumnType("nvarchar(max)");
 
-            //        b.Property<string>("Opis")
-            //            .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Opis")
+                        .HasColumnType("nvarchar(max)");
 
-            //        b.Property<int>("OrganizacijaKursaId")
-            //            .HasColumnType("int");
+                    b.Property<int>("OrganizacijaKursaId")
+                        .HasColumnType("int");
 
-            //        b.Property<string>("UrlDokumenta")
-            //            .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UrlDokumenta")
+                        .HasColumnType("nvarchar(max)");
 
-            //        b.Property<DateTime>("VrijemePocetka")
-            //            .HasColumnType("datetime2");
+                    b.Property<DateTime>("VrijemePocetka")
+                        .HasColumnType("datetime2");
 
-            //        b.Property<DateTime>("VrijemeZavrsetka")
-            //            .HasColumnType("datetime2");
+                    b.Property<DateTime>("VrijemeZavrsetka")
+                        .HasColumnType("datetime2");
 
-            //        b.HasKey("Id");
+                    b.HasKey("Id");
 
-            //        b.HasIndex("OrganizacijaKursaId");
+                    b.HasIndex("OrganizacijaKursaId");
 
-            //        b.ToTable("Ispit");
-            //    });
+                    b.ToTable("Ispit");
+                });
 
             modelBuilder.Entity("TAM.Core.KategorijaKursa", b =>
                 {
@@ -438,48 +415,12 @@ namespace TAM.Repository.Migrations
                     b.ToTable("Obavijest");
                 });
 
-            modelBuilder.Entity("TAM.Core.OdrzanaNastava", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DatumIVrijemeOdrzavanja")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OrganizacijaKursaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PredavacId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ProstorijaId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Zakljucen")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizacijaKursaId");
-
-                    b.HasIndex("PredavacId");
-
-                    b.HasIndex("ProstorijaId");
-
-                    b.ToTable("OdrzanaNastava");
-                });
-
             modelBuilder.Entity("TAM.Core.OrganizacijaKursa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("AktivnaRecenzija")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("DatumPocetka")
                         .HasColumnType("datetime2");
@@ -521,9 +462,6 @@ namespace TAM.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Aktivan")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("OcjenaPohadjanja")
                         .HasColumnType("int");
@@ -632,59 +570,33 @@ namespace TAM.Repository.Migrations
                     b.ToTable("Prostorija");
                 });
 
-            modelBuilder.Entity("TAM.Core.Recenzija", b =>
+            modelBuilder.Entity("TAM.Core.Rad", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Komentar")
+                    b.Property<DateTime>("DatumPostavljanja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IspitId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PolaznikId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UrlDokumenta")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OcjenaKursa")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OcjenaPredavaca")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrganizacijaKursaId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizacijaKursaId");
+                    b.HasIndex("IspitId");
 
-                    b.ToTable("Recenzija");
+                    b.HasIndex("PolaznikId");
+
+                    b.ToTable("Rad");
                 });
-
-            //modelBuilder.Entity("TAM.Core.Rad", b =>
-            //    {
-            //        b.Property<int>("Id")
-            //            .ValueGeneratedOnAdd()
-            //            .HasColumnType("int")
-            //            .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            //        b.Property<DateTime>("DatumPostavljanja")
-            //            .HasColumnType("datetime2");
-
-            //        b.Property<int>("IspitId")
-            //            .HasColumnType("int");
-
-            //        b.Property<string>("PolaznikId")
-            //            .HasColumnType("nvarchar(450)");
-
-            //        b.Property<string>("UrlDokumenta")
-            //            .HasColumnType("nvarchar(max)");
-
-            //        b.HasKey("Id");
-
-            //        b.HasIndex("IspitId");
-
-            //        b.HasIndex("PolaznikId");
-
-            //        b.ToTable("Rad");
-            //    });
 
             modelBuilder.Entity("TAM.Core.SvrhaUplate", b =>
                 {
@@ -823,21 +735,6 @@ namespace TAM.Repository.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TAM.Core.Dolazak", b =>
-                {
-                    b.HasOne("TAM.Core.OdrzanaNastava", "OdrzanaNastava")
-                        .WithMany()
-                        .HasForeignKey("OdrzanaNastavaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TAM.Core.Pohadjanje", "Pohadjanje")
-                        .WithMany()
-                        .HasForeignKey("PohadjanjeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TAM.Core.Ispit", b =>
                 {
                     b.HasOne("TAM.Core.OrganizacijaKursa", "OrganizacijaKursa")
@@ -867,25 +764,6 @@ namespace TAM.Repository.Migrations
                     b.HasOne("TAM.Core.KorisnickiRacun", "KorisnickiRacun")
                         .WithMany()
                         .HasForeignKey("KorisnickiRacunId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TAM.Core.OdrzanaNastava", b =>
-                {
-                    b.HasOne("TAM.Core.OrganizacijaKursa", "OrganizacijaKursa")
-                        .WithMany()
-                        .HasForeignKey("OrganizacijaKursaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TAM.Core.Predavac", "Predavac")
-                        .WithMany()
-                        .HasForeignKey("PredavacId");
-
-                    b.HasOne("TAM.Core.Prostorija", "Prostorija")
-                        .WithMany()
-                        .HasForeignKey("ProstorijaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -980,15 +858,6 @@ namespace TAM.Repository.Migrations
                     b.HasOne("TAM.Core.Polaznik", "Polaznik")
                         .WithMany()
                         .HasForeignKey("PolaznikId");
-                });
-
-            modelBuilder.Entity("TAM.Core.Recenzija", b =>
-                {
-                    b.HasOne("TAM.Core.OrganizacijaKursa", "OrganizacijaKursa")
-                        .WithMany()
-                        .HasForeignKey("OrganizacijaKursaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TAM.Core.Uplata", b =>
