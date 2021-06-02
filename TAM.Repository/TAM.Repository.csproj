@@ -9,6 +9,10 @@
     <Compile Remove="Migrations\20210425204159_init.Designer.cs" />
     <Compile Remove="Migrations\20210425204408_init.cs" />
     <Compile Remove="Migrations\20210425204408_init.Designer.cs" />
+    <Compile Remove="Migrations\20210502113934_Ispit_added.cs" />
+    <Compile Remove="Migrations\20210502113934_Ispit_added.Designer.cs" />
+    <Compile Remove="Migrations\20210526181819_rad-added.cs" />
+    <Compile Remove="Migrations\20210526181819_rad-added.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

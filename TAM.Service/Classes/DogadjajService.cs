@@ -96,7 +96,7 @@ namespace TAM.Service.Classes
                 var dogadjaji1 = DogadjajRepository.GetAll().AsQueryable();
                 dogadjaji1 = dogadjaji1.Include(x => x.TipDogadjaja).Include(x => x.Organizator)
                     .ThenInclude(x => x.KorisnickiRacun);
-                //dogadjaji1 = dogadjaji1.Where(x => x.DatumIVrijemeOdrzavanja > DateTime.Now && x.Odobren == true);
+                dogadjaji1 = dogadjaji1.Where(x => x.DatumIVrijemeOdrzavanja > DateTime.Now && x.Odobren == true);
                 var lista = dogadjaji1.ToList();
                 return lista;
 

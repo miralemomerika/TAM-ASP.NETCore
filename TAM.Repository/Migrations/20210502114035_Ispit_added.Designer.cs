@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TAM.Repository;
 
 namespace TAM.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210502114035_Ispit_added")]
+    partial class Ispit_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -568,34 +570,6 @@ namespace TAM.Repository.Migrations
                     b.ToTable("Prostorija");
                 });
 
-            modelBuilder.Entity("TAM.Core.Rad", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DatumPostavljanja")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IspitId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PolaznikId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UrlDokumenta")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IspitId");
-
-                    b.HasIndex("PolaznikId");
-
-                    b.ToTable("Rad");
-                });
-
             modelBuilder.Entity("TAM.Core.SvrhaUplate", b =>
                 {
                     b.Property<int>("Id")
@@ -837,19 +811,6 @@ namespace TAM.Repository.Migrations
                     b.HasOne("TAM.Core.Kurs", "Kurs")
                         .WithMany()
                         .HasForeignKey("KursId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TAM.Core.Polaznik", "Polaznik")
-                        .WithMany()
-                        .HasForeignKey("PolaznikId");
-                });
-
-            modelBuilder.Entity("TAM.Core.Rad", b =>
-                {
-                    b.HasOne("TAM.Core.Ispit", "Ispit")
-                        .WithMany()
-                        .HasForeignKey("IspitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
