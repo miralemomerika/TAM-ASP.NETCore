@@ -1,0 +1,39 @@
+﻿@using TAM.Core
+@using TAM.ViewModels
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model NastavaPolazniciVM
+
+<table class="table table-hover">
+    <thead class="card-header">
+        <tr align="center">
+            <th>
+                Ime i prezime
+            </th>
+            <th>
+                Aktivan
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Polaznici)
+        {
+            <tr align="center">
+                <td>@item.ImePrezime</td>
+                @if (item.Aktivan)
+                {
+                    <td class="btn btn-success disabled">Da</td>
+                }
+                else
+                {
+                    <td class="btn btn-danger disabled">Ne</td>
+
+                }
+            </tr>
+            
+        }
+    </tbody>
+</table>

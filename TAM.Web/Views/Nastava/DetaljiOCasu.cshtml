@@ -1,0 +1,82 @@
+﻿@using TAM.Core
+@using TAM.ViewModels
+@{    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model OdrzanaNastavaDetaljiVM
+
+<div class="card-header">
+
+    <div>
+        <h5>Datum i vrijeme odrzavanja: @Model.DatumIVrijemeOdrzavanja</h5>
+    </div>
+    @if (Model.Zakljucen)
+    {
+        <div>
+            <h5>Zakljuceno</h5>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h5>Zakljuci > <a class="btn btn-dark" href="/Nastava/Zakljuci?Id=@Model.Id">Klikni ovdje</a></h5>
+        </div>
+    }
+
+</div>
+
+
+<table class="table table-hover">
+    <thead class="card-header">
+        <tr align="center">
+            <th>Ime i prezime</th>
+            <th>Prisutan</th>
+            @if(Model.Zakljucen)
+            {
+                <th>Prisustva</th>
+                <th>Akcija</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Dolasci)
+        {
+        <tr align="center">
+            <td>@item.ImePrezime</td>
+            @if (!Model.Zakljucen)
+            {
+
+                @if (item.IsPrisutan)
+                {
+                    <td><a class="btn btn-success" href="/Nastava/Promijeni?Id=@item.Id&Cas=@Model.Id">Da</a></td>
+                }
+                else
+                {
+                    <td><a class="btn btn-danger" href="/Nastava/Promijeni?Id=@item.Id&Cas=@Model.Id">Ne</a></td>
+                }
+
+            }
+            else
+            {
+                @if (item.IsPrisutan)
+                {
+                    <td><a class="btn btn-success disabled" href="/Nastava/Promijeni?Id=@item.Id&Cas=@Model.Id">Da</a></td>
+                }
+                else
+                {
+                    <td><a class="btn btn-danger disabled" href="/Nastava/Promijeni?Id=@item.Id&Cas=@Model.Id">Ne</a></td>
+                }
+                <td>@item.Prisutan/@Model.Ukupno</td>
+                <td>
+                    @if(item.Odsutan>2)
+                    {
+                        <a class="btn btn-danger" href="/Nastava/Deaktiviraj?Id=@item.Id&Cas=@Model.Id">Ukloni</a>
+                    }
+                </td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>

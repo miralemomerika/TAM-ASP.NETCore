@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web.Http;
+using Microsoft.AspNetCore.Authorization;
 using TAM.Service.Interfaces;
 using TAM.ViewModels;
 using TAM.Web.Helper;
@@ -17,6 +17,7 @@ using TAM.Core;
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
     [Area("AdministratorModul")]
+    [Authorize(Roles = "Portir")]
     public class UplataController : Controller
     {
         readonly IUplataService uplataService;

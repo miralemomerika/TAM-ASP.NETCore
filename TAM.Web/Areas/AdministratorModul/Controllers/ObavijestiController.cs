@@ -9,6 +9,7 @@ using TAM.Service.Classes;
 using cloudscribe.Pagination.Models;
 using Microsoft.EntityFrameworkCore;
 using TAM.Web.Helper;
+using Microsoft.AspNetCore.Authorization;
 using TAM.ViewModels;
 using static TAM.ViewModels.ObavijestPrikazVM;
 using TAM.Core;
@@ -16,6 +17,7 @@ using TAM.Core;
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
     [Area("AdministratorModul")]
+    [Authorize(Roles = "Administrator")]
     public class ObavijestiController : Controller
     {
 

@@ -12,11 +12,13 @@ using System.Threading.Tasks;
 using TAM.Core;
 using TAM.Service.Interfaces;
 using TAM.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using TAM.Web.Helper;
 
 namespace TAM.Web.Areas.AdministratorModul.Controllers
 {
     [Area("AdministratorModul")]
+    [Authorize(Roles = "Administrator")]
     public class UposleniController : Controller
     {
 
@@ -126,7 +128,7 @@ namespace TAM.Web.Areas.AdministratorModul.Controllers
                     LastName = Input.LastName,
                     PhoneNumber = Input.PhoneNumber
                 };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, "Sifra123!");
                 if (result.Succeeded)
                 {
                     var roleresult = await _userManager.AddToRoleAsync(user, rola.Name);
