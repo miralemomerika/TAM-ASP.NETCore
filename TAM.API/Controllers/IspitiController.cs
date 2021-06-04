@@ -112,7 +112,7 @@ namespace TAM.API.Controllers
 
         }
 
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("createispit")]
         public async Task<IActionResult> CreateIspit(IspitDodajDto model)
         {
@@ -221,7 +221,7 @@ namespace TAM.API.Controllers
             catch (Exception ex)
             {
                 _exceptionHandler.Add(PomocneMetode.GenerisiException(ex));
-                return BadRequest();
+                return BadRequest("Problem prilikom dobavljanja organizacija kurseva.");
             }
         }
 

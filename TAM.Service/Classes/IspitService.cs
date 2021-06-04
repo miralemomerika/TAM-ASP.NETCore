@@ -64,14 +64,14 @@ namespace TAM.Service.Classes
                     if(roles.Result.Count != 0)
                     {
                         bool isAdmin = false;
-                        //bool isPredavac = false;
+                        bool isPredavac = false;
 
                         foreach (var item in roles.Result)
                         {
                             if (item == "Administrator")
                                 isAdmin = true;
-                            //if (item == "Predavac")
-                            //    isPredavac = true;
+                            if (item == "Predavac")
+                                isPredavac = true;
                         }
                         if (isAdmin)
                         {
@@ -79,13 +79,13 @@ namespace TAM.Service.Classes
                             ispitiAdmin = ispitiAdmin.Include(x => x.OrganizacijaKursa).ThenInclude(x => x.Kurs);
                             return ispitiAdmin.ToList();
                         }
-                        //else if(isPredavac)
-                        //{
-                        //    var ispitiPredavac = repository.GetAll().AsQueryable();
-                        //    ispitiPredavac = ispitiPredavac.Include(x => x.OrganizacijaKursa).ThenInclude(x => x.Kurs);
-                        //    ispitiPredavac = ispitiPredavac.Where(x => x.OrganizacijaKursa.PredavacId == _korisnickiRacun.Id);
-                        //    return ispitiPredavac.ToList();
-                        //}
+                        else if (isPredavac)
+                        {
+                            var ispitiPredavac = repository.GetAll().AsQueryable();
+                            ispitiPredavac = ispitiPredavac.Include(x => x.OrganizacijaKursa).ThenInclude(x => x.Kurs);
+                            ispitiPredavac = ispitiPredavac.Where(x => x.OrganizacijaKursa.PredavacId == _korisnickiRacun.Id);
+                            return ispitiPredavac.ToList();
+                        }
                         else
                         {
                             var ispiti = repository.GetAll().AsQueryable();
