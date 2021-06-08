@@ -192,7 +192,64 @@ namespace TAM.API.Controllers
             catch (Exception ex)
             {
                 _exceptionHandler.Add(PomocneMetode.GenerisiException(ex));
-                return StatusCode(500, $"Internal server error: {ex}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("getradoveispita/{id}")]
+        public async Task<IActionResult> GetRadoveIspita(int id)
+        {
+            try
+            {
+                var radovi = _radService.GetAll().AsQueryable();
+
+                var model = radovi.Where(x => x.IspitId == id)
+                    .Select(x => new RadGet()
+                {
+                    Id = x.Id,
+                    DatumPostavljanja = x.DatumPostavljanja,
+                    UrlDokumenta = x.UrlDokumenta,
+                    PolaznikId = x.PolaznikId,
+                    ImePrezimePolaznika = x.Polaznik.KorisnickiRacun.FirstName + " " + x.Polaznik.KorisnickiRacun.LastName
+                }).ToList();
+
+                if (model == null)
+                    return BadRequest("Radovi na ispitu nisu pronadjeni.");
+
+                return Ok(model);
+            }
+            catch (Exception ex)
+            {
+                _exceptionHandler.Add(PomocneMetode.GenerisiException(ex));
+                return BadRequest("Operaciju dobavljanja radova na ispitu nije moguce izvrsiti.");
+            }
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("ocijenirad")]
+        public async Task<IActionResult> OcjeniRad(RadOcijeni model)
+        {
+            if (model == null || !ModelState.IsValid)
+                return BadRequest("Rad nije moguce ocijeniti.");
+
+            var pohadjanje = _pohadjanjeService.GetAll().AsQueryable();
+            var postoji = pohadjanje.Where(x => x.PolaznikId == model.PolaznikId && x.OrganizacijaKursaId == model.OrganizacijaKursaId).FirstOrDefault();
+
+            if(postoji == null)
+                return BadRequest("Rad nije moguce ocijeniti, jer pohadjanje ne postoji.");
+
+            try
+            {
+                postoji.OcjenaPohadjanja = model.Ocjena;
+                
+                _pohadjanjeService.Update(postoji);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _exceptionHandler.Add(PomocneMetode.GenerisiException(ex));
+                return BadRequest("Rad nije moguce ocijeniti.");
             }
         }
     }
